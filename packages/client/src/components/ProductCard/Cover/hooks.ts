@@ -28,7 +28,7 @@ export const useRect = () => {
     return () => {
       el.removeEventListener('resize', updateRect)
     }
-  })
+  }, [])
 
   return {
     size,

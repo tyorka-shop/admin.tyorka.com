@@ -5,7 +5,6 @@ import { createApolloClient } from "./apollo";
 import { Config } from "./types/common";
 import config from "../configs/main.json";
 
-const client = createApolloClient();
 
 interface Ctx {
   config: Config;
@@ -18,6 +17,8 @@ const ctx = {
 export const Context = React.createContext<Ctx>(ctx);
 
 export const App: React.FC = () => {
+  const client = createApolloClient(config.backendUrl);
+
   return (
     <Context.Provider value={ctx}>
       <ApolloProvider client={client}>

@@ -13,4 +13,5 @@ export interface Crop {
 
 export interface Config {
   imagesUrl: string
+  backendUrl: string
 }

@@ -49,14 +49,35 @@ export class Store {
   getPicture = (id: ID): Picture | undefined =>
     this.get().pictures.find((picture) => picture.id === id);
 
+
+  private fixGallery(product: Product) {
+    const state = this.get();
+
+    // remove from gallery
+    if(!product.showInGallery) {
+      state.gallery = state.gallery.filter(id => product.id !== id)
+      return state;
+    }
+    const index = state.gallery.findIndex(id => product.id === id);
+    // add to gallery
+    if(index === -1) {
+      state.gallery = [product.id, ...state.gallery];
+    }
+    return state;
+  }
+
   saveProduct(newProduct: Product) {
+    this.save(this.fixGallery(newProduct))
+
     const state = this.get();
     const index = state.products.findIndex(({ id }) => id === newProduct.id);
+    
     if (index === -1) {
       state.products.push(newProduct);
     } else {
       state.products[index] = newProduct;
     }
+
 
     this.save(state);
     return true;

@@ -11,7 +11,7 @@ export const Grid: React.FC = () =>
   <div className={b()}>
     <table>
       <tbody>
-        {range(3).map(i => (<tr>{range(3).map(j => <td />)}</tr>))}
+        {range(3).map(i => (<tr key={i}>{range(3).map(j => <td key={`${i}_${j}`}/>)}</tr>))}
       </tbody>
     </table>
   </div>
