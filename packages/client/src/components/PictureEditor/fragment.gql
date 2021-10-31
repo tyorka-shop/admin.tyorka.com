@@ -1,0 +1,12 @@
+fragment PictureEditor on Picture {
+  id
+  src
+  crop {
+    anchor {x y}
+    factor
+  }
+  originalSize {
+    width
+    height
+  }
+}

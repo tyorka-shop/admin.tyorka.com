@@ -1,0 +1,4 @@
+fragment Pic on Picture {
+  id
+  src
+}

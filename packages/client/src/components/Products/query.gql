@@ -1,0 +1,8 @@
+#import '../ProductCard/fragment.gql'
+
+query Products {
+  products {
+    id
+    ...ProductCard
+  }
+}

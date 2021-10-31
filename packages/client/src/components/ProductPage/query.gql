@@ -1,0 +1,16 @@
+#import './Pic/fragment.gql'
+#import './Form/fragment.gql'
+#import './PictureEditModal/fragment.gql'
+
+query Product($id: ID!) {
+  product(id: $id) {
+    id
+    title
+    state
+    ...Form
+    pictures {
+      id
+      ...PictureEditModal
+    }
+  }
+}

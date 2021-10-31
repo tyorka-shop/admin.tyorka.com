@@ -1,0 +1,28 @@
+schema: http://localhost:3000/graphql
+documents: 'src/**/*.gql'
+generates:
+  schema.json:
+    plugins:
+      - introspection
+    config:
+      minify: false
+  ./src/types/gql.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo      
+    config:
+      nonOptionalTypename: true
+      maybeValue: T | undefined
+      avoidOptionals:
+        field: true
+        inputValue: true
+        object: true
+        defaultValue: true      
+  src/:
+    preset: near-operation-file-preset
+    presetConfig:
+      extension: .types.ts
+      baseTypesPath: types/gql.ts
+    plugins:
+      - typescript-operations

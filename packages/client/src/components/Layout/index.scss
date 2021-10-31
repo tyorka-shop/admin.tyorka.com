@@ -1,0 +1,14 @@
+.content {
+  width: 1024px;
+  margin: auto;
+
+  @media (max-width: 1200px) {
+    width: 768px;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 0;
+    width: auto;
+    padding: 1rem;
+  }
+}

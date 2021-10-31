@@ -1,0 +1,41 @@
+{
+  "name": "server",
+  "scripts": {
+    "start": "node -r ts-node/register --inspect  ./src/index.ts"
+  },
+  "packageManager": "yarn@3.1.0",
+  "devDependencies": {
+    "@types/formidable": "^1.2.4",
+    "@types/koa": "^2.0.47",
+    "@types/koa-graphql": "^0.8.5",
+    "@types/koa-mount": "^4.0.1",
+    "@types/koa-static": "^4.0.2",
+    "@types/koa__cors": "^3.0.3",
+    "@types/koa__router": "^8.0.8",
+    "@types/node": "^10.12.2",
+    "@types/sharp": "^0.29.2",
+    "@types/uuid": "^8.0.0",
+    "nodemon": "^1.18.9",
+    "ts-node": "^7.0.1",
+    "typescript": "^4.1.5"
+  },
+  "dependencies": {
+    "@koa/cors": "^3.1.0",
+    "@koa/router": "^10.1.1",
+    "apollo-server": "^3.4.0",
+    "class-validator": "^0.13.1",
+    "formidable": "^2.0.1",
+    "graphql-tools": "^8.2.0",
+    "koa": "^2.6.2",
+    "koa-body": "^4.0.4",
+    "koa-graphql": "^0.9.0",
+    "koa-mount": "^4.0.0",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "reflect-metadata": "^0.1.13",
+    "sharp": "^0.29.2",
+    "type-graphql": "^1.1.1",
+    "typedi": "^0.10.0",
+    "uuid": "^8.1.0"
+  }
+}

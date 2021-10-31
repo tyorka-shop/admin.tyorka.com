@@ -1,0 +1,6 @@
+#import '../../PictureEditor/fragment.gql'
+
+fragment PictureEditModal on Picture {
+  id
+  ...PictureEditor
+}

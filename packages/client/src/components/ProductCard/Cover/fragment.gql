@@ -1,0 +1,11 @@
+fragment ProductCardCover on Picture {
+  id
+  src
+  crop {
+    anchor {
+      x
+      y
+    }
+    factor
+  }
+}

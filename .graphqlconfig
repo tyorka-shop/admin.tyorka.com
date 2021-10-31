@@ -1,0 +1,9 @@
+{
+  "schemaPath": "./packages/client/schema.json",
+  "includes": ["**/*.gql"],
+  "extensions": {
+    "endpoints": {
+      "default": "http://localhost:3000/graphql"
+    }
+  }
+}

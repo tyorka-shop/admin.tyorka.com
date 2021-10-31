@@ -1,0 +1,11 @@
+#import './Cover/fragment.gql'
+
+fragment ProductCard on Product {
+  id
+  title
+  pictures {
+    id
+    ...ProductCardCover
+  }
+  coverId
+}

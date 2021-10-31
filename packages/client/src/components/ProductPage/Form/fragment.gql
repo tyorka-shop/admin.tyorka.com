@@ -1,0 +1,12 @@
+#import '../Pic/fragment.gql'
+fragment Form on Product {
+  id
+  title
+  showInGallery
+  showInShop
+  coverId
+  pictures{
+    id
+    ...Pic
+  }
+}

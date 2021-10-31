@@ -1,0 +1,12 @@
+mutation SaveCrop($id: ID!, $crop: CropInput!) {
+  saveCrop(id: $id, crop: $crop) {
+    id
+    crop {
+      anchor {
+        x
+        y
+      }
+      factor
+    }
+  }
+}

@@ -1,0 +1,32 @@
+$border-radius: 10px;
+
+.product-card {
+  position: relative;
+  color: rgba(0,0,0,0.5) !important;
+  text-decoration: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: $border-radius;
+  min-height: 15rem;
+
+  &__title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.2rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-clip: padding-box;
+    border-radius: $border-radius;
+  }
+
+}

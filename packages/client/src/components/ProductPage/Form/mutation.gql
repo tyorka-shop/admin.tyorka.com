@@ -1,0 +1,8 @@
+#import './fragment.gql'
+
+mutation SaveProduct($product: ProductInput!){
+  saveProduct(product: $product) {
+    id
+    ...Form
+  } 
+}

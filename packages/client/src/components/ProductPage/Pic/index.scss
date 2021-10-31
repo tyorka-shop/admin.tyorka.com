@@ -1,0 +1,68 @@
+.product-page-pic {
+  height: 20rem;
+  padding: 1rem;
+  position: relative;
+
+  img {
+    height: 100%;
+  }
+
+  &:hover > &__cover-btn {
+    visibility: visible;
+  }
+
+  &__remove {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    margin: 1.1rem;
+    padding: 0.2rem;
+    width: 1.7rem;
+    text-align: center;
+    vertical-align: baseline;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+
+  &__crop {
+    position: absolute;
+    top: 0;
+    right: 2rem;
+    z-index: 1;
+    margin: 1.1rem;
+    padding: 0.2rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    text-align: center;
+    vertical-align: baseline;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+
+
+  &__cover-btn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin: 1rem;
+    cursor: pointer;
+    text-align: center;
+    visibility: hidden;
+
+
+    &_is-cover {
+      color: black;
+      visibility: visible;
+    }
+  }
+}
