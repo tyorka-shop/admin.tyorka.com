@@ -31,10 +31,22 @@ export class Picture {
       src: filename,
       color,
       originalSize: size,
-      crop: {
-        anchor: { x: 0, y: 0 },
-        factor: 100,
-      },
+      crop: getCrop(size),
     })
+  }
+}
+
+const getCrop = (size: Size): Crop => {
+  if(size.width <= size.height || size.height === 0) {
+    return {
+      anchor: {x: 0, y: 0},
+      factor: 100
+    }
+  }
+
+  const ratio = size.width / size.height;
+  return {
+    anchor: {x: -(ratio - 1)/2, y: 0},
+    factor: ratio * 100
   }
 }

@@ -2,7 +2,7 @@
   "name": "client",
   "scripts": {
     "start": "gatsby develop",
-    "build": "webpack --config webpack.config.js",
+    "build": "gatsby build",
     "generate": "graphql-codegen"
   },
   "packageManager": "yarn@3.1.0",
