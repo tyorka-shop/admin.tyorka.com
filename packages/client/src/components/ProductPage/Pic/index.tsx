@@ -6,8 +6,7 @@ import { PicFragment } from "./fragment.types";
 import "./index.scss";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  isPicked: boolean;
-  children: PicFragment;
+  children: PicFragment | undefined;
   isCover: boolean;
   onCoverSelect: () => void;
   onRemove: () => void;
@@ -22,7 +21,6 @@ export const Pic: React.FC<Props> = ({
   onRemove,
   onCoverSelect,
   onCropClick,
-  isPicked,
   ...props
 }) => {
   if (!children) {
@@ -30,7 +28,7 @@ export const Pic: React.FC<Props> = ({
   }
   const src = useImage(children.src);
   return (
-    <div className={b({ visible: !isPicked })}>
+    <div className={b()}>
       <img src={src} {...props} draggable />
       <div
         onClick={onCoverSelect}

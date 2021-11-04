@@ -25,4 +25,10 @@ export class MutationsResolver {
     this.store.saveCrop(id, crop);
     return this.store.getPicture(id)
   }
+
+  @Mutation(() => [Product])
+  saveGalleryOrder(@Arg('list', () => [ID]) list: IDScalar[]): Product[] {
+    this.store.saveGalleryOrder(list);
+    return this.store.getGallery()
+  }
 }

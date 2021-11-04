@@ -1,0 +1,5 @@
+mutation SaveGalleryOrder($list: [ID!]!) {
+  saveGalleryOrder(list: $list) {
+    id
+  }
+}

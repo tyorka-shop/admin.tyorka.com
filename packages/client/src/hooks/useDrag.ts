@@ -2,7 +2,7 @@ import * as React from "react";
 
 export const useDrag = <T extends string>(
   list: T[],
-  onChange: (newList: T[]) => void
+  onChange?: (newList: T[]) => void
 ) => {
   const [picked, setPicked] = React.useState<string | undefined>();
   const [order, setOrder] = React.useState(list);
@@ -37,7 +37,7 @@ export const useDrag = <T extends string>(
   };
 
   const dragEnd = () => {
-    picked && onChange(order);
+    picked && onChange && onChange(order);
     setPicked(undefined);
   };
 

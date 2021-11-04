@@ -107,4 +107,11 @@ export class Store {
     pic.crop = crop;
     this.save(state);
   }
+
+  saveGalleryOrder(list: String[]) {
+    const state = this.get();
+
+    state.gallery = list;
+    this.save(state);
+  }
 }

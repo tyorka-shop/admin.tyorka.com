@@ -46,9 +46,8 @@ export const Pics: React.FC<Props> = ({
             onDragStart={dragStart}
             onDragEnd={dragEnd}
             onDragEnter={dragEnter}
-            isPicked={id === picked}
           >
-            {children.find(pic => pic.id === id)!}
+            {children.find(pic => pic.id === id)}
           </Pic>
         ))}
       </div>

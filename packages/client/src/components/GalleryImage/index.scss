@@ -1,0 +1,14 @@
+$border-radius: 10px;
+
+.gallery-image {
+  position: relative;
+  margin: .6rem .3rem;
+
+  &:first-child {
+    margin-top: 0;
+  }
+  &__img {
+    width: 100%;
+  }
+
+}
