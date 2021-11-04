@@ -1,19 +1,21 @@
 import React from "react";
 import { v4 as uuid } from "uuid";
-import { Crop } from "../../types/common";
-import * as query from './query.gql';
-import { ProductQuery as Query, ProductQueryVariables as Variables } from './query.types';
+import * as query from "./query.gql";
+import {
+  ProductQuery as Query,
+  ProductQueryVariables as Variables,
+} from "./query.types";
 import { useQuery } from "@apollo/client";
 import { Picture, State } from "../../types/gql";
 
-type Product = Query['product']
+type Product = Query["product"];
 
 export const useProduct = (id: string | undefined) => {
   const { data, loading } = useQuery<Query, Variables>(query, {
     variables: {
-      id: id!
+      id: id!,
     },
-    skip: !id
+    skip: !id,
   });
 
   const [product, setProduct] = React.useState<Product>(createNewProduct());
@@ -23,44 +25,46 @@ export const useProduct = (id: string | undefined) => {
   }, [data]);
 
   const addPic = (pic: Picture) => {
-    const newProduct: Product = {
-      ...product,
-      pictures: [...product.pictures, pic],
-    };
-    if (!newProduct.coverId) {
-      newProduct.coverId = pic.id;
-    }
-    setProduct(newProduct);
+    setProduct((previous) => {
+      const newProduct: Product = {
+        ...previous,
+        pictures: [...previous.pictures, pic],
+      };
+      if (!newProduct.coverId) {
+        newProduct.coverId = pic.id;
+      }
+      return newProduct;
+    });
   };
 
   const removePic = (id: string) => {
-    const newProduct: Product = {
-      ...product,
-      pictures: product.pictures.filter((pic) => pic.id !== id),
-    };
-    if (newProduct.coverId === id) {
-      newProduct.coverId = newProduct.pictures[0]?.id || undefined;
-    }
-    setProduct(newProduct);
+    setProduct((previous) => {
+      const newProduct: Product = {
+        ...previous,
+        pictures: previous.pictures.filter((pic) => pic.id !== id),
+      };
+      if (newProduct.coverId === id) {
+        newProduct.coverId = newProduct.pictures[0]?.id || undefined;
+      }
+      return newProduct;
+    });
   };
 
   const setCover = (id: string) => {
-    const newProduct: Product = {
-      ...product,
+    setProduct((previous) => ({
+      ...previous,
       coverId: id,
-    };
-    setProduct(newProduct);
+    }));
   };
 
-  const setCrop = (id: string, crop: Crop) => {
-    const pictures = product.pictures.map((pic) =>
-      pic.id === id ? { ...pic, crop } : pic
-    );
-    const newProduct: Product = {
-      ...product,
-      pictures,
-    };
-    setProduct(newProduct);
+  const reorderPics = (picIds: string[]) => {
+    setProduct((previous) => {
+      const newProduct: Product = {
+        ...previous,
+        pictures: picIds.map(id => previous.pictures.find(pic => pic.id === id)!),
+      };
+      return newProduct;
+    });
   };
 
   return {
@@ -69,7 +73,7 @@ export const useProduct = (id: string | undefined) => {
     addPic,
     removePic,
     setCover,
-    setCrop
+    reorderPics,
   };
 };
 
@@ -80,5 +84,5 @@ const createNewProduct = (): Product => ({
   title: "",
   showInGallery: false,
   showInShop: false,
-  coverId: undefined
+  coverId: undefined,
 });

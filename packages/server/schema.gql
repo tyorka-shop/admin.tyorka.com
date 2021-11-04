@@ -58,6 +58,7 @@ input ProductInput {
 }
 
 type Query {
+  gallery: [Product!]!
   picture(id: ID!): Picture!
   product(id: ID!): Product!
   products: [Product!]!

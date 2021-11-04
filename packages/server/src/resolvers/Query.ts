@@ -25,5 +25,10 @@ export class QueryResolver {
   @Query(() => Product)
   product(@Arg('id', () => ID) id: IDScalar): Product | undefined {
     return this.store.getProduct(id)
-  }  
+  }
+
+  @Query(() => [Product])
+  gallery(): Product[] {
+    return this.store.getGallery()
+  }
 }

@@ -17,7 +17,7 @@ export interface FormValues {
 }
 
 export const ProductPage: React.FC<Props> = ({ id }) => {
-  const { product, loading, addPic, removePic, setCover, setCrop } =
+  const { product, loading, addPic, removePic, setCover, reorderPics } =
     useProduct(id);
   const [pictureIdToEdit, setPictureToEdit] =
     React.useState<string | null>(null);
@@ -38,6 +38,7 @@ export const ProductPage: React.FC<Props> = ({ id }) => {
         onPictureRemove={removePic}
         onCoverSelect={setCover}
         onCropClick={(id: string) => setPictureToEdit(id)}
+        onReorderPics={reorderPics}
       />
       {pictureToEdit && (
         <PictureEditModal

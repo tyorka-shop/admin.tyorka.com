@@ -47,7 +47,7 @@ router.post("/", mw, async (ctx) => {
   if (!files) {
     throw new Error("File does not passed");
   }
-
+  console.log(files)
   const { name, path } = getSingleFile(files);
 
   if (!name) {

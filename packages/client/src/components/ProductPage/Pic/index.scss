@@ -2,12 +2,17 @@
   height: 20rem;
   padding: 1rem;
   position: relative;
+  // visibility: hidden;
 
   img {
     height: 100%;
   }
 
   &:hover > &__cover-btn {
+    visibility: visible;
+  }
+
+  &_visible {
     visibility: visible;
   }
 
