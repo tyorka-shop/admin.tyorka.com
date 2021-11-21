@@ -19,6 +19,7 @@ interface Props {
   onPictureRemove: (id: string) => void;
   onCoverSelect: (id: string) => void;
   onCropClick: (id: string) => void;
+  onReorderPics: (ids: string[]) => void
 }
 
 export interface FormValues {
@@ -33,6 +34,7 @@ export const ProductForm: React.FC<Props> = ({
   onPictureRemove,
   onCoverSelect,
   onCropClick,
+  onReorderPics
 }) => {
   const { onSubmit } = useSubmit(product);
 
@@ -63,6 +65,7 @@ export const ProductForm: React.FC<Props> = ({
               coverId={product.coverId}
               onCoverSelect={onCoverSelect}
               onCropClick={onCropClick}
+              onReorderPics={onReorderPics}
             >
               {product.pictures}
             </Pics>

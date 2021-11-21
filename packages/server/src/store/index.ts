@@ -43,6 +43,11 @@ export class Store {
 
   getProducts = (): Product[] => this.get().products;
 
+  getGallery = (): Product[] => {
+    const {products, gallery} = this.get();
+    return gallery.map(id => products.find(product => product.id === id)).filter(Boolean) as Product[]
+  }
+
   getProduct = (id: ID): Product | undefined =>
     this.getProducts().find((product) => product.id === id);
 
@@ -100,6 +105,13 @@ export class Store {
     }
 
     pic.crop = crop;
+    this.save(state);
+  }
+
+  saveGalleryOrder(list: String[]) {
+    const state = this.get();
+
+    state.gallery = list;
     this.save(state);
   }
 }

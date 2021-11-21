@@ -15,6 +15,7 @@ input CropInput {
 
 type Mutation {
   saveCrop(crop: CropInput!, id: ID!): Picture
+  saveGalleryOrder(list: [ID!]!): [Product!]!
   saveProduct(product: ProductInput!): Product
 }
 
@@ -58,6 +59,7 @@ input ProductInput {
 }
 
 type Query {
+  gallery: [Product!]!
   picture(id: ID!): Picture!
   product(id: ID!): Product!
   products: [Product!]!

@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "@reach/router";
 import { Navbar, NavbarProps, Nav } from "rsuite";
+import { NavLink } from './NavLink'
 
 export const NavBar: React.FC<NavbarProps> = (props) => {
 
@@ -9,10 +9,10 @@ export const NavBar: React.FC<NavbarProps> = (props) => {
       <Navbar.Brand as="div">Tyorka.com admin</Navbar.Brand>
       <Navbar>
         <Nav>
-          <Nav.Item to="/products/" as={Link}>
+          <Nav.Item to="/products/" as={NavLink}>
             Products
           </Nav.Item>
-          <Nav.Item as={Link} to="/gallery/">
+          <Nav.Item as={NavLink} to="/gallery/">
             Gallery
           </Nav.Item>
         </Nav>

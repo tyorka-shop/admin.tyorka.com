@@ -28,6 +28,7 @@ export type CropInput = {
 export type Mutation = {
   __typename: 'Mutation';
   saveCrop: Maybe<Picture>;
+  saveGalleryOrder: Array<Product>;
   saveProduct: Maybe<Product>;
 };
 
@@ -35,6 +36,11 @@ export type Mutation = {
 export type MutationSaveCropArgs = {
   crop: CropInput;
   id: Scalars['ID'];
+};
+
+
+export type MutationSaveGalleryOrderArgs = {
+  list: Array<Scalars['ID']>;
 };
 
 
@@ -86,6 +92,7 @@ export type ProductInput = {
 
 export type Query = {
   __typename: 'Query';
+  gallery: Array<Product>;
   picture: Picture;
   product: Product;
   products: Array<Product>;
@@ -113,6 +120,18 @@ export enum State {
   Draft = 'DRAFT',
   Published = 'PUBLISHED'
 }
+
+export type SaveGalleryOrderMutationVariables = Exact<{
+  list: Array<Scalars['ID']> | Scalars['ID'];
+}>;
+
+
+export type SaveGalleryOrderMutation = { __typename: 'Mutation', saveGalleryOrder: Array<{ __typename: 'Product', id: string }> };
+
+export type GalleryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GalleryQuery = { __typename: 'Query', gallery: Array<{ __typename: 'Product', id: string, cover: { __typename: 'Picture', id: string, src: string } | null }> };
 
 export type PictureEditorFragment = { __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } }, originalSize: { __typename: 'Size', width: number, height: number } };
 
@@ -219,6 +238,77 @@ export const PictureEditModalFragmentDoc = gql`
   ...PictureEditor
 }
     ${PictureEditorFragmentDoc}`;
+export const SaveGalleryOrderDocument = gql`
+    mutation SaveGalleryOrder($list: [ID!]!) {
+  saveGalleryOrder(list: $list) {
+    id
+  }
+}
+    `;
+export type SaveGalleryOrderMutationFn = Apollo.MutationFunction<SaveGalleryOrderMutation, SaveGalleryOrderMutationVariables>;
+
+/**
+ * __useSaveGalleryOrderMutation__
+ *
+ * To run a mutation, you first call `useSaveGalleryOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveGalleryOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveGalleryOrderMutation, { data, loading, error }] = useSaveGalleryOrderMutation({
+ *   variables: {
+ *      list: // value for 'list'
+ *   },
+ * });
+ */
+export function useSaveGalleryOrderMutation(baseOptions?: Apollo.MutationHookOptions<SaveGalleryOrderMutation, SaveGalleryOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveGalleryOrderMutation, SaveGalleryOrderMutationVariables>(SaveGalleryOrderDocument, options);
+      }
+export type SaveGalleryOrderMutationHookResult = ReturnType<typeof useSaveGalleryOrderMutation>;
+export type SaveGalleryOrderMutationResult = Apollo.MutationResult<SaveGalleryOrderMutation>;
+export type SaveGalleryOrderMutationOptions = Apollo.BaseMutationOptions<SaveGalleryOrderMutation, SaveGalleryOrderMutationVariables>;
+export const GalleryDocument = gql`
+    query Gallery {
+  gallery {
+    id
+    cover {
+      id
+      src
+    }
+  }
+}
+    `;
+
+/**
+ * __useGalleryQuery__
+ *
+ * To run a query within a React component, call `useGalleryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGalleryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGalleryQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGalleryQuery(baseOptions?: Apollo.QueryHookOptions<GalleryQuery, GalleryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GalleryQuery, GalleryQueryVariables>(GalleryDocument, options);
+      }
+export function useGalleryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GalleryQuery, GalleryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GalleryQuery, GalleryQueryVariables>(GalleryDocument, options);
+        }
+export type GalleryQueryHookResult = ReturnType<typeof useGalleryQuery>;
+export type GalleryLazyQueryHookResult = ReturnType<typeof useGalleryLazyQuery>;
+export type GalleryQueryResult = Apollo.QueryResult<GalleryQuery, GalleryQueryVariables>;
 export const SaveProductDocument = gql`
     mutation SaveProduct($product: ProductInput!) {
   saveProduct(product: $product) {
