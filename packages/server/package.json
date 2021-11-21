@@ -1,7 +1,8 @@
 {
   "name": "server",
   "scripts": {
-    "start": "node -r ts-node/register --inspect  ./src/index.ts"
+    "start": "node -r ts-node/register --inspect  ./src/index.ts",
+    "build": "tsc"
   },
   "packageManager": "yarn@3.1.0",
   "devDependencies": {
