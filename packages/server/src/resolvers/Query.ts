@@ -4,6 +4,8 @@ import { ID as IDScalar } from '../types';
 import { Store } from '../store';
 import { Picture } from '../types/Picture';
 import { Product } from '../types/Product';
+import { GalleryItem } from '../types/GalleryItem';
+import { ShopItem } from '../types/ShopItem';
 
 @Service()
 @Resolver()
@@ -27,8 +29,13 @@ export class QueryResolver {
     return this.store.getProduct(id)
   }
 
-  @Query(() => [Product])
-  gallery(): Product[] {
+  @Query(() => [GalleryItem])
+  gallery(): GalleryItem[] {
     return this.store.getGallery()
+  }
+
+  @Query(() => [ShopItem])
+  shop(): ShopItem[] {
+    return this.store.getShop()
   }
 }

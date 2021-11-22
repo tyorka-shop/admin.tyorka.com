@@ -5,6 +5,8 @@ fragment Form on Product {
   showInGallery
   showInShop
   coverId
+  price
+  description
   pictures{
     id
     ...Pic

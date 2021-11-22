@@ -22,6 +22,8 @@ export const useSubmit = (product: FormFragment) => {
           coverId: product.coverId || undefined,
           pictures: product.pictures.map((pic) => pic.id),
           state: State.Draft,
+          price: +values.price,
+          description: values.description
         },
       },
       refetchQueries: [{query: productsQuery}]

@@ -5,4 +5,4 @@ export type ProductQueryVariables = Types.Exact<{
 }>;
 
 
-export type ProductQuery = { __typename?: 'Query', product: { __typename?: 'Product', id: string, title?: string | null | undefined, state: Types.State, showInGallery: boolean, showInShop: boolean, coverId?: string | null | undefined, pictures: Array<{ __typename?: 'Picture', id: string, src: string, crop: { __typename?: 'Crop', factor: number, anchor: { __typename?: 'Point', x: number, y: number } }, originalSize: { __typename?: 'Size', width: number, height: number } }> } };
+export type ProductQuery = { __typename?: 'Query', product: { __typename?: 'Product', id: string, title?: string | null | undefined, state: Types.State, showInGallery: boolean, showInShop: boolean, coverId?: string | null | undefined, price?: number | null | undefined, description?: string | null | undefined, pictures: Array<{ __typename?: 'Picture', id: string, src: string, crop: { __typename?: 'Crop', factor: number, anchor: { __typename?: 'Point', x: number, y: number } }, originalSize: { __typename?: 'Size', width: number, height: number } }> } };

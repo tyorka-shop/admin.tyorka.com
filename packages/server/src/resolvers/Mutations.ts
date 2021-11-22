@@ -5,6 +5,7 @@ import { Crop, CropInput } from '../types/Crop';
 import { Product, ProductInput } from '../types/Product';
 import { ID as IDScalar} from '../types'
 import { Picture } from '../types/Picture';
+import { GalleryItem } from '../types/GalleryItem';
 
 @Service()
 @Resolver()
@@ -26,8 +27,8 @@ export class MutationsResolver {
     return this.store.getPicture(id)
   }
 
-  @Mutation(() => [Product])
-  saveGalleryOrder(@Arg('list', () => [ID]) list: IDScalar[]): Product[] {
+  @Mutation(() => [GalleryItem])
+  saveGalleryOrder(@Arg('list', () => [ID]) list: IDScalar[]): GalleryItem[] {
     this.store.saveGalleryOrder(list);
     return this.store.getGallery()
   }

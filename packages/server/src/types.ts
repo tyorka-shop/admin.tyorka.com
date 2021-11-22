@@ -35,6 +35,7 @@ export interface Product {
   price?: number
   showInGallery: boolean
   showInShop: boolean
+  description?: string
 }
 
 export interface Schema {

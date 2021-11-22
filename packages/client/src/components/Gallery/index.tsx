@@ -27,10 +27,10 @@ export const Gallery: React.FC<Props> = () => {
       <section className={b()}>
         {order
           .map((id) => gallery.find((pic) => pic.id === id)!)
-          .map(({ id, cover }) => (
+          .map(({ id, src }) => (
             <GalleryImage
               key={id}
-              src={cover?.src}
+              src={src}
               data-id={id}
               onDragEnter={dragEnter}
               onDragStart={dragStart}

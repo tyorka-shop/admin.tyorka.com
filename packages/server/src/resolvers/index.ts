@@ -7,10 +7,11 @@ import { Container } from "typedi";
 import { QueryResolver } from "./Query";
 import { MutationsResolver } from "./Mutations";
 import { ProductResolver } from "./Product";
+import { ShopItemResolver } from "./ShopItem";
 
 export const bootstrap = async () => {
   const { typeDefs, resolvers } = await buildTypeDefsAndResolvers({
-    resolvers: [QueryResolver, MutationsResolver, ProductResolver],
+    resolvers: [QueryResolver, MutationsResolver, ProductResolver, ShopItemResolver],
     container: Container,
     emitSchemaFile: true
   });

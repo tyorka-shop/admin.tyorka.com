@@ -1,17 +1,15 @@
 import * as React from "react";
-import * as b_ from "b_";
 import { Form, Button, ButtonToolbar } from "rsuite";
 import { Form as RForm } from "react-final-form";
 import { Picture } from "../../../types";
 import { Input } from "../../Input";
+import { Textarea } from "../../Textarea";
 import { Checkbox } from "../../Checkbox";
 import { Pics } from "../Pics";
 import { useSubmit } from "./hooks";
 import { FormFragment } from './fragment.types'
 
 import "./index.scss";
-
-const b = b_.with("product-page-form");
 
 interface Props {
   product: FormFragment;
@@ -24,8 +22,10 @@ interface Props {
 
 export interface FormValues {
   title: string;
+  price: number
   showInGallery: boolean;
   showInShop: boolean;
+  description: string
 }
 
 export const ProductForm: React.FC<Props> = ({
@@ -44,6 +44,8 @@ export const ProductForm: React.FC<Props> = ({
         title: product.title || undefined,
         showInGallery: product.showInGallery || false,
         showInShop: product.showInShop || false,
+        price: product.price || undefined,
+        description: product.description || undefined
       }}
       onSubmit={(values) => onSubmit(values)}
       render={({ handleSubmit }) => (
@@ -51,6 +53,14 @@ export const ProductForm: React.FC<Props> = ({
           <Form.Group>
             <Form.ControlLabel>Title</Form.ControlLabel>
             <Input name="title" />
+          </Form.Group>
+          <Form.Group>
+            <Form.ControlLabel>Price</Form.ControlLabel>
+            <Input name="price" />
+          </Form.Group>
+          <Form.Group>
+            <Form.ControlLabel>Description</Form.ControlLabel>
+            <Textarea name="description" />
           </Form.Group>
           <Form.Group>
             <Checkbox name="showInGallery" title="Show in gallery" />

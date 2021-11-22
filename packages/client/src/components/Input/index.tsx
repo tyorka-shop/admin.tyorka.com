@@ -1,11 +1,11 @@
 import * as React from "react";
-import { Form } from "rsuite";
+import { Form, FormControlProps } from "rsuite";
 import { Field } from "react-final-form";
 
-interface Props {
+interface Props extends FormControlProps{
   name: string;
 }
 
-export const Input: React.FC<Props> = ({ name }) => (
-  <Field name={name}>{(props) => <Form.Control {...props.input} />}</Field>
+export const Input: React.FC<Props> = ({ name, children, ...outerProps }) => (
+  <Field name={name}>{({input: {children, ...input}}) => <Form.Control {...input} {...outerProps}  />}</Field>
 );

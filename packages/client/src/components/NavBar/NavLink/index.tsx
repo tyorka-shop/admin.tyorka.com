@@ -6,11 +6,9 @@ export const NavLink: React.FC<LinkProps<{}>> = (props) => {
     // @ts-ignore
     <Link
       {...props}
-      getProps={({ isCurrent }) => {
-        console.log(isCurrent)
-        return ({
+      getProps={({ isCurrent }) => ({
         className: `${props.className || ""}${isCurrent ? " active" : ""}`,
-      })}}
+      })}
     />
   );
 };

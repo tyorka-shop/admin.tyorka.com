@@ -13,9 +13,19 @@ input CropInput {
   factor: Float!
 }
 
+type GalleryItem {
+  color: String!
+  height: Float!
+
+  """id of product"""
+  id: ID!
+  src: String!
+  width: Float!
+}
+
 type Mutation {
   saveCrop(crop: CropInput!, id: ID!): Picture
-  saveGalleryOrder(list: [ID!]!): [Product!]!
+  saveGalleryOrder(list: [ID!]!): [GalleryItem!]!
   saveProduct(product: ProductInput!): Product
 }
 
@@ -38,10 +48,12 @@ input PointInput {
 }
 
 type Product {
-  cover: Picture
+  cover: Picture!
   coverId: ID
+  description: String
   id: ID!
   pictures: [Picture!]!
+  price: Float
   showInGallery: Boolean!
   showInShop: Boolean!
   state: State!
@@ -50,8 +62,10 @@ type Product {
 
 input ProductInput {
   coverId: ID
+  description: String
   id: ID!
   pictures: [ID!]!
+  price: Float
   showInGallery: Boolean!
   showInShop: Boolean!
   state: State!
@@ -59,10 +73,20 @@ input ProductInput {
 }
 
 type Query {
-  gallery: [Product!]!
+  gallery: [GalleryItem!]!
   picture(id: ID!): Picture!
   product(id: ID!): Product!
   products: [Product!]!
+  shop: [ShopItem!]!
+}
+
+type ShopItem {
+  cover: Picture!
+  description: String
+  id: ID!
+  pictures: [Picture!]!
+  price: Float!
+  title: String!
 }
 
 type Size {

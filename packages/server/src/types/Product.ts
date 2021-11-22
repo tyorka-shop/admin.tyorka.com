@@ -1,4 +1,4 @@
-import { Field, ID, InputType, ObjectType } from "type-graphql";
+import { Field, Float, ID, InputType, ObjectType } from "type-graphql";
 import { ID as IDScalar } from "../types";
 import { State } from "./State";
 
@@ -21,6 +21,12 @@ export class Product {
   
   @Field(() => Boolean)
   showInShop: boolean
+
+  @Field(() => Float, {nullable: true})
+  price?: number
+
+  @Field(() => String, {nullable: true})
+  description?: string 
 }
 
 @InputType()
@@ -45,4 +51,10 @@ export class ProductInput {
   
   @Field(() => Boolean)
   showInShop: boolean
+
+  @Field(() => Float, {nullable: true})
+  price?: number 
+
+  @Field(() => String, {nullable: true})
+  description?: string 
 }

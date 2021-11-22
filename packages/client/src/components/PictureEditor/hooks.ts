@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Crop } from '../../types/common'
+import { Crop } from "../../types/common";
 
 interface Size {
-  width: number
-  height: number
+  width: number;
+  height: number;
 }
 
 interface Point {
@@ -12,7 +12,7 @@ interface Point {
 }
 
 export const useEditor = (
-  pictureSize: Size,
+  originalSize: Size,
   crop: Crop,
   onSave: (crop: Crop) => void
 ) => {
@@ -29,7 +29,7 @@ export const useEditor = (
     x: (crop.anchor.x || 0) * layoutSize.width,
     y: (crop.anchor.y || 0) * layoutSize.height,
   });
-  const [size, setSize] = React.useState(crop.factor || 100);
+  const [factor, setFactor] = React.useState(crop.factor || 100);
   const [isMoving, toggleMoving] = React.useState(false);
 
   const move = (p: Point) => {
@@ -48,7 +48,7 @@ export const useEditor = (
         x: p.x / layoutSize.width,
         y: p.y / layoutSize.height,
       },
-      factor: size,
+      factor,
     });
   };
 
@@ -86,15 +86,15 @@ export const useEditor = (
   const onMouseWheel = (e: WheelEvent) => {
     e.preventDefault();
     const minSize = getMinSize() * 100;
-    const ds = e.deltaY < 0 ? 1 : -1;
-    const newSize = size + ds;
+    const ds = (e.deltaY < 0 ? 1 : -1) * 5;
+    const newSize = factor + ds;
     if (newSize < minSize) {
-      setSize(minSize);
+      setFactor(minSize);
       return;
     }
     const s = newSize / 100;
     const r = (s + ds / 100) / s;
-    setSize(newSize);
+    setFactor(newSize);
     commit({
       x: getBounceX(
         (positionPoint.x - layoutSize.width / 2) * r + layoutSize.width / 2,
@@ -110,15 +110,15 @@ export const useEditor = (
   const getMinSize = () => {
     const ratio = layoutSize.width / layoutSize.height;
     const pratio =
-      pictureSize.width && pictureSize.height
-        ? pictureSize.width / pictureSize.height
+      originalSize.width && originalSize.height
+        ? originalSize.width / originalSize.height
         : 1;
     return Math.max(1, pratio / ratio);
   };
 
   const getTouchPositionX = (dx: number) => {
     const x = positionPoint.x + dx;
-    const right = (-layoutSize.width * (size - 100)) / 100;
+    const right = (-layoutSize.width * (factor - 100)) / 100;
     if (x > 0) return -positionPoint.x;
     if (x < right) return right - positionPoint.x;
     return dx;
@@ -127,10 +127,10 @@ export const useEditor = (
   const getTouchPositionY = (dy: number) => {
     const y = positionPoint.y + dy;
     const bottom =
-      pictureSize.width && pictureSize.height
+      originalSize.width && originalSize.height
         ? layoutSize.height -
-          (((pictureSize.height * layoutSize.width) / pictureSize.width) *
-            size) /
+          (((originalSize.height * layoutSize.width) / originalSize.width) *
+            factor) /
             100
         : 0;
     if (y > 0) return -positionPoint.y;
@@ -147,9 +147,9 @@ export const useEditor = (
 
   const getBounceY = (y: number, size: number) => {
     const bottom =
-      pictureSize.width && pictureSize.height
+      originalSize.width && originalSize.height
         ? layoutSize.height -
-          (((pictureSize.height * layoutSize.width) / pictureSize.width) *
+          (((originalSize.height * layoutSize.width) / originalSize.width) *
             size) /
             100
         : 0;
@@ -207,11 +207,39 @@ export const useEditor = (
     };
   });
 
+  const backgroundPosition = calcPosition(
+    {
+      anchor: {
+        x: (positionPoint.x + touchPoint.x) / layoutSize.width,
+        y: (positionPoint.y + touchPoint.y) / layoutSize.height,
+      },
+      factor,
+    },
+    originalSize
+  );
+
   return {
     container,
-    positionPoint,
     isMoving,
-    size,
-    touchPoint,
+    backgroundPosition,
   };
 };
+
+function calcPosition(
+  { anchor: { x, y }, factor }: Crop,
+  { width, height }: Size
+) {
+  const r = width / height;
+
+  const f = factor / 100;
+
+  return {
+    backgroundPositionX: `${div(-x, f - 1) * 100}%`,
+    backgroundPositionY: `${div(-y, f / r - 1) * 100}%`,
+    backgroundSize: `${factor}%`,
+  };
+}
+
+const div = (n: number, d: number) => (d === 0 ? 0 : clamp(n / d));
+
+const clamp = (x: number) => Math.max(Math.min(x, 1), 0);

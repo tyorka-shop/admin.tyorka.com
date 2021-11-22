@@ -25,6 +25,16 @@ export type CropInput = {
   factor: Scalars['Float'];
 };
 
+export type GalleryItem = {
+  __typename: 'GalleryItem';
+  color: Scalars['String'];
+  height: Scalars['Float'];
+  /** id of product */
+  id: Scalars['ID'];
+  src: Scalars['String'];
+  width: Scalars['Float'];
+};
+
 export type Mutation = {
   __typename: 'Mutation';
   saveCrop: Maybe<Picture>;
@@ -72,8 +82,10 @@ export type Product = {
   __typename: 'Product';
   cover: Maybe<Picture>;
   coverId: Maybe<Scalars['ID']>;
+  description: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   pictures: Array<Picture>;
+  price: Maybe<Scalars['Float']>;
   showInGallery: Scalars['Boolean'];
   showInShop: Scalars['Boolean'];
   state: State;
@@ -82,8 +94,10 @@ export type Product = {
 
 export type ProductInput = {
   coverId: Maybe<Scalars['ID']>;
+  description: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   pictures: Array<Scalars['ID']>;
+  price: Maybe<Scalars['Float']>;
   showInGallery: Scalars['Boolean'];
   showInShop: Scalars['Boolean'];
   state: State;
@@ -92,7 +106,7 @@ export type ProductInput = {
 
 export type Query = {
   __typename: 'Query';
-  gallery: Array<Product>;
+  gallery: Array<GalleryItem>;
   picture: Picture;
   product: Product;
   products: Array<Product>;
@@ -131,7 +145,7 @@ export type SaveGalleryOrderMutation = { __typename: 'Mutation', saveGalleryOrde
 export type GalleryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GalleryQuery = { __typename: 'Query', gallery: Array<{ __typename: 'Product', id: string, cover: { __typename: 'Picture', id: string, src: string } | null }> };
+export type GalleryQuery = { __typename: 'Query', gallery: Array<{ __typename: 'GalleryItem', id: string, src: string }> };
 
 export type PictureEditorFragment = { __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } }, originalSize: { __typename: 'Size', width: number, height: number } };
 
@@ -139,14 +153,14 @@ export type ProductCardCoverFragment = { __typename: 'Picture', id: string, src:
 
 export type ProductCardFragment = { __typename: 'Product', id: string, title: string | null, coverId: string | null, pictures: Array<{ __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } } }> };
 
-export type FormFragment = { __typename: 'Product', id: string, title: string | null, showInGallery: boolean, showInShop: boolean, coverId: string | null, pictures: Array<{ __typename: 'Picture', id: string, src: string }> };
+export type FormFragment = { __typename: 'Product', id: string, title: string | null, showInGallery: boolean, showInShop: boolean, coverId: string | null, price: number | null, description: string | null, pictures: Array<{ __typename: 'Picture', id: string, src: string }> };
 
 export type SaveProductMutationVariables = Exact<{
   product: ProductInput;
 }>;
 
 
-export type SaveProductMutation = { __typename: 'Mutation', saveProduct: { __typename: 'Product', id: string, title: string | null, showInGallery: boolean, showInShop: boolean, coverId: string | null, pictures: Array<{ __typename: 'Picture', id: string, src: string }> } | null };
+export type SaveProductMutation = { __typename: 'Mutation', saveProduct: { __typename: 'Product', id: string, title: string | null, showInGallery: boolean, showInShop: boolean, coverId: string | null, price: number | null, description: string | null, pictures: Array<{ __typename: 'Picture', id: string, src: string }> } | null };
 
 export type PicFragment = { __typename: 'Picture', id: string, src: string };
 
@@ -165,7 +179,7 @@ export type ProductQueryVariables = Exact<{
 }>;
 
 
-export type ProductQuery = { __typename: 'Query', product: { __typename: 'Product', id: string, title: string | null, state: State, showInGallery: boolean, showInShop: boolean, coverId: string | null, pictures: Array<{ __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } }, originalSize: { __typename: 'Size', width: number, height: number } }> } };
+export type ProductQuery = { __typename: 'Query', product: { __typename: 'Product', id: string, title: string | null, state: State, showInGallery: boolean, showInShop: boolean, coverId: string | null, price: number | null, description: string | null, pictures: Array<{ __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } }, originalSize: { __typename: 'Size', width: number, height: number } }> } };
 
 export type ProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -209,6 +223,8 @@ export const FormFragmentDoc = gql`
   showInGallery
   showInShop
   coverId
+  price
+  description
   pictures {
     id
     ...Pic
@@ -275,10 +291,7 @@ export const GalleryDocument = gql`
     query Gallery {
   gallery {
     id
-    cover {
-      id
-      src
-    }
+    src
   }
 }
     `;
