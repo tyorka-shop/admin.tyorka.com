@@ -4,6 +4,7 @@ import serve from "koa-static";
 import mount from "koa-mount";
 import cors from "@koa/cors";
 import { router as uploadRouter } from "./routes/upload";
+import { router as loginRouter } from "./routes/login";
 import { root } from "./store";
 import { bootstrap } from "./resolvers";
 
@@ -38,6 +39,7 @@ app.on("error", (err, ctx) => {
 app.use(mount("/static", serve(root)));
 
 app.use(uploadRouter.routes());
+app.use(loginRouter.routes());
 
 const main = async () => {
   const mw = await bootstrap();

@@ -3417,6 +3417,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/koa-bodyparser@npm:^4.3.4":
+  version: 4.3.4
+  resolution: "@types/koa-bodyparser@npm:4.3.4"
+  dependencies:
+    "@types/koa": "*"
+  checksum: b62b1425399df5b9052b847e595ee52ed9f0f00bd6cd0f2fce58c182af4373c18bdc19476b4e3033f5b79602e059b1278e841b51ba7107b8b45f63bc6a35375a
+  languageName: node
+  linkType: hard
+
 "@types/koa-compose@npm:*":
   version: 3.2.5
   resolution: "@types/koa-compose@npm:3.2.5"
@@ -17053,6 +17062,7 @@ __metadata:
     "@koa/router": ^10.1.1
     "@types/formidable": ^1.2.4
     "@types/koa": ^2.0.47
+    "@types/koa-bodyparser": ^4.3.4
     "@types/koa-graphql": ^0.8.5
     "@types/koa-mount": ^4.0.1
     "@types/koa-static": ^4.0.2

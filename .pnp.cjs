@@ -5578,6 +5578,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["@types/koa-bodyparser", [
+        ["npm:4.3.4", {
+          "packageLocation": "./.yarn/cache/@types-koa-bodyparser-npm-4.3.4-7e9298ffee-b62b142539.zip/node_modules/@types/koa-bodyparser/",
+          "packageDependencies": [
+            ["@types/koa-bodyparser", "npm:4.3.4"],
+            ["@types/koa", "npm:2.13.4"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["@types/koa-compose", [
         ["npm:3.2.5", {
           "packageLocation": "./.yarn/cache/@types-koa-compose-npm-3.2.5-b9ab25d904-5d1147c4b0.zip/node_modules/@types/koa-compose/",
@@ -22195,6 +22205,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@koa/router", "npm:10.1.1"],
             ["@types/formidable", "npm:1.2.4"],
             ["@types/koa", "npm:2.13.4"],
+            ["@types/koa-bodyparser", "npm:4.3.4"],
             ["@types/koa-graphql", "npm:0.8.5"],
             ["@types/koa-mount", "npm:4.0.1"],
             ["@types/koa-static", "npm:4.0.2"],
