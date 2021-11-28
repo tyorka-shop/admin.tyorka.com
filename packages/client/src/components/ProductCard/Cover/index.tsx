@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as b_ from "b_";
+import b_ from "b_";
 import { useRect } from './hooks'
 import { ProductCardCoverFragment } from './fragment.types'
 import { useImage } from "../../../hooks/useImage";

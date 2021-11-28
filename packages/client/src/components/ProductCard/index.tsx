@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "@reach/router";
-import * as b_ from "b_";
+import b_ from "b_";
 import { Cover } from "./Cover";
 import { ProductCardFragment } from './fragment.types'
 

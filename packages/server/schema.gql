@@ -78,6 +78,7 @@ type Query {
   product(id: ID!): Product!
   products: [Product!]!
   shop: [ShopItem!]!
+  user: User!
 }
 
 type ShopItem {
@@ -99,4 +100,8 @@ enum State {
   ARCHIVED
   DRAFT
   PUBLISHED
+}
+
+type User {
+  email: String!
 }

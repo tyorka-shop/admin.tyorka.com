@@ -3,15 +3,14 @@ import { ApolloProvider } from "@apollo/client";
 import { Root } from "./components/Root";
 import { createApolloClient } from "./apollo";
 import { Config } from "./types/common";
-import config from "../configs/main.json";
-
+import config from "../config.json";
 
 interface Ctx {
   config: Config;
 }
 
 const ctx = {
-  config: config as Config,
+  config,
 };
 
 export const Context = React.createContext<Ctx>(ctx);

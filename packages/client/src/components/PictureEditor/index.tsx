@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as b_ from "b_";
+import b_ from "b_";
 import { Grid } from "../Grid";
 import { Crop, Size } from "../../types/common";
 import { useEditor } from "./hooks";

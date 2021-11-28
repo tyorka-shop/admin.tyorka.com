@@ -38,7 +38,7 @@ export type GalleryItem = {
 export type Mutation = {
   __typename: 'Mutation';
   saveCrop: Maybe<Picture>;
-  saveGalleryOrder: Array<Product>;
+  saveGalleryOrder: Array<GalleryItem>;
   saveProduct: Maybe<Product>;
 };
 
@@ -80,7 +80,7 @@ export type PointInput = {
 
 export type Product = {
   __typename: 'Product';
-  cover: Maybe<Picture>;
+  cover: Picture;
   coverId: Maybe<Scalars['ID']>;
   description: Maybe<Scalars['String']>;
   id: Scalars['ID'];
@@ -110,6 +110,8 @@ export type Query = {
   picture: Picture;
   product: Product;
   products: Array<Product>;
+  shop: Array<ShopItem>;
+  user: User;
 };
 
 
@@ -120,6 +122,16 @@ export type QueryPictureArgs = {
 
 export type QueryProductArgs = {
   id: Scalars['ID'];
+};
+
+export type ShopItem = {
+  __typename: 'ShopItem';
+  cover: Picture;
+  description: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  pictures: Array<Picture>;
+  price: Scalars['Float'];
+  title: Scalars['String'];
 };
 
 export type Size = {
@@ -135,12 +147,17 @@ export enum State {
   Published = 'PUBLISHED'
 }
 
+export type User = {
+  __typename: 'User';
+  email: Scalars['String'];
+};
+
 export type SaveGalleryOrderMutationVariables = Exact<{
   list: Array<Scalars['ID']> | Scalars['ID'];
 }>;
 
 
-export type SaveGalleryOrderMutation = { __typename: 'Mutation', saveGalleryOrder: Array<{ __typename: 'Product', id: string }> };
+export type SaveGalleryOrderMutation = { __typename: 'Mutation', saveGalleryOrder: Array<{ __typename: 'GalleryItem', id: string }> };
 
 export type GalleryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -185,6 +202,11 @@ export type ProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ProductsQuery = { __typename: 'Query', products: Array<{ __typename: 'Product', id: string, title: string | null, coverId: string | null, pictures: Array<{ __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } } }> }> };
+
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeQuery = { __typename: 'Query', user: { __typename: 'User', email: string } };
 
 export const ProductCardCoverFragmentDoc = gql`
     fragment ProductCardCover on Picture {
@@ -475,3 +497,37 @@ export function useProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<P
 export type ProductsQueryHookResult = ReturnType<typeof useProductsQuery>;
 export type ProductsLazyQueryHookResult = ReturnType<typeof useProductsLazyQuery>;
 export type ProductsQueryResult = Apollo.QueryResult<ProductsQuery, ProductsQueryVariables>;
+export const MeDocument = gql`
+    query Me {
+  user {
+    email
+  }
+}
+    `;
+
+/**
+ * __useMeQuery__
+ *
+ * To run a query within a React component, call `useMeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMeQuery(baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+      }
+export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+        }
+export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
+export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
+export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;

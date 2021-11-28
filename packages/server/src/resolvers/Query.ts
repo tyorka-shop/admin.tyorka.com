@@ -1,4 +1,4 @@
-import { Arg, Query, Resolver, ID } from 'type-graphql'
+import { Arg, Query, Resolver, ID, Ctx } from 'type-graphql'
 import { Inject, Service } from 'typedi';
 import { ID as IDScalar } from '../types';
 import { Store } from '../store';
@@ -6,6 +6,8 @@ import { Picture } from '../types/Picture';
 import { Product } from '../types/Product';
 import { GalleryItem } from '../types/GalleryItem';
 import { ShopItem } from '../types/ShopItem';
+import { User } from '../types/User'
+import { Context } from '../types/Context';
 
 @Service()
 @Resolver()
@@ -37,5 +39,12 @@ export class QueryResolver {
   @Query(() => [ShopItem])
   shop(): ShopItem[] {
     return this.store.getShop()
+  }
+
+  @Query(() => User) 
+  user(@Ctx() ctx: Context): User {
+    return {
+      email: ctx.email
+    }
   }
 }

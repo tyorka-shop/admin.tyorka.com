@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as b_ from "b_";
+import b_ from "b_";
 import { Loader } from "rsuite";
 import { RouteComponentProps } from "@reach/router";
 import { useProducts } from "./hooks";

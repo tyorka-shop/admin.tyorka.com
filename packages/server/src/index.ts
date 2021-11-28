@@ -1,14 +1,13 @@
-import "reflect-metadata"
+import "reflect-metadata";
 import Koa from "koa";
 import serve from "koa-static";
 import mount from "koa-mount";
+import { Container } from "typedi";
 import cors from "@koa/cors";
+import { Config, setupConfig } from "./config";
 import { router as uploadRouter } from "./routes/upload";
 import { router as loginRouter } from "./routes/login";
-import { root } from "./store";
 import { bootstrap } from "./resolvers";
-
-export const config = require("./config.json");
 
 const app = new Koa();
 
@@ -36,15 +35,19 @@ app.on("error", (err, ctx) => {
   console.error(err, ctx);
 });
 
-app.use(mount("/static", serve(root)));
 
 app.use(uploadRouter.routes());
 app.use(loginRouter.routes());
 
 const main = async () => {
+  await setupConfig()
+  const { imagesFolder } = Container.get<Config>("config");
+  
+  app.use(mount("/static/images", serve(imagesFolder)));
+  
   const mw = await bootstrap();
   app.use(mount("/graphql", mw));
-  
+
   app.listen(3000);
   console.log("listening on port 3000");
 };

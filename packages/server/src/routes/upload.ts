@@ -5,10 +5,10 @@ import { extname, resolve } from "path";
 import Router from "@koa/router";
 import koaBody from "koa-body";
 import type { Files, File } from "formidable";
-import { config } from "..";
 import { Container } from 'typedi'
 import { getSize, resize } from "../image-processing";
 import { Store } from "../store";
+import { Config } from "../config";
 
 export const router = new Router({
   prefix: "/upload",
@@ -35,6 +35,7 @@ const storeFile = async (name: string, path: string) => {
   const hash = createHash("md5");
   hash.update(content);
   const newFilename = `${hash.digest("hex")}${extname(name)}`;
+  const config = Container.get<Config>('config');
   const newPath = resolve(config.imagesFolder, newFilename);
 
   await fs.writeFile(newPath, content);
@@ -54,6 +55,8 @@ router.post("/", mw, async (ctx) => {
   }
 
   const filename = await storeFile(name, path);
+
+  const config = Container.get<Config>('config');
 
   const fullPathname = resolve(config.imagesFolder, filename);
 

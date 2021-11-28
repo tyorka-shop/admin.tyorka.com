@@ -1,5 +1,5 @@
 import React from "react";
-import * as b_ from "b_";
+import b_ from "b_";
 import './index.scss';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {

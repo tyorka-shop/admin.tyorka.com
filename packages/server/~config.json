@@ -1,0 +1,14 @@
+{
+  "storeFolder": "",
+  "imagesFolder": "",
+  "jwt": {
+    "private_key_filename": "",
+    "public_key_filename": "",
+    "token_lifespan": 86400
+  },
+  "google_sign_in_button": {
+    "client_id": ""
+  },
+  "granted_emails": [],
+  "client_url": ""
+}

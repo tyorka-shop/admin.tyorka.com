@@ -1,11 +1,12 @@
-import React from 'react';
-import { useButton } from './hooks';
+import React from "react";
+import b_ from 'b_';
+import { useButton } from "./hooks";
+
+import './styles.scss';
+
+const b = b_.with('sign-in-button');
 
 export const SignInButton: React.FC = () => {
-  useButton();
-  return (
-    <div
-      
-    />
-  )
-}
+  const { container } = useButton();
+  return <div className={b()} ref={container} />;
+};

@@ -1,5 +1,5 @@
 import React from "react";
-import * as b_ from "b_";
+import b_ from "b_";
 import { Uploader } from "rsuite";
 import { Picture } from "../../../types";
 import { useDrag } from "../../../hooks/useDrag";

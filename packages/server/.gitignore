@@ -1,2 +1,4 @@
 dist
 store/*
+jwt-keys/*
+config.json

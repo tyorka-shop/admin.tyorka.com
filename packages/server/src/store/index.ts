@@ -1,4 +1,4 @@
-import { Service } from "typedi";
+import { Inject, Service } from "typedi";
 import * as fs from "fs";
 import * as path from "path";
 import { ID, Schema, Product } from "../types";
@@ -7,8 +7,7 @@ import { Size } from "../types/Size";
 import { Crop } from "../types/Crop";
 import { GalleryItem } from "../types/GalleryItem";
 import { ShopItem } from "../types/ShopItem";
-
-export const root = "./store";
+import { Config } from "../config";
 
 const fileName = "index.json";
 
@@ -20,25 +19,28 @@ const initialState: Schema = {
 
 @Service()
 export class Store {
-  constructor() {
-    const filename = path.join(root, fileName);
+
+  constructor(
+    @Inject('config') private config: Config
+  ) {
+    const filename = path.join(config.storeFolder, fileName);
     if (!fs.existsSync(filename)) {
       console.log("Create new store");
       this.save(initialState);
     }
   }
   get() {
-    const result = fs.readFileSync(path.join(root, fileName), "utf-8");
+    const result = fs.readFileSync(path.join(this.config.storeFolder, fileName), "utf-8");
     return JSON.parse(result) as Schema;
   }
 
   getDirname() {
-    return root;
+    return this.config.storeFolder;
   }
 
   save(json: Schema) {
-    const tempFilename = path.join(root, `.~${fileName}`);
-    const actualFilename = path.join(root, fileName);
+    const tempFilename = path.join(this.config.storeFolder, `.~${fileName}`);
+    const actualFilename = path.join(this.config.storeFolder, fileName);
     fs.writeFileSync(tempFilename, JSON.stringify(json, null, 2));
     fs.renameSync(tempFilename, actualFilename);
   }

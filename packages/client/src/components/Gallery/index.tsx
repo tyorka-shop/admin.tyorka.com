@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as b_ from "b_";
+import b_ from "b_";
 import { Button, Loader } from "rsuite";
 import { RouteComponentProps } from "@reach/router";
 import { useDrag } from "../../hooks/useDrag";
