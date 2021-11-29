@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { makeExecutableSchema } from "graphql-tools";
 import { buildTypeDefsAndResolvers } from "type-graphql";
-import Koa from "koa";
 import graphqlHTTP from "koa-graphql";
 import { Container } from "typedi";
 // @ts-ignore
@@ -10,22 +9,11 @@ import { QueryResolver } from "./Query";
 import { MutationsResolver } from "./Mutations";
 import { ProductResolver } from "./Product";
 import { ShopItemResolver } from "./ShopItem";
-import { extract } from "../auth/userInfo";
+import { checkAuthMiddleware } from "../middleware/checkAuth";
 
-const error = {
+const unauthorizedError = {
   errors: [{ message: "Unauthorized" }],
   data: null,
-};
-
-const checkAuth: Koa.Middleware = async (ctx, next) => {
-  const payload = await extract(ctx);
-  if (!payload) {
-    ctx.status = 200;
-    ctx.body = error;
-    return;
-  }
-  ctx.state.user = payload;
-  await next();
 };
 
 export const bootstrap = async () => {
@@ -41,6 +29,11 @@ export const bootstrap = async () => {
   });
 
   const schema = makeExecutableSchema({ typeDefs, resolvers });
+
+  const checkAuth = checkAuthMiddleware((ctx) => {
+    ctx.status = 200;
+    ctx.body = unauthorizedError;
+  });
 
   const mw = graphqlHTTP((req, res, ctx) => ({
     schema,

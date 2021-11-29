@@ -58,6 +58,7 @@ export const Pics: React.FC<Props> = ({
           onSuccess={onAdd}
           multiple
           accept='image/jpeg,image/png,image/jpg'
+          withCredentials
         >
           <div>Drag pictures here</div>
         </Uploader>

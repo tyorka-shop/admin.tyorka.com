@@ -9,10 +9,15 @@ import { Container } from 'typedi'
 import { getSize, resize } from "../image-processing";
 import { Store } from "../store";
 import { Config } from "../config";
+import { checkAuthMiddleware } from "../middleware/checkAuth";
 
 export const router = new Router({
   prefix: "/upload",
 });
+
+const checkAuth = checkAuthMiddleware(ctx => {
+  ctx.status = 401;
+})
 
 const mw = koaBody({
   multipart: true,
@@ -42,7 +47,7 @@ const storeFile = async (name: string, path: string) => {
   return newFilename;
 };
 
-router.post("/", mw, async (ctx) => {
+router.post("/", checkAuth, mw, async (ctx) => {
   // @ts-ignore
   const { files } = ctx.request;
   if (!files) {
