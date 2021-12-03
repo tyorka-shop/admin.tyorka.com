@@ -1,4 +1,8 @@
 {
   "imagesUrl": "",
-  "backendUrl": ""
+  "backendUrl": "",
+  "siwg": {
+    "client_id": "",
+    "login_uri": ""
+  }
 }

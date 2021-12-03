@@ -14,4 +14,8 @@ export interface Crop {
 export interface Config {
   imagesUrl: string
   backendUrl: string
+  siwg: {
+    client_id: string,
+    login_uri: string
+  }
 }

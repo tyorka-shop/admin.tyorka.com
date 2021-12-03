@@ -1,10 +1,16 @@
 import React, { useEffect } from "react";
+import { useConfig } from "../../hooks/useConfig";
+import { Config } from "../../types/common";
+
+let initialized = false;
 
 export const useButton = () => {
   const container = React.createRef<HTMLDivElement>();
+  const { siwg } = useConfig();
+  
   useEffect(() => {
-    init(container);
-  }, []);
+    container.current && init(container, siwg);
+  }, [container.current]);
 
   return {
     container,
@@ -23,18 +29,23 @@ const loadScript = async (src: string) =>
     document.head.appendChild(js);
   });
 
-const init = async (container: React.RefObject<HTMLDivElement>) => {
-  if (!container || !container.current) {
+const init = async (
+  container: React.RefObject<HTMLDivElement>,
+  config: Config["siwg"]
+) => {
+  if (!container.current) {
     return;
   }
-  await loadScript("https://accounts.google.com/gsi/client");
-  // @ts-ignore
-  window.google.accounts.id.initialize({
-    client_id:
-      "1020162780981-ekmcic9v67h6juo6au1hec2k4vfnc1c4.apps.googleusercontent.com",
-    ux_mode: "redirect",
-    login_uri: "http://localhost:3000/login",
-  });
+
+  if (!initialized) {
+    await loadScript("https://accounts.google.com/gsi/client");
+    // @ts-ignore
+    window.google.accounts.id.initialize({
+      ...config,
+      ux_mode: "redirect",
+    });
+    initialized = true;
+  }
   // @ts-ignore
   window.google.accounts.id.renderButton(container.current, {});
 };

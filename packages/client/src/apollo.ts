@@ -1,6 +1,7 @@
 import { ApolloClient, InMemoryCache, from, HttpLink } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { navigate } from "gatsby";
+
 export const createApolloClient = (uri: string) => {
   const httpLink = new HttpLink({
     uri,
