@@ -1,7 +1,8 @@
 {
   "name": "tyorka-admin",
   "scripts": {
-    "start": "concurrently \"yarn workspace client start\" \"yarn workspace server start\""
+    "start": "concurrently \"yarn workspace client start\" \"yarn workspace server start\"",
+    "build": "yarn workspace server build && yarn workspace client build"
   },
   "private": true,
   "packageManager": "yarn@3.1.0",
