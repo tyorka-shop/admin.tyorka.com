@@ -9,17 +9,18 @@ export const createApolloClient = (uri: string) => {
   });
 
   const errorLink = onError(({ graphQLErrors }) => {
-    if (
-      (graphQLErrors || []).some((error) => error.message === "Unauthorized") && window.location.pathname !== '/login'
-    ) {
+    const isUnauthorized = (graphQLErrors || []).some(
+      (error) => error.message === "Unauthorized"
+    );
+    const isLoginPage = window.location.pathname !== "/login";
+    if (isUnauthorized && isLoginPage) {
       navigate("/login");
     }
   });
 
   const client = new ApolloClient({
-    uri,
     cache: new InMemoryCache(),
-    link: from([errorLink, httpLink]),
+    link: from([errorLink, httpLink])
   });
 
   return client;

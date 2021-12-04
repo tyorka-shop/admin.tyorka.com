@@ -21,7 +21,6 @@ export interface Config {
   insta: {
     instagram_id: string
     access_token: string
-    cron: string
   }
 }
 

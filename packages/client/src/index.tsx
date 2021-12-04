@@ -13,11 +13,11 @@ const ctx = {
   config,
 };
 
+const client = createApolloClient(config.backendUrl);
+
 export const Context = React.createContext<Ctx>(ctx);
 
 export const App: React.FC = () => {
-  const client = createApolloClient(config.backendUrl);
-
   return (
     <Context.Provider value={ctx}>
       <ApolloProvider client={client}>
