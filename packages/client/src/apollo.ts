@@ -4,7 +4,7 @@ import { navigate } from "gatsby";
 
 export const createApolloClient = (uri: string) => {
   const httpLink = new HttpLink({
-    uri,
+    uri: `${uri}/graphql`.replace(/\/{2,}/g, '/'),
     credentials: "include",
   });
 
