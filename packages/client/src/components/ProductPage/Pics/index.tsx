@@ -7,6 +7,7 @@ import { Pic } from "../Pic";
 import { PicFragment } from "../Pic/fragment.types";
 
 import "./index.scss";
+import { useConfig } from "../../../hooks/useConfig";
 
 const b = b_.with("product-page-pics");
 
@@ -31,6 +32,8 @@ export const Pics: React.FC<Props> = ({
 }) => {
   const { order, dragStart, dragEnd, picked, dragEnter } =
     useDrag(children.map(pic => pic.id), onReorderPics);
+  
+  const { backendUrl } = useConfig()
 
   return (
     <div className={b()}>
@@ -53,7 +56,7 @@ export const Pics: React.FC<Props> = ({
       </div>
       <div className={b("uploader")}>
         <Uploader
-          action="//localhost:3000/upload"
+          action={`${backendUrl}/upload`}
           draggable
           onSuccess={onAdd}
           multiple
