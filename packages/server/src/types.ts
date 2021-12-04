@@ -38,10 +38,17 @@ export interface Product {
   description?: string
 }
 
+export interface InstaPost {
+  id: string
+  url: string
+  src: string
+  color: string
+}
 export interface Schema {
   products: Product[]
   gallery: ID[]
   pictures: Picture[]
+  instaPosts: InstaPost[]
 }
 
 export type Gallery = Picture[];

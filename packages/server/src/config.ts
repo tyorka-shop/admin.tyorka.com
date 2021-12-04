@@ -17,6 +17,12 @@ export interface Config {
   };
   granted_emails: string[];
   client_url: string;
+  builderToken: string
+  insta: {
+    instagram_id: string
+    access_token: string
+    cron: string
+  }
 }
 
 type ConfigInJSON = Omit<Config, "jwt"> & {

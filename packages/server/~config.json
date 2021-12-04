@@ -10,5 +10,10 @@
     "client_id": ""
   },
   "granted_emails": [],
-  "client_url": ""
+  "client_url": "",
+  "insta": {
+    "instagram_id": "",
+    "access_token": "",
+    "cron": "* 0 * * *"
+  }
 }

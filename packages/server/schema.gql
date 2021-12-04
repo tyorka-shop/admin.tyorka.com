@@ -3,6 +3,13 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type BlogPost {
+  color: String!
+  id: String!
+  src: String!
+  url: String!
+}
+
 type Crop {
   anchor: Point!
   factor: Float!
@@ -73,6 +80,7 @@ input ProductInput {
 }
 
 type Query {
+  blog: [BlogPost!]!
   gallery: [GalleryItem!]!
   picture(id: ID!): Picture!
   product(id: ID!): Product!

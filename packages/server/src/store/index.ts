@@ -1,7 +1,7 @@
 import { Inject, Service } from "typedi";
 import * as fs from "fs";
 import * as path from "path";
-import { ID, Schema, Product } from "../types";
+import { ID, Schema, Product, InstaPost } from "../types";
 import { Picture } from "../types/Picture";
 import { Size } from "../types/Size";
 import { Crop } from "../types/Crop";
@@ -15,6 +15,7 @@ const initialState: Schema = {
   gallery: [],
   pictures: [],
   products: [],
+  instaPosts: []
 };
 
 @Service()
@@ -93,6 +94,11 @@ export class Store {
       })
       .filter(Boolean) as ShopItem[];
   };
+
+  getInstaPosts = (): InstaPost[] => {
+    const { instaPosts } = this.get();
+    return instaPosts;
+  }
 
   getProduct = (id: ID): Product | undefined =>
     this.getProducts().find((product) => product.id === id);
@@ -196,6 +202,12 @@ export class Store {
     const state = this.get();
 
     state.gallery = list;
+    this.save(state);
+  }
+
+  saveInstaPosts(posts: InstaPost[]){
+    const state = this.get();
+    state.instaPosts = posts;
     this.save(state);
   }
 }

@@ -8,6 +8,7 @@ import { GalleryItem } from '../types/GalleryItem';
 import { ShopItem } from '../types/ShopItem';
 import { User } from '../types/User'
 import { Context } from '../types/Context';
+import { BlogPost } from '../types/BlogPost';
 
 @Service()
 @Resolver()
@@ -41,10 +42,17 @@ export class QueryResolver {
     return this.store.getShop()
   }
 
+  @Query(() => [BlogPost])
+  blog(): BlogPost[] {
+    return this.store.getInstaPosts()
+  }
+
   @Query(() => User) 
   user(@Ctx() ctx: Context): User {
     return {
       email: ctx.email
     }
   }
+
+
 }

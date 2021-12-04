@@ -3214,6 +3214,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/cron@npm:^1.7.3":
+  version: 1.7.3
+  resolution: "@types/cron@npm:1.7.3"
+  dependencies:
+    "@types/node": "*"
+    moment: ">=2.14.0"
+  checksum: f271c8624d5c2e8e38f62b66a4741877ffe31aa04ea8a038f117616e2a85196cfcd44edfce55fde91671348dab5b7ed1e65dcd902084243f5e19827b764cd770
+  languageName: node
+  linkType: hard
+
 "@types/debug@npm:^0.0.30":
   version: 0.0.30
   resolution: "@types/debug@npm:0.0.30"
@@ -3647,7 +3657,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/qs@npm:*":
+"@types/qs@npm:*, @types/qs@npm:^6.9.7":
   version: 6.9.7
   resolution: "@types/qs@npm:6.9.7"
   checksum: 7fd6f9c25053e9b5bb6bc9f9f76c1d89e6c04f7707a7ba0e44cc01f17ef5284adb82f230f542c2d5557d69407c9a40f0f3515e8319afd14e1e16b5543ac6cdba
@@ -5210,6 +5220,15 @@ __metadata:
   dependencies:
     follow-redirects: ^1.14.0
   checksum: 44245f24ac971e7458f3120c92f9d66d1fc695e8b97019139de5b0cc65d9b8104647db01e5f46917728edfc0cfd88eb30fc4c55e6053eef4ace76768ce95ff3c
+  languageName: node
+  linkType: hard
+
+"axios@npm:^0.24.0":
+  version: 0.24.0
+  resolution: "axios@npm:0.24.0"
+  dependencies:
+    follow-redirects: ^1.14.4
+  checksum: 468cf496c08a6aadfb7e699bebdac02851e3043d4e7d282350804ea8900e30d368daa6e3cd4ab83b8ddb5a3b1e17a5a21ada13fc9cebd27b74828f47a4236316
   languageName: node
   linkType: hard
 
@@ -7090,6 +7109,15 @@ __metadata:
   version: 1.1.1
   resolution: "create-require@npm:1.1.1"
   checksum: a9a1503d4390d8b59ad86f4607de7870b39cad43d929813599a23714831e81c520bddf61bcdd1f8e30f05fd3a2b71ae8538e946eb2786dc65c2bbc520f692eff
+  languageName: node
+  linkType: hard
+
+"cron@npm:^1.8.2":
+  version: 1.8.2
+  resolution: "cron@npm:1.8.2"
+  dependencies:
+    moment-timezone: ^0.5.x
+  checksum: 9df2d2e24684e1ebce37e3e29c183b1dfecf7adb5fb16f84435014e7205926fc9868e9bfacfa5f7b93c556c9f4a6fbcce5fde9bee1306d20bc848568bb587791
   languageName: node
   linkType: hard
 
@@ -9178,7 +9206,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.14.0":
+"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.14.0, follow-redirects@npm:^1.14.4":
   version: 1.14.5
   resolution: "follow-redirects@npm:1.14.5"
   peerDependenciesMeta:
@@ -14135,7 +14163,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment@npm:2.29.1, moment@npm:^2.22.1, moment@npm:^2.27.0":
+"moment-timezone@npm:^0.5.x":
+  version: 0.5.34
+  resolution: "moment-timezone@npm:0.5.34"
+  dependencies:
+    moment: ">= 2.9.0"
+  checksum: 12a1d3d52e4ba509cf1fa36bbda59d898a08fa80ab35f6c358747e93aec1f07e617cec647eaf2e8acf5f9132e581d4704d34a9edffa9a80c5cd04bf23b277595
+  languageName: node
+  linkType: hard
+
+"moment@npm:2.29.1, moment@npm:>= 2.9.0, moment@npm:>=2.14.0, moment@npm:^2.22.1, moment@npm:^2.27.0":
   version: 2.29.1
   resolution: "moment@npm:2.29.1"
   checksum: 1e14d5f422a2687996be11dd2d50c8de3bd577c4a4ca79ba5d02c397242a933e5b941655de6c8cb90ac18f01cc4127e55b4a12ae3c527a6c0a274e455979345e
@@ -15975,7 +16012,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:^6.4.0, qs@npm:^6.9.4":
+"qs@npm:^6.10.1, qs@npm:^6.4.0, qs@npm:^6.9.4":
   version: 6.10.1
   resolution: "qs@npm:6.10.1"
   dependencies:
@@ -17289,6 +17326,7 @@ __metadata:
   dependencies:
     "@koa/cors": ^3.1.0
     "@koa/router": ^10.1.1
+    "@types/cron": ^1.7.3
     "@types/formidable": ^1.2.4
     "@types/jsonwebtoken": ^8.5.6
     "@types/koa": ^2.0.47
@@ -17299,10 +17337,13 @@ __metadata:
     "@types/koa__cors": ^3.0.3
     "@types/koa__router": ^8.0.8
     "@types/node": ^10.12.2
+    "@types/qs": ^6.9.7
     "@types/sharp": ^0.29.2
     "@types/uuid": ^8.0.0
     apollo-server: ^3.4.0
+    axios: ^0.24.0
     class-validator: ^0.13.1
+    cron: ^1.8.2
     dotenv: ^10.0.0
     formidable: ^2.0.1
     google-auth-library: ^7.10.2
@@ -17316,6 +17357,7 @@ __metadata:
     koa-router: ^7.4.0
     koa-static: ^5.0.0
     nodemon: ^1.18.9
+    qs: ^6.10.1
     reflect-metadata: ^0.1.13
     sharp: ^0.29.2
     ts-node: ^7.0.1

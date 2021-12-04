@@ -25,14 +25,42 @@ export const resize = async (filename: string, widths: number[]) =>
 
 export const getSize = async (filename: string) => {
   const meta = await sharp(filename).metadata();
-  const stats = await sharp(filename).stats();
 
   return {
     width: meta.width!,
     height: meta.height!,
-    dominantColor: rgbToHex(stats.dominant!),
+    dominantColor: await getDominantColor(filename),
   };
 };
+
+export const getDominantColor = async (filename: string) => {
+  const stats = await sharp(filename).stats();
+
+  return rgbToHex(stats.dominant!);
+};
+
+export const crop = (filename: string, size: number): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const transformer = sharp().resize({
+      width: size,
+      height: size,
+      position: "centre",
+      fit: "cover",
+    });
+    const readable = fs.createReadStream(filename);
+
+    const { dir, name, ext } = path.parse(filename);
+
+    const outputFilename = path.join(dir, `${name}_${size}${ext}`);
+
+    const writable = fs.createWriteStream(outputFilename);
+
+    readable
+      .pipe(transformer)
+      .pipe(writable)
+      .on("close", () => resolve(outputFilename))
+      .on("error", reject);
+  });
 
 interface Color {
   r: number;
@@ -40,5 +68,5 @@ interface Color {
   b: number;
 }
 
-const rgbToHex = ({ r, g, b }: Color) =>
+export const rgbToHex = ({ r, g, b }: Color) =>
   "#" + [r, g, b].map((x) => x.toString(16).padStart(2, "0")).join("");
