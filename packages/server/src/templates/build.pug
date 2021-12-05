@@ -1,0 +1,20 @@
+body
+  style(type="text/css").
+    body {
+      background-color: gray;
+    }
+    .log {
+      color: white;
+      background-color: black;
+    }
+    .success {
+      color: green;   
+    }
+    .pending {
+      color: yellow;
+    }
+    .failure {
+      color: red;
+    }
+  bold(class=status) #{statusText}
+  pre.log #{log}
