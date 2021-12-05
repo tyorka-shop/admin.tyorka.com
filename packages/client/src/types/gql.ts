@@ -14,6 +14,27 @@ export type Scalars = {
   Float: number;
 };
 
+export type BlogPost = {
+  __typename: 'BlogPost';
+  color: Scalars['String'];
+  id: Scalars['String'];
+  src: Scalars['String'];
+  url: Scalars['String'];
+};
+
+export type Build = {
+  __typename: 'Build';
+  log: Scalars['String'];
+  status: BuildStatus;
+};
+
+/** State of building process */
+export enum BuildStatus {
+  Done = 'DONE',
+  Failure = 'FAILURE',
+  Pending = 'PENDING'
+}
+
 export type Crop = {
   __typename: 'Crop';
   anchor: Point;
@@ -37,6 +58,7 @@ export type GalleryItem = {
 
 export type Mutation = {
   __typename: 'Mutation';
+  publish: Build;
   saveCrop: Maybe<Picture>;
   saveGalleryOrder: Array<GalleryItem>;
   saveProduct: Maybe<Product>;
@@ -106,6 +128,8 @@ export type ProductInput = {
 
 export type Query = {
   __typename: 'Query';
+  blog: Array<BlogPost>;
+  currentBuild: Build;
   gallery: Array<GalleryItem>;
   picture: Picture;
   product: Product;
@@ -202,6 +226,16 @@ export type ProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ProductsQuery = { __typename: 'Query', products: Array<{ __typename: 'Product', id: string, title: string | null, coverId: string | null, pictures: Array<{ __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } } }> }> };
+
+export type PublishMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PublishMutation = { __typename: 'Mutation', publish: { __typename: 'Build', status: BuildStatus, log: string } };
+
+export type CurrentBuildQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentBuildQuery = { __typename: 'Query', currentBuild: { __typename: 'Build', status: BuildStatus, log: string } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -497,6 +531,74 @@ export function useProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<P
 export type ProductsQueryHookResult = ReturnType<typeof useProductsQuery>;
 export type ProductsLazyQueryHookResult = ReturnType<typeof useProductsLazyQuery>;
 export type ProductsQueryResult = Apollo.QueryResult<ProductsQuery, ProductsQueryVariables>;
+export const PublishDocument = gql`
+    mutation Publish {
+  publish {
+    status
+    log
+  }
+}
+    `;
+export type PublishMutationFn = Apollo.MutationFunction<PublishMutation, PublishMutationVariables>;
+
+/**
+ * __usePublishMutation__
+ *
+ * To run a mutation, you first call `usePublishMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePublishMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [publishMutation, { data, loading, error }] = usePublishMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePublishMutation(baseOptions?: Apollo.MutationHookOptions<PublishMutation, PublishMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PublishMutation, PublishMutationVariables>(PublishDocument, options);
+      }
+export type PublishMutationHookResult = ReturnType<typeof usePublishMutation>;
+export type PublishMutationResult = Apollo.MutationResult<PublishMutation>;
+export type PublishMutationOptions = Apollo.BaseMutationOptions<PublishMutation, PublishMutationVariables>;
+export const CurrentBuildDocument = gql`
+    query CurrentBuild {
+  currentBuild {
+    status
+    log
+  }
+}
+    `;
+
+/**
+ * __useCurrentBuildQuery__
+ *
+ * To run a query within a React component, call `useCurrentBuildQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCurrentBuildQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCurrentBuildQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCurrentBuildQuery(baseOptions?: Apollo.QueryHookOptions<CurrentBuildQuery, CurrentBuildQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CurrentBuildQuery, CurrentBuildQueryVariables>(CurrentBuildDocument, options);
+      }
+export function useCurrentBuildLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CurrentBuildQuery, CurrentBuildQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CurrentBuildQuery, CurrentBuildQueryVariables>(CurrentBuildDocument, options);
+        }
+export type CurrentBuildQueryHookResult = ReturnType<typeof useCurrentBuildQuery>;
+export type CurrentBuildLazyQueryHookResult = ReturnType<typeof useCurrentBuildLazyQuery>;
+export type CurrentBuildQueryResult = Apollo.QueryResult<CurrentBuildQuery, CurrentBuildQueryVariables>;
 export const MeDocument = gql`
     query Me {
   user {

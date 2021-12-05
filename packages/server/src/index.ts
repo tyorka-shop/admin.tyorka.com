@@ -1,22 +1,15 @@
 import "reflect-metadata";
-import {resolve } from 'path'
 import Koa from "koa";
 import serve from "koa-static";
 import mount from "koa-mount";
 import { Container } from "typedi";
 import cors from "@koa/cors";
-import Pug from 'koa-pug';
 import { Config, setupConfig } from "./config";
 import { router as uploadRouter } from "./routes/upload";
 import { router as loginRouter } from "./routes/login";
-import { router as buildRouter } from "./routes/build";
 import { bootstrap } from "./resolvers";
 
 const app = new Koa();
-export const pug = new Pug({
-  viewPath: resolve(__dirname, './templates'),
-  app
-})
 
 app.use(
   cors({
@@ -45,7 +38,6 @@ app.on("error", (err, ctx) => {
 
 app.use(uploadRouter.routes());
 app.use(loginRouter.routes());
-app.use(buildRouter.routes());
 
 const main = async () => {
   await setupConfig()

@@ -10,6 +10,18 @@ type BlogPost {
   url: String!
 }
 
+type Build {
+  log: String!
+  status: BuildStatus!
+}
+
+"""State of building process"""
+enum BuildStatus {
+  DONE
+  FAILURE
+  PENDING
+}
+
 type Crop {
   anchor: Point!
   factor: Float!
@@ -31,6 +43,7 @@ type GalleryItem {
 }
 
 type Mutation {
+  publish: Build!
   saveCrop(crop: CropInput!, id: ID!): Picture
   saveGalleryOrder(list: [ID!]!): [GalleryItem!]!
   saveProduct(product: ProductInput!): Product
@@ -81,6 +94,7 @@ input ProductInput {
 
 type Query {
   blog: [BlogPost!]!
+  currentBuild: Build!
   gallery: [GalleryItem!]!
   picture(id: ID!): Picture!
   product(id: ID!): Product!

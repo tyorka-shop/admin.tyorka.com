@@ -6,6 +6,8 @@ import { Product, ProductInput } from '../types/Product';
 import { ID as IDScalar} from '../types'
 import { Picture } from '../types/Picture';
 import { GalleryItem } from '../types/GalleryItem';
+import { Build } from '../types/Build';
+import { Builder } from '../builder';
 
 @Service()
 @Resolver()
@@ -13,6 +15,9 @@ export class MutationsResolver {
 
   @Inject(() => Store)
   private store: Store
+
+  @Inject(() => Builder)
+  private builder: Builder
 
   @Mutation(() => Product, {nullable: true})
   saveProduct(@Arg('product', () => ProductInput) product: ProductInput): Product | undefined {
@@ -31,5 +36,11 @@ export class MutationsResolver {
   saveGalleryOrder(@Arg('list', () => [ID]) list: IDScalar[]): GalleryItem[] {
     this.store.saveGalleryOrder(list);
     return this.store.getGallery()
+  }
+
+  @Mutation(() => Build) 
+  publish(): Build{
+    this.builder.build();
+    return this.builder.getStatus();
   }
 }

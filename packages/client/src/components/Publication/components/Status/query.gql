@@ -1,0 +1,6 @@
+query CurrentBuild {
+  currentBuild {
+    status
+    log
+  }
+}

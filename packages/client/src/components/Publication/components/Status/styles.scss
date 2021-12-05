@@ -1,0 +1,23 @@
+.publication-status {
+  &_DONE {
+    color: #46d146;
+  }
+
+  &_PENDING {
+    color: rgb(128, 128, 0);
+  }
+
+  &_FAILURE {
+    color: rgb(136, 10, 10);
+  }
+
+  &__log {
+    white-space: pre-wrap;
+    background-color: black;
+    color: #24b724;
+  }
+
+  &__vis-button {
+    font-size: 2rem;
+  }
+}
