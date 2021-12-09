@@ -3,4 +3,5 @@ query CurrentBuild {
     status
     log
   }
+  isDraft
 }

@@ -45,6 +45,7 @@
     "graphql-tag": "^2.12.5",
     "mobx": "^6.3.7",
     "mobx-react-lite": "^3.2.2",
+    "moment": "^2.29.1",
     "react": "^16",
     "react-dom": "^16",
     "react-final-form": "^6.5.7",

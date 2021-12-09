@@ -96,6 +96,7 @@ type Query {
   blog: [BlogPost!]!
   currentBuild: Build!
   gallery: [GalleryItem!]!
+  isDraft: Boolean!
   picture(id: ID!): Picture!
   product(id: ID!): Product!
   products: [Product!]!

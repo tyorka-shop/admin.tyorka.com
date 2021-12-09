@@ -4,7 +4,9 @@ import * as mutation from './mutatiion.gql';
 import { Crop } from '../../../types/common';
 
 export const useChangeHandler = (id: string) => {
-  const [ save, {loading}] = useMutation<Mutation, Variables>(mutation);
+  const [ save, {loading}] = useMutation<Mutation, Variables>(mutation, {
+    refetchQueries: ['IsDraft']
+  });
 
   const onSave = (crop: Crop) => {
     save({
@@ -16,6 +18,7 @@ export const useChangeHandler = (id: string) => {
   }
 
   return {
+    loading,
     onSave
   }
 }

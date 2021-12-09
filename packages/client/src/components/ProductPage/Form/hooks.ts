@@ -26,7 +26,7 @@ export const useSubmit = (product: FormFragment) => {
           description: values.description
         },
       },
-      refetchQueries: [{query: productsQuery}]
+      refetchQueries: [{query: productsQuery}, 'IsDraft']
     });
   };
 

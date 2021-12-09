@@ -11,6 +11,7 @@ import { Context } from "../types/Context";
 import { BlogPost } from "../types/BlogPost";
 import { Builder } from "../builder";
 import { Build } from "../types/Build";
+import { isDraft } from "../types/IsDraft";
 
 @Service()
 @Resolver()
@@ -61,5 +62,10 @@ export class QueryResolver {
   @Query(() => Build)
   currentBuild(): Build {
     return this.builder.getStatus();
+  }
+
+  @Query(() => Boolean)
+  isDraft(): boolean {
+    return this.store.getIsDraft()
   }
 }

@@ -11,7 +11,10 @@ export const useGallery = () => {
   const { data, loading } = useQuery<GalleryQuery>(query);
 
   const [save, { loading: submitting }] = useMutation<Mutation, Variables>(
-    mutation
+    mutation,
+    {
+      refetchQueries: ["IsDraft"],
+    }
   );
 
   const onSave = (list: string[]) =>
@@ -23,7 +26,8 @@ export const useGallery = () => {
 
   return {
     loading,
+    submitting,
     gallery: data?.gallery || [],
-    onSave
+    onSave,
   };
 };

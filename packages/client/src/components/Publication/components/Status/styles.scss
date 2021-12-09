@@ -1,4 +1,7 @@
 .publication-status {
+
+  padding-top: 1rem;
+  
   &_DONE {
     color: #46d146;
   }
@@ -18,6 +21,11 @@
   }
 
   &__vis-button {
-    font-size: 2rem;
+    font-size: 1rem;
+  }
+
+  &__vis-button-wrapper {
+    display: flex;
+    justify-content: space-between;
   }
 }

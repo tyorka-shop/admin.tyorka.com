@@ -49,6 +49,7 @@ export interface Schema {
   gallery: ID[]
   pictures: Picture[]
   instaPosts: InstaPost[]
+  isDraft: boolean
 }
 
 export type Gallery = Picture[];

@@ -22,6 +22,9 @@ export interface Config {
     instagram_id: string
     access_token: string
   }
+  publicSite: {
+    folder: string
+  }
 }
 
 type ConfigInJSON = Omit<Config, "jwt"> & {

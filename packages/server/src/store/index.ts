@@ -15,15 +15,13 @@ const initialState: Schema = {
   gallery: [],
   pictures: [],
   products: [],
-  instaPosts: []
+  instaPosts: [],
+  isDraft: false,
 };
 
 @Service()
 export class Store {
-
-  constructor(
-    @Inject('config') private config: Config
-  ) {
+  constructor(@Inject("config") private config: Config) {
     const filename = path.join(config.storeFolder, fileName);
     if (!fs.existsSync(filename)) {
       console.log("Create new store");
@@ -31,7 +29,10 @@ export class Store {
     }
   }
   get() {
-    const result = fs.readFileSync(path.join(this.config.storeFolder, fileName), "utf-8");
+    const result = fs.readFileSync(
+      path.join(this.config.storeFolder, fileName),
+      "utf-8"
+    );
     return JSON.parse(result) as Schema;
   }
 
@@ -39,7 +40,10 @@ export class Store {
     return this.config.storeFolder;
   }
 
-  save(json: Schema) {
+  save(json: Schema, setDraft = true) {
+    if (setDraft) {
+      json.isDraft = true;
+    }
     const tempFilename = path.join(this.config.storeFolder, `.~${fileName}`);
     const actualFilename = path.join(this.config.storeFolder, fileName);
     fs.writeFileSync(tempFilename, JSON.stringify(json, null, 2));
@@ -98,7 +102,7 @@ export class Store {
   getInstaPosts = (): InstaPost[] => {
     const { instaPosts } = this.get();
     return instaPosts;
-  }
+  };
 
   getProduct = (id: ID): Product | undefined =>
     this.getProducts().find((product) => product.id === id);
@@ -205,9 +209,19 @@ export class Store {
     this.save(state);
   }
 
-  saveInstaPosts(posts: InstaPost[]){
+  saveInstaPosts(posts: InstaPost[]) {
     const state = this.get();
     state.instaPosts = posts;
     this.save(state);
+  }
+
+  getIsDraft() {
+    return this.get().isDraft;
+  }
+
+  publish() {
+    const state = this.get();
+    state.isDraft = false;
+    this.save(state, false);
   }
 }

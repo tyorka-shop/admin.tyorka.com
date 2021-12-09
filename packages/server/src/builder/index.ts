@@ -1,5 +1,7 @@
 import { spawn } from "child_process";
-import { Service } from "typedi";
+import { Inject, Service } from "typedi";
+import { Config } from "../config";
+import { Store } from "../store";
 import { Build } from "../types/Build";
 import { BuildStatus } from "../types/BuildStatus";
 
@@ -8,13 +10,19 @@ export class Builder {
   private status: BuildStatus = BuildStatus.DONE;
   private log = "";
 
+  @Inject(() => Store)
+  private store: Store
+
+  @Inject('config')
+  private config: Config
+
   build() {
     if (this.status === BuildStatus.PENDING) {
       throw new Error("build already started");
     }
     this.status = BuildStatus.PENDING;
     this.log = "";
-    const cmd = spawn("yarn", ["build"], { cwd: "/home/kazatca/tyorka.com" });
+    const cmd = spawn("make", { cwd: this.config.publicSite.folder });
 
     cmd.stdout.on("data", (data: Buffer) => {
       this.log += data.toString("ascii");
@@ -26,6 +34,9 @@ export class Builder {
 
     cmd.on("close", (code) => {
       this.status = code === 0 ? BuildStatus.DONE : BuildStatus.FAILURE;
+      if(code === 0){
+        this.store.publish();
+      }
     });
 
     return {

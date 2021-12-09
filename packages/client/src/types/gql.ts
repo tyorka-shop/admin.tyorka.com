@@ -131,6 +131,7 @@ export type Query = {
   blog: Array<BlogPost>;
   currentBuild: Build;
   gallery: Array<GalleryItem>;
+  isDraft: Scalars['Boolean'];
   picture: Picture;
   product: Product;
   products: Array<Product>;
@@ -187,6 +188,11 @@ export type GalleryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GalleryQuery = { __typename: 'Query', gallery: Array<{ __typename: 'GalleryItem', id: string, src: string }> };
+
+export type IsDraftQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type IsDraftQuery = { __typename: 'Query', isDraft: boolean };
 
 export type PictureEditorFragment = { __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } }, originalSize: { __typename: 'Size', width: number, height: number } };
 
@@ -378,6 +384,38 @@ export function useGalleryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ga
 export type GalleryQueryHookResult = ReturnType<typeof useGalleryQuery>;
 export type GalleryLazyQueryHookResult = ReturnType<typeof useGalleryLazyQuery>;
 export type GalleryQueryResult = Apollo.QueryResult<GalleryQuery, GalleryQueryVariables>;
+export const IsDraftDocument = gql`
+    query IsDraft {
+  isDraft
+}
+    `;
+
+/**
+ * __useIsDraftQuery__
+ *
+ * To run a query within a React component, call `useIsDraftQuery` and pass it any options that fit your needs.
+ * When your component renders, `useIsDraftQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useIsDraftQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useIsDraftQuery(baseOptions?: Apollo.QueryHookOptions<IsDraftQuery, IsDraftQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<IsDraftQuery, IsDraftQueryVariables>(IsDraftDocument, options);
+      }
+export function useIsDraftLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IsDraftQuery, IsDraftQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<IsDraftQuery, IsDraftQueryVariables>(IsDraftDocument, options);
+        }
+export type IsDraftQueryHookResult = ReturnType<typeof useIsDraftQuery>;
+export type IsDraftLazyQueryHookResult = ReturnType<typeof useIsDraftLazyQuery>;
+export type IsDraftQueryResult = Apollo.QueryResult<IsDraftQuery, IsDraftQueryVariables>;
 export const SaveProductDocument = gql`
     mutation SaveProduct($product: ProductInput!) {
   saveProduct(product: $product) {

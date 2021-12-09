@@ -13,9 +13,9 @@ interface Props extends RouteComponentProps {}
 export const Publication: React.FC<Props> = () => {
   const [isStatusVisible, setStatusVisible] = React.useState(false)
   return (
-    <>
+    <div className={b()}>
       <PublishButton onClick={() => setStatusVisible(true)}/>
       {isStatusVisible && <Status />}
-    </>
+    </div>
   );
 };
