@@ -51,7 +51,7 @@ export class Builder {
     var parser = new AnsiParser(terminal);
     parser.parse(this.log);
 
-    const log = terminal.toString().trim().replace(/\s{10,}/g, ' ')
+    const log = terminal.toString().trim()
 
     return {
       log,
