@@ -22,7 +22,10 @@ export class Builder {
     }
     this.status = BuildStatus.PENDING;
     this.log = "";
-    const cmd = spawn("make", { cwd: this.config.publicSite.folder });
+    const cmd = spawn("make", { cwd: this.config.publicSite.folder, env: {
+      ...process.env,
+      XDG_CONFIG_HOME: this.config.publicSite.folder
+    } });
 
     cmd.stdout.on("data", (data: Buffer) => {
       this.log += data.toString("ascii");
@@ -48,9 +51,18 @@ export class Builder {
     var AnsiTerminal = require("node-ansiterminal").AnsiTerminal;
     var AnsiParser = require("node-ansiparser");
     var terminal = new AnsiTerminal(1000, 5000, 5000);
+    var oldInstX = terminal.inst_x
+    terminal.inst_x = (flag: string) => {
+      if(flag.charCodeAt(0) === 10) {
+        oldInstX.call(terminal, flag)
+        oldInstX.call(terminal, '\r');
+        return;
+      }
+      return oldInstX.call(terminal, flag)
+    }
     var parser = new AnsiParser(terminal);
     parser.parse(this.log);
-
+    
     const log = terminal.toString().trim()
 
     return {
