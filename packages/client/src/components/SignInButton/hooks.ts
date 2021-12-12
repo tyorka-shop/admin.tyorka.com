@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useConfig } from "../../hooks/useConfig";
 import { Config } from "../../types/common";
 
@@ -6,11 +6,20 @@ let initialized = false;
 
 export const useButton = () => {
   const container = React.createRef<HTMLDivElement>();
+  const [inited, setInited] = useState(false);
   const { siwg } = useConfig();
-  
+
   useEffect(() => {
-    container.current && init(container, siwg);
-  }, [container.current]);
+    init(siwg, () => setInited(true));
+  }, []);
+
+  useEffect(() => {
+    if (!container.current || !inited) {
+      return;
+    }
+    // @ts-ignore
+    window.google.accounts.id.renderButton(container.current, {});
+  }, [container.current || !inited]);
 
   return {
     container,
@@ -29,14 +38,7 @@ const loadScript = async (src: string) =>
     document.head.appendChild(js);
   });
 
-const init = async (
-  container: React.RefObject<HTMLDivElement>,
-  config: Config["siwg"]
-) => {
-  if (!container.current) {
-    return;
-  }
-
+const init = async (config: Config["siwg"], callback: () => void) => {
   if (!initialized) {
     await loadScript("https://accounts.google.com/gsi/client");
     // @ts-ignore
@@ -46,6 +48,5 @@ const init = async (
     });
     initialized = true;
   }
-  // @ts-ignore
-  window.google.accounts.id.renderButton(container.current, {});
+  callback();
 };
