@@ -11,10 +11,10 @@ export class Builder {
   private log = "";
 
   @Inject(() => Store)
-  private store: Store
+  private store: Store;
 
-  @Inject('config')
-  private config: Config
+  @Inject("config")
+  private config: Config;
 
   build() {
     if (this.status === BuildStatus.PENDING) {
@@ -22,10 +22,22 @@ export class Builder {
     }
     this.status = BuildStatus.PENDING;
     this.log = "";
-    const cmd = spawn("make", { cwd: this.config.publicSite.folder, env: {
-      ...process.env,
-      XDG_CONFIG_HOME: this.config.publicSite.folder
-    } });
+
+    const env = Object.keys(process.env)
+      .filter((key) => !key.match(/NODE/i))
+      .reduce((result, key) => {
+        result[key] = process.env[key];
+        return result;
+      }, {} as Record<string, any>);
+
+    const cmd = spawn("make", {
+      cwd: this.config.publicSite.folder,
+      env: {
+        ...env,
+        XDG_CONFIG_HOME: this.config.publicSite.folder,
+        FORCE_COLOR: '0'
+      },
+    });
 
     cmd.stdout.on("data", (data: Buffer) => {
       this.log += data.toString("ascii");
@@ -37,7 +49,7 @@ export class Builder {
 
     cmd.on("close", (code) => {
       this.status = code === 0 ? BuildStatus.DONE : BuildStatus.FAILURE;
-      if(code === 0){
+      if (code === 0) {
         this.store.publish();
       }
     });
@@ -48,25 +60,25 @@ export class Builder {
   }
 
   getStatus(): Build {
-    var AnsiTerminal = require("node-ansiterminal").AnsiTerminal;
-    var AnsiParser = require("node-ansiparser");
-    var terminal = new AnsiTerminal(1000, 5000, 5000);
-    var oldInstX = terminal.inst_x
-    terminal.inst_x = (flag: string) => {
-      if(flag.charCodeAt(0) === 10) {
-        oldInstX.call(terminal, flag)
-        oldInstX.call(terminal, '\r');
-        return;
-      }
-      return oldInstX.call(terminal, flag)
-    }
-    var parser = new AnsiParser(terminal);
-    parser.parse(this.log);
-    
-    const log = terminal.toString().trim()
+    // var AnsiTerminal = require("node-ansiterminal").AnsiTerminal;
+    // var AnsiParser = require("node-ansiparser");
+    // var terminal = new AnsiTerminal(1000, 5000, 5000);
+    // var oldInstX = terminal.inst_x
+    // terminal.inst_x = (flag: string) => {
+    //   if(flag.charCodeAt(0) === 10) {
+    //     oldInstX.call(terminal, flag)
+    //     oldInstX.call(terminal, '\r');
+    //     return;
+    //   }
+    //   return oldInstX.call(terminal, flag)
+    // }
+    // var parser = new AnsiParser(terminal);
+    // parser.parse(this.log);
+
+    // const log = terminal.toString().trim()
 
     return {
-      log,
+      log: this.log,
       status: this.status,
     };
   }
