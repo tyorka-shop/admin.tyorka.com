@@ -45,7 +45,7 @@ type GalleryItem {
 }
 
 type Mutation {
-  publish: Build!
+  publish: Build
   saveCrop(crop: CropInput!, id: ID!): Picture
   saveGalleryOrder(list: [ID!]!): [GalleryItem!]!
   saveProduct(product: ProductInput!): Product

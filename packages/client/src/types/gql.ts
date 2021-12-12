@@ -60,7 +60,7 @@ export type GalleryItem = {
 
 export type Mutation = {
   __typename: 'Mutation';
-  publish: Build;
+  publish: Maybe<Build>;
   saveCrop: Maybe<Picture>;
   saveGalleryOrder: Array<GalleryItem>;
   saveProduct: Maybe<Product>;
@@ -246,7 +246,7 @@ export type ProductsQuery = { __typename: 'Query', products: Array<{ __typename:
 export type PublishMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PublishMutation = { __typename: 'Mutation', publish: { __typename: 'Build', status: BuildStatus, log: string } };
+export type PublishMutation = { __typename: 'Mutation', publish: { __typename: 'Build', status: BuildStatus, log: string } | null };
 
 export type PublicationFragment = { __typename: 'Build', id: string, date: string, status: BuildStatus };
 

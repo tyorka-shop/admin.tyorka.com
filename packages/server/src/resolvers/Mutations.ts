@@ -38,8 +38,8 @@ export class MutationsResolver {
     return this.store.getGallery()
   }
 
-  @Mutation(() => Build) 
-  publish(): Build{
+  @Mutation(() => Build, {nullable: true}) 
+  publish(): Build | undefined{
     this.builder.build();
     return this.builder.getStatus();
   }
