@@ -1,9 +1,9 @@
 import React from "react";
 import { Router } from "@reach/router";
-import { Publication } from "../Publication";
+import { PublicationPage } from "../PublicationPage";
 
 export const PublicationRouter: React.FC = () => (
   <Router basepath="/publication">
-    <Publication path="/" />
+    <PublicationPage path="/" />
   </Router>
 );

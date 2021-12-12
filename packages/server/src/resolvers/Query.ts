@@ -1,4 +1,4 @@
-import { Arg, Query, Resolver, ID, Ctx } from "type-graphql";
+import { Arg, Query, Resolver, ID, Ctx, Float } from "type-graphql";
 import { Inject, Service } from "typedi";
 import { ID as IDScalar } from "../types";
 import { Store } from "../store";
@@ -59,13 +59,37 @@ export class QueryResolver {
     };
   }
 
-  @Query(() => Build)
-  currentBuild(): Build {
+  @Query(() => Build, { nullable: true })
+  currentBuild(): Build | undefined {
     return this.builder.getStatus();
+  }
+
+  @Query(() => [Build])
+  publications(): Build[] {
+    const result = this.store.getPublications();
+    const current = this.builder.getStatus();
+    if (!current) {
+      return result;
+    }
+    return [current, ...result];
+  }
+
+  @Query(() => Build, { nullable: true })
+  publication(@Arg("id", () => String) id: string): Build | undefined {
+    const current = this.builder.getStatus();
+    if (current?.id === id) {
+      return current;
+    }
+    return this.store.getPublication(id);
+  }
+
+  @Query(() => Float)
+  publicationDuration(): number {
+    return this.store.getPublicationDuration();
   }
 
   @Query(() => Boolean)
   isDraft(): boolean {
-    return this.store.getIsDraft()
+    return this.store.getIsDraft();
   }
 }

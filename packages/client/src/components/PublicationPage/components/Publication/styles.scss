@@ -1,4 +1,4 @@
-.publication-status {
+.publication {
 
   padding-top: 1rem;
   
@@ -28,5 +28,17 @@
   &__vis-button-wrapper {
     display: flex;
     justify-content: space-between;
+  }
+
+  &__date{
+    width: 11rem;
+    line-height: 2rem;
+  }
+
+  &__log {
+    white-space: pre-wrap;
+    background-color: black;
+    color: #24b724;
+    max-height: 50vh;    
   }
 }

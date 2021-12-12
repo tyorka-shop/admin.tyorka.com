@@ -1,0 +1,9 @@
+#import './components/Publication/fragment.gql'
+
+query Publications {
+  publications {
+    id
+    ...Publication
+  }
+  publicationDuration
+}

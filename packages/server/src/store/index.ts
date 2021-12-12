@@ -8,6 +8,8 @@ import { Crop } from "../types/Crop";
 import { GalleryItem } from "../types/GalleryItem";
 import { ShopItem } from "../types/ShopItem";
 import { Config } from "../config";
+import { Build } from "../types/Build";
+import { BuildStatus } from "../types/BuildStatus";
 
 const fileName = "index.json";
 
@@ -17,6 +19,7 @@ const initialState: Schema = {
   products: [],
   instaPosts: [],
   isDraft: false,
+  publications: [],
 };
 
 @Service()
@@ -219,9 +222,35 @@ export class Store {
     return this.get().isDraft;
   }
 
-  publish() {
+  getPublications() {
+    return this.get().publications || [];
+  }
+
+  getPublication(id: string) {
+    const { publications } = this.get();
+    return publications.find((publication) => publication.id === id);
+  }
+
+  publish(build: Build) {
     const state = this.get();
-    state.isDraft = false;
+    state.publications = [build, ...(state.publications || [])].slice(0, 10);
+    state.isDraft = build.status !== BuildStatus.DONE;
     this.save(state, false);
+  }
+
+  getPublicationDuration() {
+    const done = this.getPublications().filter(
+      (publication) =>
+        publication.status === BuildStatus.DONE && publication.duration
+    );
+    if(!done.length) {
+      return 60_000;
+    }
+    return (
+      done.reduce(
+        (result, publication) => result + (publication.duration || 0),
+        0
+      ) / done.length
+    );
   }
 }

@@ -1,3 +1,5 @@
+import { Build } from "./types/Build";
+import { BuildStatus } from "./types/BuildStatus";
 import { State } from "./types/State";
 
 export type ID = String;
@@ -44,12 +46,14 @@ export interface InstaPost {
   src: string
   color: string
 }
+
 export interface Schema {
   products: Product[]
   gallery: ID[]
   pictures: Picture[]
   instaPosts: InstaPost[]
   isDraft: boolean
+  publications: Build[]
 }
 
 export type Gallery = Picture[];

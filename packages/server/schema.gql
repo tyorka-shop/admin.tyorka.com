@@ -11,6 +11,8 @@ type BlogPost {
 }
 
 type Build {
+  date: String!
+  id: String!
   log: String!
   status: BuildStatus!
 }
@@ -94,12 +96,15 @@ input ProductInput {
 
 type Query {
   blog: [BlogPost!]!
-  currentBuild: Build!
+  currentBuild: Build
   gallery: [GalleryItem!]!
   isDraft: Boolean!
   picture(id: ID!): Picture!
   product(id: ID!): Product!
   products: [Product!]!
+  publication(id: String!): Build
+  publicationDuration: Float!
+  publications: [Build!]!
   shop: [ShopItem!]!
   user: User!
 }

@@ -7,8 +7,7 @@ import { BuildStatus } from "../types/BuildStatus";
 
 @Service()
 export class Builder {
-  private status: BuildStatus = BuildStatus.DONE;
-  private log = "";
+  private currentBuild: Build | undefined
 
   @Inject(() => Store)
   private store: Store;
@@ -17,11 +16,10 @@ export class Builder {
   private config: Config;
 
   build() {
-    if (this.status === BuildStatus.PENDING) {
+    if (this.currentBuild) {
       throw new Error("build already started");
     }
-    this.status = BuildStatus.PENDING;
-    this.log = "";
+    this.currentBuild = Build.create();
 
     const env = Object.keys(process.env)
       .filter((key) => !key.match(/NODE/i))
@@ -34,24 +32,26 @@ export class Builder {
       cwd: this.config.publicSite.folder,
       env: {
         ...env,
-        XDG_CONFIG_HOME: this.config.publicSite.folder,
-        FORCE_COLOR: '0'
+        XDG_CONFIG_HOME: this.config.publicSite.folder
       },
     });
 
     cmd.stdout.on("data", (data: Buffer) => {
-      this.log += data.toString("ascii");
+      if(!this.currentBuild) return;
+      this.currentBuild.log += data.toString("ascii");
     });
 
     cmd.stderr.on("data", (data: Buffer) => {
-      this.log += data.toString("ascii");
+      if(!this.currentBuild) return;
+      this.currentBuild.log += data.toString("ascii");
     });
 
     cmd.on("close", (code) => {
-      this.status = code === 0 ? BuildStatus.DONE : BuildStatus.FAILURE;
-      if (code === 0) {
-        this.store.publish();
-      }
+      if(!this.currentBuild) return;
+      this.currentBuild.status = code === 0 ? BuildStatus.DONE : BuildStatus.FAILURE;
+      this.currentBuild.duration = Date.now() - this.currentBuild.date;
+      this.store.publish(this.currentBuild);
+      this.currentBuild = undefined
     });
 
     return {
@@ -59,7 +59,7 @@ export class Builder {
     };
   }
 
-  getStatus(): Build {
+  getStatus(): Build | undefined{
     // var AnsiTerminal = require("node-ansiterminal").AnsiTerminal;
     // var AnsiParser = require("node-ansiparser");
     // var terminal = new AnsiTerminal(1000, 5000, 5000);
@@ -77,9 +77,6 @@ export class Builder {
 
     // const log = terminal.toString().trim()
 
-    return {
-      log: this.log,
-      status: this.status,
-    };
+    return this.currentBuild;
   }
 }

@@ -24,6 +24,8 @@ export type BlogPost = {
 
 export type Build = {
   __typename: 'Build';
+  date: Scalars['String'];
+  id: Scalars['String'];
   log: Scalars['String'];
   status: BuildStatus;
 };
@@ -129,12 +131,15 @@ export type ProductInput = {
 export type Query = {
   __typename: 'Query';
   blog: Array<BlogPost>;
-  currentBuild: Build;
+  currentBuild: Maybe<Build>;
   gallery: Array<GalleryItem>;
   isDraft: Scalars['Boolean'];
   picture: Picture;
   product: Product;
   products: Array<Product>;
+  publication: Maybe<Build>;
+  publicationDuration: Scalars['Float'];
+  publications: Array<Build>;
   shop: Array<ShopItem>;
   user: User;
 };
@@ -147,6 +152,11 @@ export type QueryPictureArgs = {
 
 export type QueryProductArgs = {
   id: Scalars['ID'];
+};
+
+
+export type QueryPublicationArgs = {
+  id: Scalars['String'];
 };
 
 export type ShopItem = {
@@ -238,10 +248,19 @@ export type PublishMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type PublishMutation = { __typename: 'Mutation', publish: { __typename: 'Build', status: BuildStatus, log: string } };
 
-export type CurrentBuildQueryVariables = Exact<{ [key: string]: never; }>;
+export type PublicationFragment = { __typename: 'Build', id: string, date: string, status: BuildStatus };
+
+export type LogQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
 
 
-export type CurrentBuildQuery = { __typename: 'Query', currentBuild: { __typename: 'Build', status: BuildStatus, log: string } };
+export type LogQuery = { __typename: 'Query', publication: { __typename: 'Build', id: string, status: BuildStatus, log: string, date: string } | null };
+
+export type PublicationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PublicationsQuery = { __typename: 'Query', publicationDuration: number, publications: Array<{ __typename: 'Build', id: string, date: string, status: BuildStatus }> };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -316,6 +335,13 @@ export const PictureEditModalFragmentDoc = gql`
   ...PictureEditor
 }
     ${PictureEditorFragmentDoc}`;
+export const PublicationFragmentDoc = gql`
+    fragment Publication on Build {
+  id
+  date
+  status
+}
+    `;
 export const SaveGalleryOrderDocument = gql`
     mutation SaveGalleryOrder($list: [ID!]!) {
   saveGalleryOrder(list: $list) {
@@ -602,41 +628,80 @@ export function usePublishMutation(baseOptions?: Apollo.MutationHookOptions<Publ
 export type PublishMutationHookResult = ReturnType<typeof usePublishMutation>;
 export type PublishMutationResult = Apollo.MutationResult<PublishMutation>;
 export type PublishMutationOptions = Apollo.BaseMutationOptions<PublishMutation, PublishMutationVariables>;
-export const CurrentBuildDocument = gql`
-    query CurrentBuild {
-  currentBuild {
+export const LogDocument = gql`
+    query Log($id: String!) {
+  publication(id: $id) {
+    id
     status
     log
+    ...Publication
   }
 }
-    `;
+    ${PublicationFragmentDoc}`;
 
 /**
- * __useCurrentBuildQuery__
+ * __useLogQuery__
  *
- * To run a query within a React component, call `useCurrentBuildQuery` and pass it any options that fit your needs.
- * When your component renders, `useCurrentBuildQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useLogQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLogQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useCurrentBuildQuery({
+ * const { data, loading, error } = useLogQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useLogQuery(baseOptions: Apollo.QueryHookOptions<LogQuery, LogQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<LogQuery, LogQueryVariables>(LogDocument, options);
+      }
+export function useLogLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LogQuery, LogQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<LogQuery, LogQueryVariables>(LogDocument, options);
+        }
+export type LogQueryHookResult = ReturnType<typeof useLogQuery>;
+export type LogLazyQueryHookResult = ReturnType<typeof useLogLazyQuery>;
+export type LogQueryResult = Apollo.QueryResult<LogQuery, LogQueryVariables>;
+export const PublicationsDocument = gql`
+    query Publications {
+  publications {
+    id
+    ...Publication
+  }
+  publicationDuration
+}
+    ${PublicationFragmentDoc}`;
+
+/**
+ * __usePublicationsQuery__
+ *
+ * To run a query within a React component, call `usePublicationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePublicationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePublicationsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useCurrentBuildQuery(baseOptions?: Apollo.QueryHookOptions<CurrentBuildQuery, CurrentBuildQueryVariables>) {
+export function usePublicationsQuery(baseOptions?: Apollo.QueryHookOptions<PublicationsQuery, PublicationsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CurrentBuildQuery, CurrentBuildQueryVariables>(CurrentBuildDocument, options);
+        return Apollo.useQuery<PublicationsQuery, PublicationsQueryVariables>(PublicationsDocument, options);
       }
-export function useCurrentBuildLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CurrentBuildQuery, CurrentBuildQueryVariables>) {
+export function usePublicationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PublicationsQuery, PublicationsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CurrentBuildQuery, CurrentBuildQueryVariables>(CurrentBuildDocument, options);
+          return Apollo.useLazyQuery<PublicationsQuery, PublicationsQueryVariables>(PublicationsDocument, options);
         }
-export type CurrentBuildQueryHookResult = ReturnType<typeof useCurrentBuildQuery>;
-export type CurrentBuildLazyQueryHookResult = ReturnType<typeof useCurrentBuildLazyQuery>;
-export type CurrentBuildQueryResult = Apollo.QueryResult<CurrentBuildQuery, CurrentBuildQueryVariables>;
+export type PublicationsQueryHookResult = ReturnType<typeof usePublicationsQuery>;
+export type PublicationsLazyQueryHookResult = ReturnType<typeof usePublicationsLazyQuery>;
+export type PublicationsQueryResult = Apollo.QueryResult<PublicationsQuery, PublicationsQueryVariables>;
 export const MeDocument = gql`
     query Me {
   user {

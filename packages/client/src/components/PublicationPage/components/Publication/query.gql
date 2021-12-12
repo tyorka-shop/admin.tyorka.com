@@ -1,0 +1,9 @@
+#import './fragment.gql'
+query Log($id: String!) {
+  publication(id: $id) {
+    id
+    status
+    log
+    ...Publication
+  }
+}

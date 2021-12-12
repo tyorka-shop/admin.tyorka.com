@@ -1,7 +1,0 @@
-query CurrentBuild {
-  currentBuild {
-    status
-    log
-  }
-  isDraft
-}

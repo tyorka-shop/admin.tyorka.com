@@ -1,0 +1,5 @@
+fragment Publication on Build {
+  id
+  date
+  status
+}
