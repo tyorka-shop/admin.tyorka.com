@@ -1,7 +1,7 @@
 import { Arg, Mutation, ID, Resolver } from 'type-graphql'
 import { Inject, Service } from 'typedi';
 import { Store } from '../store';
-import { Crop, CropInput } from '../types/Crop';
+import { CropInput } from '../types/Crop';
 import { Product, ProductInput } from '../types/Product';
 import { ID as IDScalar} from '../types'
 import { Picture } from '../types/Picture';

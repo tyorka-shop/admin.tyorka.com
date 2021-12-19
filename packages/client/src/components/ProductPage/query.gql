@@ -5,7 +5,10 @@
 query Product($id: ID!) {
   product(id: $id) {
     id
-    title
+    title {
+      en
+      ru
+    }
     state
     ...Form
     pictures {

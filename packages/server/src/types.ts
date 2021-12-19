@@ -1,5 +1,5 @@
 import { Build } from "./types/Build";
-import { BuildStatus } from "./types/BuildStatus";
+import { MultiLang } from "./types/MultiLang";
 import { State } from "./types/State";
 
 export type ID = String;
@@ -32,12 +32,12 @@ export interface Product {
   state: State
   pictures: ID[]
   coverId?: ID
-  title?: string
+  title?: MultiLang
   tags?: string[],
   price?: number
   showInGallery: boolean
   showInShop: boolean
-  description?: string
+  description?: MultiLang
 }
 
 export interface InstaPost {

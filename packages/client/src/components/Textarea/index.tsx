@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Form, FormControlProps } from "rsuite";
+import { FormControlProps } from "rsuite";
 import { Field } from "react-final-form";
 
-interface Props extends FormControlProps {
+type Props = FormControlProps & React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
   name: string;
 }
 

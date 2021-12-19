@@ -10,6 +10,7 @@ import { ShopItem } from "../types/ShopItem";
 import { Config } from "../config";
 import { Build } from "../types/Build";
 import { BuildStatus } from "../types/BuildStatus";
+import { MultiLang } from "../types/MultiLang";
 
 const fileName = "index.json";
 
@@ -53,7 +54,11 @@ export class Store {
     fs.renameSync(tempFilename, actualFilename);
   }
 
-  getProducts = (): Product[] => this.get().products;
+  getProducts = (): Product[] => this.get().products.map(product => ({
+    ...product,
+    title: this.getMultiLng(product.title),
+    description: this.getMultiLng(product.description)
+  }));
 
   getGallery = (): GalleryItem[] => {
     const { products, gallery } = this.get();
@@ -95,12 +100,19 @@ export class Store {
           ...cover,
           id: product.id,
           price: product.price,
-          description: product.description,
-          title: product.title,
+          description: this.getMultiLng(product.description),
+          title: this.getMultiLng(product.title),
         };
       })
       .filter(Boolean) as ShopItem[];
   };
+
+  private getMultiLng(value: MultiLang | string | undefined): MultiLang {
+    if (typeof value === 'object') {
+      return value;
+    }
+    return { en: undefined, ru: value };
+  }
 
   getInstaPosts = (): InstaPost[] => {
     const { instaPosts } = this.get();
@@ -243,7 +255,7 @@ export class Store {
       (publication) =>
         publication.status === BuildStatus.DONE && publication.duration
     );
-    if(!done.length) {
+    if (!done.length) {
       return 60_000;
     }
     return (

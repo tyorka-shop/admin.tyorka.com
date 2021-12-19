@@ -1,5 +1,6 @@
 import { Field, Float, ID, InputType, ObjectType } from "type-graphql";
 import { ID as IDScalar } from "../types";
+import { MultiLang, MultiLangInput } from "./MultiLang";
 import { State } from "./State";
 
 @ObjectType()
@@ -10,23 +11,23 @@ export class Product {
   @Field(() => State)
   state: State;
 
-  @Field(() => ID, {nullable: true})
-  coverId?: IDScalar
+  @Field(() => ID, { nullable: true })
+  coverId?: IDScalar;
 
-  @Field(() => String, {nullable: true})
-  title?: string
-  
+  @Field(() => MultiLang, { nullable: true })
+  title?: MultiLang;
+
   @Field(() => Boolean)
-  showInGallery: boolean
-  
+  showInGallery: boolean;
+
   @Field(() => Boolean)
-  showInShop: boolean
+  showInShop: boolean;
 
-  @Field(() => Float, {nullable: true})
-  price?: number
+  @Field(() => Float, { nullable: true })
+  price?: number;
 
-  @Field(() => String, {nullable: true})
-  description?: string 
+  @Field(() => MultiLang, { nullable: true })
+  description?: MultiLang;
 }
 
 @InputType()
@@ -38,23 +39,23 @@ export class ProductInput {
   state: State;
 
   @Field(() => [ID])
-  pictures: IDScalar[]
+  pictures: IDScalar[];
 
-  @Field(() => ID, {nullable: true})
-  coverId?: IDScalar
+  @Field(() => ID, { nullable: true })
+  coverId?: IDScalar;
 
-  @Field(() => String, {nullable: true})
-  title?: string
-  
+  @Field(() => MultiLangInput, { nullable: true })
+  title?: MultiLangInput;
+
   @Field(() => Boolean)
-  showInGallery: boolean
-  
+  showInGallery: boolean;
+
   @Field(() => Boolean)
-  showInShop: boolean
+  showInShop: boolean;
 
-  @Field(() => Float, {nullable: true})
-  price?: number 
+  @Field(() => Float, { nullable: true })
+  price?: number;
 
-  @Field(() => String, {nullable: true})
-  description?: string 
+  @Field(() => MultiLangInput, { nullable: true })
+  description?: MultiLangInput;
 }

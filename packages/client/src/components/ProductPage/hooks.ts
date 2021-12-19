@@ -81,7 +81,10 @@ const createNewProduct = (): Product => ({
   id: uuid(),
   state: State.Draft,
   pictures: [],
-  title: "",
+  title: {
+    ru: "",
+    en: ""
+  },
   showInGallery: false,
   showInShop: false,
   coverId: undefined,

@@ -2,7 +2,10 @@
 
 fragment ProductCard on Product {
   id
-  title
+  title {
+    en
+    ru
+  }
   pictures {
     id
     ...ProductCardCover

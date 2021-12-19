@@ -44,6 +44,16 @@ type GalleryItem {
   width: Float!
 }
 
+type MultiLang {
+  en: String
+  ru: String
+}
+
+input MultiLangInput {
+  en: String
+  ru: String
+}
+
 type Mutation {
   publish: Build
   saveCrop(crop: CropInput!, id: ID!): Picture
@@ -72,26 +82,26 @@ input PointInput {
 type Product {
   cover: Picture!
   coverId: ID
-  description: String
+  description: MultiLang
   id: ID!
   pictures: [Picture!]!
   price: Float
   showInGallery: Boolean!
   showInShop: Boolean!
   state: State!
-  title: String
+  title: MultiLang
 }
 
 input ProductInput {
   coverId: ID
-  description: String
+  description: MultiLangInput
   id: ID!
   pictures: [ID!]!
   price: Float
   showInGallery: Boolean!
   showInShop: Boolean!
   state: State!
-  title: String
+  title: MultiLangInput
 }
 
 type Query {
@@ -111,11 +121,11 @@ type Query {
 
 type ShopItem {
   cover: Picture!
-  description: String
+  description: MultiLang
   id: ID!
   pictures: [Picture!]!
   price: Float!
-  title: String!
+  title: MultiLang
 }
 
 type Size {

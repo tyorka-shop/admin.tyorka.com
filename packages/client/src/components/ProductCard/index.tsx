@@ -20,7 +20,7 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
   return (
     <Link to={`/products/${product.id}`} className={b()}>
       <Cover picture={cover} />
-      <div className={b("title")}>{product.title}</div>
+      <div className={b("title")}>{product.title?.ru}</div>
     </Link>
   );
 };

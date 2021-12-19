@@ -16,14 +16,20 @@ export const useSubmit = (product: FormFragment) => {
       variables: {
         product: {
           id: product.id,
-          title: values.title,
+          title: {
+            ru: values.titleRu,
+            en: values.titleEn
+          },
           showInGallery: values.showInGallery,
           showInShop: values.showInShop,
           coverId: product.coverId || undefined,
           pictures: product.pictures.map((pic) => pic.id),
           state: State.Draft,
           price: +values.price,
-          description: values.description
+          description: {
+            en: values.descriptionEn,
+            ru: values.descriptionRu
+          }
         },
       },
       refetchQueries: [{query: productsQuery}, 'IsDraft']

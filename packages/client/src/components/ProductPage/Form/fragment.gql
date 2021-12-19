@@ -1,12 +1,18 @@
 #import '../Pic/fragment.gql'
 fragment Form on Product {
   id
-  title
+  title {
+    en
+    ru
+  }
   showInGallery
   showInShop
   coverId
   price
-  description
+  description {
+    en
+    ru
+  }
   pictures{
     id
     ...Pic
