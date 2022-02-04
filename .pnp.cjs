@@ -7215,6 +7215,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["@types/showdown", [
+        ["npm:1.9.4", {
+          "packageLocation": "./.yarn/cache/@types-showdown-npm-1.9.4-b4b3ce033b-bebf742fdf.zip/node_modules/@types/showdown/",
+          "packageDependencies": [
+            ["@types/showdown", "npm:1.9.4"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["@types/tmp", [
         ["npm:0.0.33", {
           "packageLocation": "./.yarn/cache/@types-tmp-npm-0.0.33-070918943f-b6963af740.zip/node_modules/@types/tmp/",
@@ -23851,6 +23860,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:10.17.60"],
             ["@types/qs", "npm:6.9.7"],
             ["@types/sharp", "npm:0.29.2"],
+            ["@types/showdown", "npm:1.9.4"],
             ["@types/uuid", "npm:8.3.1"],
             ["apollo-server", "virtual:2499dbb93d824027565d71b0716c4fb8b548ad61955d0a0286bfb3c5b4058e227894b6691d96808c00f576db14870018375210362c26ee321ea99fd6ed041c74#npm:3.4.0"],
             ["axios", "npm:0.24.0"],
@@ -23874,6 +23884,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["qs", "npm:6.10.1"],
             ["reflect-metadata", "npm:0.1.13"],
             ["sharp", "npm:0.30.0"],
+            ["showdown", "npm:2.0.0-alpha"],
             ["ts-node", "npm:7.0.1"],
             ["type-graphql", "virtual:2499dbb93d824027565d71b0716c4fb8b548ad61955d0a0286bfb3c5b4058e227894b6691d96808c00f576db14870018375210362c26ee321ea99fd6ed041c74#npm:1.1.1"],
             ["typedi", "npm:0.10.0"],
@@ -24036,6 +24047,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["glob", "npm:7.2.0"],
             ["interpret", "npm:1.4.0"],
             ["rechoir", "npm:0.6.2"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["showdown", [
+        ["npm:2.0.0-alpha", {
+          "packageLocation": "./.yarn/cache/showdown-npm-2.0.0-alpha-7f4d410d56-c9a1e53345.zip/node_modules/showdown/",
+          "packageDependencies": [
+            ["showdown", "npm:2.0.0-alpha"],
+            ["yargs", "npm:17.3.1"]
           ],
           "linkType": "HARD",
         }]
@@ -27111,6 +27132,20 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["yargs-parser", "npm:20.2.9"]
           ],
           "linkType": "HARD",
+        }],
+        ["npm:17.3.1", {
+          "packageLocation": "./.yarn/cache/yargs-npm-17.3.1-26b02c35fd-64fc2e32c5.zip/node_modules/yargs/",
+          "packageDependencies": [
+            ["yargs", "npm:17.3.1"],
+            ["cliui", "npm:7.0.4"],
+            ["escalade", "npm:3.1.1"],
+            ["get-caller-file", "npm:2.0.5"],
+            ["require-directory", "npm:2.1.1"],
+            ["string-width", "npm:4.2.3"],
+            ["y18n", "npm:5.0.8"],
+            ["yargs-parser", "npm:21.0.0"]
+          ],
+          "linkType": "HARD",
         }]
       ]],
       ["yargs-parser", [
@@ -27127,6 +27162,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/yargs-parser-npm-20.2.9-a1d19e598d-8bb69015f2.zip/node_modules/yargs-parser/",
           "packageDependencies": [
             ["yargs-parser", "npm:20.2.9"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:21.0.0", {
+          "packageLocation": "./.yarn/cache/yargs-parser-npm-21.0.0-d564c0a5d4-1e205fca1c.zip/node_modules/yargs-parser/",
+          "packageDependencies": [
+            ["yargs-parser", "npm:21.0.0"]
           ],
           "linkType": "HARD",
         }]

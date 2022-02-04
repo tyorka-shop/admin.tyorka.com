@@ -83,6 +83,7 @@ type Product {
   cover: Picture!
   coverId: ID
   description: MultiLang
+  descriptionHTML: MultiLang!
   id: ID!
   pictures: [Picture!]!
   price: Float
@@ -122,6 +123,7 @@ type Query {
 type ShopItem {
   cover: Picture!
   description: MultiLang
+  descriptionHTML: MultiLang!
   id: ID!
   pictures: [Picture!]!
   price: Float!
