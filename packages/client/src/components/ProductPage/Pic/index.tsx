@@ -26,7 +26,7 @@ export const Pic: React.FC<Props> = ({
   if (!children) {
     return null;
   }
-  const src = useImage(children.src);
+  const src = useImage(children.src, 'small');
   return (
     <div className={b()}>
       <img src={src} {...props} draggable />
