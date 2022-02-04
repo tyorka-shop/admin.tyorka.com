@@ -20,7 +20,7 @@ export const Cover: React.FC<Props> = ({ picture }) => {
   
   const { crop } = picture;
 
-  const src = useImage(picture.src);
+  const src = useImage(picture.src, 'small');
 
   return (
     <div

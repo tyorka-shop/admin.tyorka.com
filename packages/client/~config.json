@@ -1,8 +1,8 @@
 {
-  "imagesUrl": "",
-  "backendUrl": "",
+  "imagesUrl": "http://localhost:3000/static/images",
+  "backendUrl": "http://localhost:3000",
   "siwg": {
     "client_id": "",
-    "login_uri": ""
+    "login_uri": "http://localhost:3000/login"
   }
 }

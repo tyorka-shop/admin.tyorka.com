@@ -1,0 +1,8 @@
+#!/bin/sh
+mkdir images
+mkdir store
+mkdir jwt-key
+ssh-keygen -t rsa -P "" -b 4096 -m PEM -f ./jwt-key/private.key
+ssh-keygen -e -m PEM -f ./jwt-key/private.key > ./jwt-key/public.key
+
+cp ~config.json config.json

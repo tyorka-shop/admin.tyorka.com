@@ -9,6 +9,7 @@ import { Container } from 'typedi'
 import { getSize, resize } from "../image-processing";
 import { Store } from "../store";
 import { Config } from "../config";
+import {IMAGE_SIZES } from '../consts'
 import { checkAuthMiddleware } from "../middleware/checkAuth";
 
 export const router = new Router({
@@ -65,7 +66,7 @@ router.post("/", checkAuth, mw, async (ctx) => {
 
   const fullPathname = resolve(config.imagesFolder, filename);
 
-  await resize(fullPathname, [200, 600]);
+  await resize(fullPathname, IMAGE_SIZES);
 
   const { width, height, dominantColor } = await getSize(fullPathname);
   const store = Container.get(Store);

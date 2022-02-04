@@ -17,7 +17,7 @@ export const GalleryImage: React.FC<Props> = ({ src, ...props }) => {
 
   return (
     <div className={b()}>
-      <img className={b("img")} src={useImage(src)} {...props} />
+      <img className={b("img")} src={useImage(src, 'small')} {...props} />
     </div>
   );
 };
