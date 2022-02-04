@@ -13,7 +13,7 @@ const processImages = async (path: string, sizes: number[]) => {
     (promise, origin) =>
       promise.then(async () => {
         console.log('File:', origin)
-        await resize(join(path, origin), sizes).catch(e => console.log(e));
+        await resize(join(path, origin), sizes).catch(e => console.log(e.message));
       }),
     Promise.resolve()
   );
