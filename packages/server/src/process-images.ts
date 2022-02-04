@@ -9,7 +9,14 @@ import { IMAGE_SIZES } from "./consts";
 const processImages = async (path: string, sizes: number[]) => {
   const files = await fs.readdir(path);
   const origins = files.filter((file) => !file.match(/_\d+\./));
-  await Promise.all(origins.map((origin) => resize(join(path, origin), sizes)));
+  await origins.reduce(
+    (promise, origin) =>
+      promise.then(async () => {
+        console.log('File:', origin)
+        await resize(join(path, origin), sizes);
+      }),
+    Promise.resolve()
+  );
 };
 
 export const init = async () => {
