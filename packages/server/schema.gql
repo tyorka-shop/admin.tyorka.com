@@ -65,6 +65,7 @@ type Picture {
   color: String!
   crop: Crop!
   id: ID!
+  inline: String!
   originalSize: Size!
   src: String!
 }

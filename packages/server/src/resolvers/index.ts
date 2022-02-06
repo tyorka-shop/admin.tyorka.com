@@ -10,6 +10,7 @@ import { MutationsResolver } from "./Mutations";
 import { ProductResolver } from "./Product";
 import { ShopItemResolver } from "./ShopItem";
 import { checkAuthMiddleware } from "../middleware/checkAuth";
+import { PictureResolver } from "./Picture";
 
 const unauthorizedError = {
   errors: [{ message: "Unauthorized" }],
@@ -23,6 +24,7 @@ export const bootstrap = async () => {
       MutationsResolver,
       ProductResolver,
       ShopItemResolver,
+      PictureResolver
     ],
     container: Container,
     emitSchemaFile: true,
