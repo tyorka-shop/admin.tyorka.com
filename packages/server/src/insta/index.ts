@@ -19,7 +19,7 @@ export async function syncPosts() {
   const processed = await Promise.all(
     posts.map(async (post): Promise<InstaPost> => {
       const filename = await downloadMedia(post);
-      const cropped = await crop(filename, [600]);
+      await crop(filename, [600]);
       const color = await getDominantColor(filename);
       return {
         id: post.id,
