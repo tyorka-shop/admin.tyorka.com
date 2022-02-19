@@ -29,7 +29,7 @@ export const getDominantColor = async (filename: string) => {
   return rgbToHex(stats.dominant!);
 };
 
-export const crop = (filename: string, size: number): Promise<string> =>
+export const crop_depr = (filename: string, size: number): Promise<string> =>
   new Promise((resolve, reject) => {
     const transformer = sharp().resize({
       width: size,
@@ -51,6 +51,22 @@ export const crop = (filename: string, size: number): Promise<string> =>
       .on("close", () => resolve(outputFilename))
       .on("error", reject);
   });
+
+const cropSingle = (filename: string, width: number) => {
+  const { dir, name, ext } = path.parse(filename);
+  const outputFilename = path.join(dir, `${name}_${width}${ext}`);
+  return sharp(filename, { failOnError: false })
+    .resize({
+      width,
+      height: width,
+      position: "centre",
+      fit: "cover",
+    })
+    .toFile(outputFilename);
+};
+
+export const crop = (filename: string, widths: number[]) =>
+  Promise.all(widths.map(width => cropSingle(filename, width)))
 
 interface Color {
   r: number;
