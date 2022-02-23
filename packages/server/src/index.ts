@@ -7,7 +7,6 @@ import cors from "@koa/cors";
 import { Config } from "./config";
 import { setupConfig } from "./config";
 import { router as uploadRouter } from "./routes/upload";
-import { router as loginRouter } from "./routes/login";
 import { bootstrap } from "./resolvers";
 
 const app = new Koa();
@@ -37,7 +36,6 @@ app.on("error", (err, ctx) => {
 });
 
 app.use(uploadRouter.routes());
-app.use(loginRouter.routes());
 
 const main = async () => {
   await setupConfig();

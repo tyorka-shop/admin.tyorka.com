@@ -5,18 +5,11 @@
 
 export interface ConfigIndex {
   builderToken: string;
-  client_url: string;
-  google_sign_in_button: GoogleSignInButtonConfig;
-  granted_emails: string[];
   imagesFolder: string;
   insta: InstaConfig;
-  jwt: JWTConfig;
   publicSite: PublicSiteConfig;
+  sessionService: SessionServiceConfig;
   storeFolder: string;
-}
-
-export interface GoogleSignInButtonConfig {
-  client_id: string;
 }
 
 export interface InstaConfig {
@@ -24,14 +17,10 @@ export interface InstaConfig {
   instagram_id: string;
 }
 
-export interface JWTConfig {
-  cert?: string;
-  privateKey?: string;
-  private_key_filename: string;
-  public_key_filename: string;
-  token_lifespan: number;
-}
-
 export interface PublicSiteConfig {
   folder: string;
+}
+
+export interface SessionServiceConfig {
+  url: string;
 }

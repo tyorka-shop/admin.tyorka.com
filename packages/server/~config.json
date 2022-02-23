@@ -1,19 +1,15 @@
 {
   "storeFolder": "./store",
   "imagesFolder": "./images",
-  "jwt": {
-    "private_key_filename": "./jwt-key/private.key",
-    "public_key_filename": "./jwt-key/public.key",
-    "token_lifespan": 86400
-  },
-  "google_sign_in_button": {
-    "client_id": ""
-  },
-  "granted_emails": [],
-  "client_url": "http://localhost:8000",
   "insta": {
     "instagram_id": "",
-    "access_token": "",
-    "cron": "* 0 * * *"
-  }
+    "access_token": ""
+  },
+  "sessionService": {
+    "url": "https://session.tyorka.com"
+  },
+  "publicSite": {
+    "folder": "/var/www/tyorka.com"
+  },
+  "builderToken": ""
 }

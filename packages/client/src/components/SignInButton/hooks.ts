@@ -44,6 +44,7 @@ const init = async (config: Config["siwg"], callback: () => void) => {
     // @ts-ignore
     window.google.accounts.id.initialize({
       ...config,
+      login_uri: config.login_uri + '?returnTo='+encodeURIComponent('http://localhost:8000'),
       ux_mode: "redirect",
     });
     initialized = true;

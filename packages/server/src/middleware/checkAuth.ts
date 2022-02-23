@@ -1,8 +1,8 @@
 import Koa from "koa";
 import Container from "typedi";
-import { Auth } from "../auth";
 import { Config } from "../config";
 import { timingSafeEqual } from "crypto";
+import { SessionServiceClient } from "../clients/session";
 
 export const checkAuthMiddleware =
   (onFailure: (ctx: Koa.Context) => void): Koa.Middleware =>
@@ -22,11 +22,17 @@ export const checkAuthMiddleware =
       return;
     }
 
-    const auth = Container.get(Auth);
-    const payload = await auth.extract(ctx);
-    if (!payload) {
+    const sessionService = Container.get(SessionServiceClient);
+
+    const token = ctx.cookies.get("access_token");
+    if (!token) {
       return onFailure(ctx);
     }
+    const payload = await sessionService.verify(token)
+    if(!payload){
+      return onFailure(ctx);
+    }
+
     ctx.state.user = payload;
     await next();
   };
