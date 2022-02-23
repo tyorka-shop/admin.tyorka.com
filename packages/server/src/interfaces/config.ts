@@ -7,6 +7,7 @@ export interface ConfigIndex {
   builderToken: string;
   imagesFolder: string;
   insta: InstaConfig;
+  port: string;
   publicSite: PublicSiteConfig;
   sessionService: SessionServiceConfig;
   storeFolder: string;

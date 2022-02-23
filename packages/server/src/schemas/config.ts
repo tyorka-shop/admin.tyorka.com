@@ -20,5 +20,6 @@ export const ConfigSchema = Joi.object<ConfigIndex>({
   imagesFolder: Joi.string().required(),
   builderToken: Joi.string().required(),
   insta: InstaConfigSchema.required(),
-  publicSite: PublicSiteSchema.required()
+  publicSite: PublicSiteSchema.required(),
+  port: Joi.string().required()
 }).meta({className: 'ConfigIndex'})

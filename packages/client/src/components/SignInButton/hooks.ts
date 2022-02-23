@@ -7,10 +7,10 @@ let initialized = false;
 export const useButton = () => {
   const container = React.createRef<HTMLDivElement>();
   const [inited, setInited] = useState(false);
-  const { siwg } = useConfig();
+  const { siwg, publicUrl } = useConfig();
 
   useEffect(() => {
-    init(siwg, () => setInited(true));
+    init(siwg, publicUrl, () => setInited(true));
   }, []);
 
   useEffect(() => {
@@ -38,13 +38,13 @@ const loadScript = async (src: string) =>
     document.head.appendChild(js);
   });
 
-const init = async (config: Config["siwg"], callback: () => void) => {
+const init = async (config: Config["siwg"], publicUrl: string, callback: () => void) => {
   if (!initialized) {
     await loadScript("https://accounts.google.com/gsi/client");
     // @ts-ignore
     window.google.accounts.id.initialize({
       ...config,
-      login_uri: config.login_uri + '?returnTo='+encodeURIComponent('http://localhost:8000'),
+      login_uri: config.login_uri + '?returnTo='+encodeURIComponent(publicUrl),
       ux_mode: "redirect",
     });
     initialized = true;

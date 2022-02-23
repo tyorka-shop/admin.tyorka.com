@@ -18,4 +18,5 @@ export interface Config {
     client_id: string,
     login_uri: string
   }
+  publicUrl: string
 }

@@ -11,5 +11,6 @@
   "publicSite": {
     "folder": "/var/www/tyorka.com"
   },
-  "builderToken": ""
+  "builderToken": "",
+  "port": "3000"
 }

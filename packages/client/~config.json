@@ -4,5 +4,6 @@
   "siwg": {
     "client_id": "",
     "login_uri": "http://localhost:3000/login"
-  }
+  },
+  "publicUrl": "http://localhost:8000"
 }

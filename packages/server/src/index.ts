@@ -38,16 +38,15 @@ app.on("error", (err, ctx) => {
 app.use(uploadRouter.routes());
 
 const main = async () => {
-  await setupConfig();
-  const { imagesFolder } = Container.get<Config>("config");
+  const { imagesFolder, port } = await setupConfig();
 
   app.use(mount("/static/images", serve(imagesFolder)));
 
   const mw = await bootstrap();
   app.use(mount("/graphql", mw));
 
-  app.listen(3000);
-  console.log("listening on port 3000");
+  app.listen(port);
+  console.log(`api.tyorka.com listening on port ${port}`);
 };
 
 main();

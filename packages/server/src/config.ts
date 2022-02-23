@@ -4,12 +4,7 @@ import { join } from "path";
 import { ConfigSchema } from "./schemas/config";
 import { ConfigIndex } from "./interfaces/config";
 
-export type Config = Omit<ConfigIndex, "jwt"> & {
-  jwt: ConfigIndex["jwt"] & {
-    privateKey: string;
-    cert: string;
-  };
-};
+export type Config = ConfigIndex;
 
 const loadConfig = async (): Promise<Config> => {
   const filename = join(process.cwd(), "config.json");
@@ -24,16 +19,11 @@ const loadConfig = async (): Promise<Config> => {
     throw new Error("Invalid config file");
   }
 
-  return {
-    ...config,
-    jwt: {
-      ...config.jwt,
-      privateKey: await fs.readFile(config.jwt.private_key_filename, "utf8"),
-      cert: await fs.readFile(config.jwt.public_key_filename, "utf8"),
-    },
-  };
+  return config;
 };
 
 export const setupConfig = async () => {
-  Container.set("config", await loadConfig());
+  const config = await loadConfig();
+  Container.set("config", config);
+  return config;
 };
