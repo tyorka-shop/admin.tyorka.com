@@ -6288,6 +6288,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@hapi/hoek", "npm:9.2.1"]
           ],
           "linkType": "HARD",
+        }],
+        ["npm:4.1.3", {
+          "packageLocation": "./.yarn/cache/@sideway-address-npm-4.1.3-cfd7949080-3c1faf6ef3.zip/node_modules/@sideway/address/",
+          "packageDependencies": [
+            ["@sideway/address", "npm:4.1.3"],
+            ["@hapi/hoek", "npm:9.2.1"]
+          ],
+          "linkType": "HARD",
         }]
       ]],
       ["@sideway/formula", [
@@ -17612,6 +17620,40 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@sideway/pinpoint", "npm:2.0.0"]
           ],
           "linkType": "HARD",
+        }],
+        ["npm:17.6.0", {
+          "packageLocation": "./.yarn/cache/joi-npm-17.6.0-987ef6515f-eaf62f6c02.zip/node_modules/joi/",
+          "packageDependencies": [
+            ["joi", "npm:17.6.0"],
+            ["@hapi/hoek", "npm:9.2.1"],
+            ["@hapi/topo", "npm:5.1.0"],
+            ["@sideway/address", "npm:4.1.3"],
+            ["@sideway/formula", "npm:3.0.0"],
+            ["@sideway/pinpoint", "npm:2.0.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["joi-to-typescript", [
+        ["npm:3.0.3", {
+          "packageLocation": "./.yarn/cache/joi-to-typescript-npm-3.0.3-a44e41a4e5-212642e334.zip/node_modules/joi-to-typescript/",
+          "packageDependencies": [
+            ["joi-to-typescript", "npm:3.0.3"]
+          ],
+          "linkType": "SOFT",
+        }],
+        ["virtual:2499dbb93d824027565d71b0716c4fb8b548ad61955d0a0286bfb3c5b4058e227894b6691d96808c00f576db14870018375210362c26ee321ea99fd6ed041c74#npm:3.0.3", {
+          "packageLocation": "./.yarn/__virtual__/joi-to-typescript-virtual-014fc6011a/0/cache/joi-to-typescript-npm-3.0.3-a44e41a4e5-212642e334.zip/node_modules/joi-to-typescript/",
+          "packageDependencies": [
+            ["joi-to-typescript", "virtual:2499dbb93d824027565d71b0716c4fb8b548ad61955d0a0286bfb3c5b4058e227894b6691d96808c00f576db14870018375210362c26ee321ea99fd6ed041c74#npm:3.0.3"],
+            ["@types/joi", null],
+            ["joi", "npm:17.6.0"]
+          ],
+          "packagePeers": [
+            "@types/joi",
+            "joi"
+          ],
+          "linkType": "HARD",
         }]
       ]],
       ["js-tokens", [
@@ -23870,6 +23912,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["formidable", "npm:2.0.1"],
             ["google-auth-library", "npm:7.10.2"],
             ["graphql-tools", "virtual:2499dbb93d824027565d71b0716c4fb8b548ad61955d0a0286bfb3c5b4058e227894b6691d96808c00f576db14870018375210362c26ee321ea99fd6ed041c74#npm:8.2.0"],
+            ["joi", "npm:17.6.0"],
+            ["joi-to-typescript", "virtual:2499dbb93d824027565d71b0716c4fb8b548ad61955d0a0286bfb3c5b4058e227894b6691d96808c00f576db14870018375210362c26ee321ea99fd6ed041c74#npm:3.0.3"],
             ["jsonwebtoken", "npm:8.5.1"],
             ["koa", "npm:2.13.4"],
             ["koa-body", "npm:4.2.0"],

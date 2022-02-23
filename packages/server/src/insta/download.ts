@@ -28,10 +28,9 @@ export const downloadMedia = async (post: Post): Promise<string> => {
 };
 
 const download = async (url: string, filename: string) => {
+  const { imagesFolder } = Container.get<Config>("config");
 
-  const { imagesFolder } = Container.get<Config>('config');
-
-  const outputFilename = join(imagesFolder, filename)
+  const outputFilename = join(imagesFolder, filename);
   const writer = fs.createWriteStream(outputFilename);
 
   try {

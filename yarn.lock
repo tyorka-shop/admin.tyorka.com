@@ -2985,6 +2985,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sideway/address@npm:^4.1.3":
+  version: 4.1.3
+  resolution: "@sideway/address@npm:4.1.3"
+  dependencies:
+    "@hapi/hoek": ^9.0.0
+  checksum: 3c1faf6ef37a0b59b62ce42b59c012c00ef1fc4194ad6776c65c2f9a6dd6c1710c6f6362b3ca3fa582fdb93984f0cb64ca44f9f5e02940634805f5e561279c22
+  languageName: node
+  linkType: hard
+
 "@sideway/formula@npm:^3.0.0":
   version: 3.0.0
   resolution: "@sideway/formula@npm:3.0.0"
@@ -12175,6 +12184,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"joi-to-typescript@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "joi-to-typescript@npm:3.0.3"
+  peerDependencies:
+    joi: 17.x
+  checksum: 212642e3348c075c6a7010b934b8784116faf582ae0f8a477e6059a532087da300acacc4ce24c88e0885fa02bdc99c0390042dbbd3d8c042e27ae60149694c94
+  languageName: node
+  linkType: hard
+
 "joi@npm:^17.2.1, joi@npm:^17.4.0, joi@npm:^17.4.2":
   version: 17.4.2
   resolution: "joi@npm:17.4.2"
@@ -12185,6 +12203,19 @@ __metadata:
     "@sideway/formula": ^3.0.0
     "@sideway/pinpoint": ^2.0.0
   checksum: 977ada1f9d38c2762689b61cec1272176968ccea731a16b71713ebaa067f140460e0b6f7eccff6fc12206fddce22e7f4ed74724651bc1b24b1e26d43280633d0
+  languageName: node
+  linkType: hard
+
+"joi@npm:^17.6.0":
+  version: 17.6.0
+  resolution: "joi@npm:17.6.0"
+  dependencies:
+    "@hapi/hoek": ^9.0.0
+    "@hapi/topo": ^5.0.0
+    "@sideway/address": ^4.1.3
+    "@sideway/formula": ^3.0.0
+    "@sideway/pinpoint": ^2.0.0
+  checksum: eaf62f6c02f2edb1042f1ab04fc23a5918a2cb8f54bec84c6e1033624d8a462c10ae9518af55a3ba84f1793960450d58094eda308e7ef93c17edd4e3c8ef31d5
   languageName: node
   linkType: hard
 
@@ -17353,6 +17384,8 @@ __metadata:
     formidable: ^2.0.1
     google-auth-library: ^7.10.2
     graphql-tools: ^8.2.0
+    joi: ^17.6.0
+    joi-to-typescript: ^3.0.3
     jsonwebtoken: ^8.5.1
     koa: ^2.6.2
     koa-body: ^4.0.4

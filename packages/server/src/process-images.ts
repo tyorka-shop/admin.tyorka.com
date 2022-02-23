@@ -2,7 +2,8 @@ import "reflect-metadata";
 import { promises as fs } from "fs";
 import { join } from "path";
 import Container from "typedi";
-import { Config, setupConfig } from "./config";
+import { Config } from "./config";
+import { setupConfig } from "./config";
 import { resize } from "./image-processing";
 import { IMAGE_SIZES } from "./consts";
 
@@ -12,8 +13,10 @@ const processImages = async (path: string, sizes: number[]) => {
   await origins.reduce(
     (promise, origin) =>
       promise.then(async () => {
-        console.log('File:', origin)
-        await resize(join(path, origin), sizes).catch(e => console.log(e.message));
+        console.log("File:", origin);
+        await resize(join(path, origin), sizes).catch((e) =>
+          console.log(e.message)
+        );
       }),
     Promise.resolve()
   );

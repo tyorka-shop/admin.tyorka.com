@@ -1,5 +1,5 @@
 import Container from "typedi";
-import {basename } from 'path'
+import { basename } from "path";
 import { Config } from "../config";
 import { crop, getDominantColor } from "../image-processing";
 import { Store } from "../store";

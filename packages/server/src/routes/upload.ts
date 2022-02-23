@@ -5,20 +5,20 @@ import { extname, resolve } from "path";
 import Router from "@koa/router";
 import koaBody from "koa-body";
 import type { Files, File } from "formidable";
-import { Container } from 'typedi'
+import { Container } from "typedi";
 import { getSize, resize } from "../image-processing";
 import { Store } from "../store";
 import { Config } from "../config";
-import {IMAGE_SIZES } from '../consts'
+import { IMAGE_SIZES } from "../consts";
 import { checkAuthMiddleware } from "../middleware/checkAuth";
 
 export const router = new Router({
   prefix: "/upload",
 });
 
-const checkAuth = checkAuthMiddleware(ctx => {
+const checkAuth = checkAuthMiddleware((ctx) => {
   ctx.status = 401;
-})
+});
 
 const mw = koaBody({
   multipart: true,
@@ -41,7 +41,7 @@ const storeFile = async (name: string, path: string) => {
   const hash = createHash("md5");
   hash.update(content);
   const newFilename = `${hash.digest("hex")}${extname(name)}`;
-  const config = Container.get<Config>('config');
+  const config = Container.get<Config>("config");
   const newPath = resolve(config.imagesFolder, newFilename);
 
   await fs.writeFile(newPath, content);
@@ -62,7 +62,7 @@ router.post("/", checkAuth, mw, async (ctx) => {
 
   const filename = await storeFile(name, path);
 
-  const config = Container.get<Config>('config');
+  const config = Container.get<Config>("config");
 
   const fullPathname = resolve(config.imagesFolder, filename);
 
