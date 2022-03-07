@@ -6772,6 +6772,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"commander@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "commander@npm:9.0.0"
+  checksum: 15066e433d528315ded8261d16bc600d1f3c5671c75021e685ae67e4d62f7551243ff28411b28dc0a6f8b23c2a0f033550ec6f3e66bdf9d11a4fdc2d33dd9802
+  languageName: node
+  linkType: hard
+
 "common-tags@npm:1.8.0, common-tags@npm:^1.5.1, common-tags@npm:^1.8.0":
   version: 1.8.0
   resolution: "common-tags@npm:1.8.0"
@@ -10245,7 +10252,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:7.2.0, glob@npm:^7.0.0, glob@npm:^7.1.1, glob@npm:^7.1.2, glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6, glob@npm:^7.1.7":
+"glob@npm:7.2.0, glob@npm:^7.0.0, glob@npm:^7.1.1, glob@npm:^7.1.2, glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6, glob@npm:^7.1.7, glob@npm:^7.2.0":
   version: 7.2.0
   resolution: "glob@npm:7.2.0"
   dependencies:
@@ -12434,7 +12441,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json5@npm:^2.1.2":
+"json5@npm:^2.1.2, json5@npm:^2.2.0":
   version: 2.2.0
   resolution: "json5@npm:2.2.0"
   dependencies:
@@ -17190,7 +17197,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"safe-stable-stringify@npm:^2.2.0":
+"safe-stable-stringify@npm:^2.2.0, safe-stable-stringify@npm:^2.3.1":
   version: 2.3.1
   resolution: "safe-stable-stringify@npm:2.3.1"
   checksum: a0a0bad0294c3e2a9d1bf3cf2b1096dfb83c162d09a5e4891e488cce082120bd69161d2a92aae7fc48255290f17700decae9c89a07fe139794e61b5c8b411377
@@ -17466,6 +17473,7 @@ __metadata:
     reflect-metadata: ^0.1.13
     sharp: ^0.30.0
     showdown: ^2.0.0-alpha
+    ts-json-schema-generator: ^0.98.0
     ts-node: ^7.0.1
     type-graphql: ^1.1.1
     typedi: ^0.10.0
@@ -18841,6 +18849,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ts-json-schema-generator@npm:^0.98.0":
+  version: 0.98.0
+  resolution: "ts-json-schema-generator@npm:0.98.0"
+  dependencies:
+    "@types/json-schema": ^7.0.9
+    commander: ^9.0.0
+    glob: ^7.2.0
+    json5: ^2.2.0
+    safe-stable-stringify: ^2.3.1
+    typescript: ~4.5.4
+  bin:
+    ts-json-schema-generator: bin/ts-json-schema-generator
+  checksum: a00eef4a4a9c58e7b400c9345df7076beced370763969c29e00201000bc97b163aadde86218e5d6eaddc7273c401ad876e58c6b181d93a002070fcaf385ad418
+  languageName: node
+  linkType: hard
+
 "ts-log@npm:^2.2.3":
   version: 2.2.4
   resolution: "ts-log@npm:2.2.4"
@@ -19179,7 +19203,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:~4.5.0":
+"typescript@npm:~4.5.0, typescript@npm:~4.5.4":
   version: 4.5.5
   resolution: "typescript@npm:4.5.5"
   bin:
@@ -19199,7 +19223,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@~4.5.0#~builtin<compat/typescript>":
+"typescript@patch:typescript@~4.5.0#~builtin<compat/typescript>, typescript@patch:typescript@~4.5.4#~builtin<compat/typescript>":
   version: 4.5.5
   resolution: "typescript@patch:typescript@npm%3A4.5.5#~builtin<compat/typescript>::version=4.5.5&hash=ddd1e8"
   bin:

@@ -2,7 +2,8 @@
   "name": "tyorka-admin",
   "scripts": {
     "start": "concurrently \"yarn workspace client start\" \"yarn workspace server start\"",
-    "build": "yarn workspace server build && yarn workspace client build"
+    "build": "yarn workspace server build && yarn workspace client build",
+    "generate:json-schema": "typescript-json-schema ./packages/server/tsconfig.json ConfigIndex > config.schema.json"
   },
   "private": true,
   "packageManager": "yarn@3.1.0",

@@ -5,7 +5,8 @@
     "sync-instagram": "node -r ts-node/register ./src/tasks.ts",
     "process-images": "node -r ts-node/register ./src/process-images.ts",
     "build": "tsc",
-    "generate:schema": "ts-node scripts/types.ts"
+    "generate:schema": "ts-node scripts/types.ts && yarn generate:json-schema",
+    "generate:json-schema": "ts-json-schema-generator --path './src/interfaces/config.ts' --type ConfigIndex --no-top-ref --additional-properties -o config.schema.json"
   },
   "packageManager": "yarn@3.1.0",
   "devDependencies": {
@@ -56,6 +57,7 @@
     "reflect-metadata": "^0.1.13",
     "sharp": "^0.30.0",
     "showdown": "^2.0.0-alpha",
+    "ts-json-schema-generator": "^0.98.0",
     "type-graphql": "^1.1.1",
     "typedi": "^0.10.0",
     "uuid": "^8.1.0"

@@ -11009,6 +11009,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["commander", "npm:7.2.0"]
           ],
           "linkType": "HARD",
+        }],
+        ["npm:9.0.0", {
+          "packageLocation": "./.yarn/cache/commander-npm-9.0.0-b4ddcedf46-15066e433d.zip/node_modules/commander/",
+          "packageDependencies": [
+            ["commander", "npm:9.0.0"]
+          ],
+          "linkType": "HARD",
         }]
       ]],
       ["common-tags", [
@@ -24010,6 +24017,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["reflect-metadata", "npm:0.1.13"],
             ["sharp", "npm:0.30.0"],
             ["showdown", "npm:2.0.0-alpha"],
+            ["ts-json-schema-generator", "npm:0.98.0"],
             ["ts-node", "npm:7.0.1"],
             ["type-graphql", "virtual:2499dbb93d824027565d71b0716c4fb8b548ad61955d0a0286bfb3c5b4058e227894b6691d96808c00f576db14870018375210362c26ee321ea99fd6ed041c74#npm:1.1.1"],
             ["typedi", "npm:0.10.0"],
@@ -25571,6 +25579,21 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["ts-invariant", "npm:0.9.3"],
             ["tslib", "npm:2.3.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["ts-json-schema-generator", [
+        ["npm:0.98.0", {
+          "packageLocation": "./.yarn/cache/ts-json-schema-generator-npm-0.98.0-1561b7262b-a00eef4a4a.zip/node_modules/ts-json-schema-generator/",
+          "packageDependencies": [
+            ["ts-json-schema-generator", "npm:0.98.0"],
+            ["@types/json-schema", "npm:7.0.9"],
+            ["commander", "npm:9.0.0"],
+            ["glob", "npm:7.2.0"],
+            ["json5", "npm:2.2.0"],
+            ["safe-stable-stringify", "npm:2.3.1"],
+            ["typescript", "patch:typescript@npm%3A4.5.5#~builtin<compat/typescript>::version=4.5.5&hash=ddd1e8"]
           ],
           "linkType": "HARD",
         }]

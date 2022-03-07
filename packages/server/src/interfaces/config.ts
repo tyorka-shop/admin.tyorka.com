@@ -4,11 +4,11 @@
  */
 
 export interface ConfigIndex {
-  builderToken: string;
   imagesFolder: string;
   insta: InstaConfig;
   port: string;
   publicSite: PublicSiteConfig;
+  secret: string;
   sessionService: SessionServiceConfig;
   storeFolder: string;
 }

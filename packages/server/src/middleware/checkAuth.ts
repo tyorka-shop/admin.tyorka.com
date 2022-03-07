@@ -8,13 +8,14 @@ export const checkAuthMiddleware =
   (onFailure: (ctx: Koa.Context) => void): Koa.Middleware =>
   async (ctx, next) => {
     const config = Container.get<Config>("config");
-    const builderToken = ctx.header["x-auth"];
+    const secret = ctx.header["x-auth"];
 
     if (
-      typeof builderToken === "string" &&
+      typeof secret === "string" &&
+      secret.length === config.secret.length &&
       timingSafeEqual(
-        Buffer.from(builderToken, "utf-8"),
-        Buffer.from(config.builderToken, "utf-8")
+        Buffer.from(secret, "utf-8"),
+        Buffer.from(config.secret, "utf-8")
       )
     ) {
       ctx.state.user = { email: "builder@tyorka.com" };

@@ -18,7 +18,7 @@ export const ConfigSchema = Joi.object<ConfigIndex>({
   sessionService: SessionServiceConfigSchema.required(),
   storeFolder: Joi.string().required(),
   imagesFolder: Joi.string().required(),
-  builderToken: Joi.string().required(),
+  secret: Joi.string().required(),
   insta: InstaConfigSchema.required(),
   publicSite: PublicSiteSchema.required(),
   port: Joi.string().required()

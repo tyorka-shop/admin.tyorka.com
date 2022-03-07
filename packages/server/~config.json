@@ -1,4 +1,5 @@
 {
+  "$schema": "./config.schema.json",
   "storeFolder": "./store",
   "imagesFolder": "./images",
   "insta": {
@@ -11,6 +12,6 @@
   "publicSite": {
     "folder": "/var/www/tyorka.com"
   },
-  "builderToken": "",
+  "secret": "secret",
   "port": "3000"
 }
