@@ -6,7 +6,7 @@ import { useDrag } from "../../../hooks/useDrag";
 import { Pic } from "../Pic";
 import { PicFragment } from "../Pic/fragment.types";
 import { useConfig } from "../../../hooks/useConfig";
-import { useDropzone } from './hooks'
+import { useDropzone } from "./hooks";
 
 import "./index.scss";
 
@@ -31,12 +31,14 @@ export const Pics: React.FC<Props> = ({
   onCropClick,
   onReorderPics,
 }) => {
-  const { order, dragStart, dragEnd, picked, dragEnter } =
-    useDrag(children.map(pic => pic.id), onReorderPics);
-  
-  const { backendUrl } = useConfig()
+  const { order, dragStart, dragEnd, picked, dragEnter } = useDrag(
+    children.map((pic) => pic.id),
+    onReorderPics
+  );
 
-  const { isExpanded } = useDropzone()
+  const { backendUrl } = useConfig();
+
+  const { isExpanded } = useDropzone();
 
   return (
     <div className={b()}>
@@ -53,19 +55,18 @@ export const Pics: React.FC<Props> = ({
             onDragEnd={dragEnd}
             onDragEnter={dragEnter}
           >
-            {children.find(pic => pic.id === id)}
+            {children.find((pic) => pic.id === id)}
           </Pic>
         ))}
       </div>
-      <div className={b("uploader", {active: isExpanded})}>
+      <div className={b("uploader", { active: isExpanded })}>
         <Uploader
           action={`${backendUrl}/upload`}
           draggable
           onSuccess={onAdd}
           multiple
-          accept='image/jpeg,image/png,image/jpg'
+          accept="image/jpeg,image/png,image/jpg"
           withCredentials
-
         >
           <div>Drag pictures here</div>
         </Uploader>

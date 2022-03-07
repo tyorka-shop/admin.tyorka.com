@@ -2,8 +2,10 @@ import React from "react";
 export const useDropzone = () => {
   const [isExpanded, setExpanded] = React.useState(false);
 
-  const onDragOver = () => {
-    setExpanded(true);
+  const onDragOver = (e: DragEvent) => {
+    if (e.dataTransfer?.items[0].kind === "file") {
+      setExpanded(true);
+    }
   };
 
   const onDragEnd = () => {
