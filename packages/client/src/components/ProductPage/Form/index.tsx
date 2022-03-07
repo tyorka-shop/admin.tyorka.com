@@ -1,19 +1,21 @@
 import * as React from "react";
 import { Form, Button, ButtonToolbar } from "rsuite";
 import { Form as RForm } from "react-final-form";
-import b_ from 'b_';
+import ReactMarkdown from "react-markdown";
+import b_ from "b_";
 import { Picture } from "../../../types";
 import { Input } from "../../Input";
 import { Textarea } from "../../Textarea";
 import { Checkbox } from "../../Checkbox";
-import { createValidator, required} from '../../../libs/validation'
+import { createValidator, required } from "../../../libs/validation";
 import { Pics } from "../Pics";
 import { useSubmit } from "./hooks";
-import { FormFragment } from './fragment.types'
+import { FormFragment } from "./fragment.types";
 
 import "./index.scss";
+import { Preview } from "./Previce";
 
-const b = b_.with('product-page-form')
+const b = b_.with("product-page-form");
 
 interface Props {
   product: FormFragment;
@@ -21,23 +23,23 @@ interface Props {
   onPictureRemove: (id: string) => void;
   onCoverSelect: (id: string) => void;
   onCropClick: (id: string) => void;
-  onReorderPics: (ids: string[]) => void
+  onReorderPics: (ids: string[]) => void;
 }
 
 export interface FormValues {
   titleRu: string;
   titleEn: string;
-  price: number
+  price: number;
   showInGallery: boolean;
   showInShop: boolean;
-  descriptionRu: string
-  descriptionEn: string
+  descriptionRu: string;
+  descriptionEn: string;
 }
 
 const validate = createValidator<FormValues>({
   titleEn: [required()],
-  titleRu: [required()] 
-})
+  titleRu: [required()],
+});
 
 export const ProductForm: React.FC<Props> = ({
   product,
@@ -45,7 +47,7 @@ export const ProductForm: React.FC<Props> = ({
   onPictureRemove,
   onCoverSelect,
   onCropClick,
-  onReorderPics
+  onReorderPics,
 }) => {
   const { onSubmit } = useSubmit(product);
 
@@ -58,11 +60,11 @@ export const ProductForm: React.FC<Props> = ({
         showInShop: product.showInShop || false,
         price: product.price || undefined,
         descriptionRu: product.description?.ru || undefined,
-        descriptionEn: product.description?.en || undefined
+        descriptionEn: product.description?.en || undefined,
       }}
       validate={validate}
       onSubmit={(values) => onSubmit(values)}
-      render={({ handleSubmit }) => (
+      render={({ handleSubmit, values }) => (
         <Form onSubmit={(checkStatus, e) => handleSubmit(e)}>
           <Form.Group>
             <Form.ControlLabel>Title [ru]</Form.ControlLabel>
@@ -78,11 +80,13 @@ export const ProductForm: React.FC<Props> = ({
           </Form.Group>
           <Form.Group>
             <Form.ControlLabel>Description [ru]</Form.ControlLabel>
-            <Textarea name="descriptionRu" style={{ width: '100%' }} rows={8} />
+            <Textarea name="descriptionRu" style={{ width: "100%" }} rows={8} />
+            <Preview>{values.descriptionRu}</Preview>
           </Form.Group>
           <Form.Group>
             <Form.ControlLabel>Description [en]</Form.ControlLabel>
-            <Textarea name="descriptionEn" style={{ width: '100%' }} rows={8} />
+            <Textarea name="descriptionEn" style={{ width: "100%" }} rows={8} />
+            <Preview>{values.descriptionEn}</Preview>
           </Form.Group>
           <Form.Group>
             <Checkbox name="showInGallery" title="Show in gallery" />
@@ -101,7 +105,7 @@ export const ProductForm: React.FC<Props> = ({
             >
               {product.pictures}
             </Pics>
-            <ButtonToolbar className={b('submit')} >
+            <ButtonToolbar className={b("submit")}>
               <Button appearance="primary" type="submit">
                 Submit
               </Button>

@@ -24,6 +24,11 @@ export const Gallery: React.FC<Props> = () => {
   }
   return (
     <div>
+      <div className={b("btn-wrap")}>
+        <Button appearance="primary" onClick={() => onSave(order)}>
+          Save
+        </Button>
+      </div>
       <section className={b()}>
         {order
           .map((id) => gallery.find((pic) => pic.id === id)!)
@@ -38,9 +43,6 @@ export const Gallery: React.FC<Props> = () => {
             />
           ))}
       </section>
-      <Button appearance="primary" onClick={() => onSave(order)}>
-        Save
-      </Button>
     </div>
   );
 };

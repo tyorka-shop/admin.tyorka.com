@@ -15,7 +15,9 @@ export const PublicationPage: React.FC<Props> = () => {
   const { list, maxDuration } = useList();
   return (
     <div className={b()}>
-      <PublishButton />
+      <div className={b('btn-wrap')}>
+        <PublishButton />
+      </div>
       {list.map((publication) => (
         <Publication
           key={publication.id}
