@@ -1,4 +1,5 @@
 import { useMutation } from "@apollo/client";
+import { useToasts } from "react-toast-notifications";
 import {
   SaveProductMutation as Mutation,
   SaveProductMutationVariables as Variables,
@@ -7,18 +8,28 @@ import * as mutation from "./mutation.gql";
 import { FormValues } from ".";
 import { State } from "../../../types/gql";
 import { FormFragment } from "./fragment.types";
-import * as productsQuery from '../../Products/query.gql'
+import * as productsQuery from "../../Products/query.gql";
 
 export const useSubmit = (product: FormFragment) => {
-  const [save, { loading, error }] = useMutation<Mutation, Variables>(mutation);
+  const { addToast } = useToasts();
+  const [save, { loading, error }] = useMutation<Mutation, Variables>(
+    mutation,
+    {
+      onCompleted: () => addToast("Сохранено", { appearance: "success" }),
+    }
+  );
   const onSubmit = (values: FormValues) => {
+    if (!product.pictures.length) {
+      addToast("Добавь фото", { appearance: "warning" });
+      return;
+    }
     save({
       variables: {
         product: {
           id: product.id,
           title: {
             ru: values.titleRu,
-            en: values.titleEn
+            en: values.titleEn,
           },
           showInGallery: values.showInGallery,
           showInShop: values.showInShop,
@@ -28,17 +39,17 @@ export const useSubmit = (product: FormFragment) => {
           price: +values.price,
           description: {
             en: values.descriptionEn,
-            ru: values.descriptionRu
-          }
+            ru: values.descriptionRu,
+          },
         },
       },
-      refetchQueries: [{query: productsQuery}, 'IsDraft']
+      refetchQueries: [{ query: productsQuery }, "IsDraft"],
     });
   };
 
   return {
     onSubmit,
     submitting: loading,
-    error
+    error,
   };
 };

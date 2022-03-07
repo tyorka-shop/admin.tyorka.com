@@ -6,6 +6,7 @@ import { Picture } from "../../../types";
 import { Input } from "../../Input";
 import { Textarea } from "../../Textarea";
 import { Checkbox } from "../../Checkbox";
+import { createValidator, required} from '../../../libs/validation'
 import { Pics } from "../Pics";
 import { useSubmit } from "./hooks";
 import { FormFragment } from './fragment.types'
@@ -33,6 +34,11 @@ export interface FormValues {
   descriptionEn: string
 }
 
+const validate = createValidator<FormValues>({
+  titleEn: [required()],
+  titleRu: [required()] 
+})
+
 export const ProductForm: React.FC<Props> = ({
   product,
   onPictureAdd,
@@ -54,6 +60,7 @@ export const ProductForm: React.FC<Props> = ({
         descriptionRu: product.description?.ru || undefined,
         descriptionEn: product.description?.en || undefined
       }}
+      validate={validate}
       onSubmit={(values) => onSubmit(values)}
       render={({ handleSubmit }) => (
         <Form onSubmit={(checkStatus, e) => handleSubmit(e)}>
