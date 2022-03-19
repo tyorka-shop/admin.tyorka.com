@@ -30,10 +30,10 @@ export const getRegion = (box: Box, cropParams?: Crop): Region | undefined => {
   const { factor, anchor } = cropParams;
   const f = (box.width / factor) * 100;
   const region: Region = {
-    width: Math.floor(f),
-    height: Math.floor(f),
-    left: Math.floor(-anchor.x * f),
-    top: Math.floor(-anchor.y * f),
+    width: Math.round(f),
+    height: Math.round(f),
+    left: Math.round(-anchor.x * f),
+    top: Math.round(-anchor.y * f),
   };
 
   if (
