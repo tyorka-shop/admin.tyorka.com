@@ -54,11 +54,12 @@ export class Store {
     fs.renameSync(tempFilename, actualFilename);
   }
 
-  getProducts = (): Product[] => this.get().products.map(product => ({
-    ...product,
-    title: this.getMultiLng(product.title),
-    description: this.getMultiLng(product.description)
-  }));
+  getProducts = (): Product[] =>
+    this.get().products.map((product) => ({
+      ...product,
+      title: this.getMultiLng(product.title),
+      description: this.getMultiLng(product.description),
+    }));
 
   getGallery = (): GalleryItem[] => {
     const { products, gallery } = this.get();
@@ -108,7 +109,7 @@ export class Store {
   };
 
   private getMultiLng(value: MultiLang | string | undefined): MultiLang {
-    if (typeof value === 'object') {
+    if (typeof value === "object") {
       return value;
     }
     return { en: undefined, ru: value };
@@ -162,8 +163,10 @@ export class Store {
       .filter(Boolean) as Picture[];
   };
 
+  getPictures = (): Picture[] => this.get().pictures;
+
   getPicture = (id: ID): Picture | undefined =>
-    this.get().pictures.find((picture) => picture.id === id);
+    this.getPictures().find((picture) => picture.id === id);
 
   private fixGallery(product: Product) {
     const state = this.get();

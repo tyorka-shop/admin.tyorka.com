@@ -56,7 +56,7 @@ input MultiLangInput {
 
 type Mutation {
   publish: Build
-  saveCrop(crop: CropInput!, id: ID!): Picture
+  saveCrop(crop: CropInput!, id: ID!): Picture!
   saveGalleryOrder(list: [ID!]!): [GalleryItem!]!
   saveProduct(product: ProductInput!): Product
 }

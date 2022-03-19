@@ -1,15 +1,15 @@
 import * as os from "os";
 import { promises as fs } from "fs";
 import { createHash } from "crypto";
-import { extname, resolve } from "path";
+import { extname, join } from "path";
 import Router from "@koa/router";
 import koaBody from "koa-body";
 import type { Files, File } from "formidable";
 import { Container } from "typedi";
-import { getSize, resize } from "../image-processing";
+import { getMeta, resize } from "../image-processing";
+import { crop } from "../image-processing/square";
 import { Store } from "../store";
 import { Config } from "../config";
-import { IMAGE_SIZES } from "../consts";
 import { checkAuthMiddleware } from "../middleware/checkAuth";
 
 export const router = new Router({
@@ -42,7 +42,7 @@ const storeFile = async (name: string, path: string) => {
   hash.update(content);
   const newFilename = `${hash.digest("hex")}${extname(name)}`;
   const config = Container.get<Config>("config");
-  const newPath = resolve(config.imagesFolder, newFilename);
+  const newPath = join(config.imagesFolder, newFilename);
 
   await fs.writeFile(newPath, content);
   return newFilename;
@@ -64,11 +64,13 @@ router.post("/", checkAuth, mw, async (ctx) => {
 
   const config = Container.get<Config>("config");
 
-  const fullPathname = resolve(config.imagesFolder, filename);
+  const fullPathname = join(config.imagesFolder, filename);
 
-  await resize(fullPathname, IMAGE_SIZES);
+  await resize(fullPathname);
 
-  const { width, height, dominantColor } = await getSize(fullPathname);
+  await crop(fullPathname);
+
+  const { width, height, dominantColor } = await getMeta(fullPathname);
   const store = Container.get(Store);
 
   const picture = store.addPicture(filename, { width, height }, dominantColor);

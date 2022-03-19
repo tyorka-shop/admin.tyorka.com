@@ -3,7 +3,6 @@ import { Loader } from "rsuite";
 import { RouteComponentProps } from "@reach/router";
 import { useProduct } from "./hooks";
 import { ProductForm } from "./Form";
-import { Crop } from "../../types/common";
 import { PictureEditModal } from "./PictureEditModal";
 
 import "./index.scss";
