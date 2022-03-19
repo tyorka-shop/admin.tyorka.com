@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from "path";
 import sharp, { Region } from "sharp";
 import { IMAGE_SIZES } from "../consts";
@@ -8,9 +9,13 @@ interface Box {
   height: number;
 }
 
-const cropSingle = async (filename: string, width: number, region: Region) => {
+const cropSingle = async (filename: string, width: number, region: Region, skipExisting = false) => {
   const { dir, name, ext } = path.parse(filename);
   const outputFilename = path.join(dir, `${name}_square_${width}${ext}`);
+
+  if(skipExisting && fs.existsSync(outputFilename)){
+    return;
+  }
 
   return sharp(filename, { failOnError: false })
     .extract(region)
@@ -49,7 +54,7 @@ export const getRegion = (box: Box, cropParams?: Crop): Region | undefined => {
   return region;
 };
 
-export const crop = async (filename: string, cropParams?: Crop) => {
+export const crop = async (filename: string, cropParams?: Crop, skipExisting = false) => {
   const meta = await sharp(filename).metadata();
   const box = {
     width: meta.width!,
@@ -64,7 +69,7 @@ export const crop = async (filename: string, cropParams?: Crop) => {
 
   return Promise.all(
     IMAGE_SIZES.map(async (width) =>
-      cropSingle(filename, width, region || { left: 0, top: 0, ...box }).catch(
+      cropSingle(filename, width, region || { left: 0, top: 0, ...box }, skipExisting).catch(
         (e) => {
           console.error(e.message);
           console.error("  box =", box);

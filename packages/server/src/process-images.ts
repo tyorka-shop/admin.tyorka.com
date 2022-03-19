@@ -18,8 +18,8 @@ const processImages = async () => {
       promise.then(async () => {
         console.log("File:", picture.src);
         const fullPathname = join(imagesFolder, picture.src);
-        await resize(fullPathname).catch((e) => console.log(e.message));
-        await crop(fullPathname, picture.crop).catch((e) =>
+        await resize(fullPathname, true).catch((e) => console.log(e.message));
+        await crop(fullPathname, picture.crop, true).catch((e) =>
           console.log(e.message)
         );
       }),
