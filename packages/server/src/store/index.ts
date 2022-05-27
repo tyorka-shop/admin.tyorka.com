@@ -100,7 +100,7 @@ export class Store {
       title: this.getMultiLng(product.title),
       description: this.getMultiLng(product.description),
     }))
-    .sort((a, b) => b.createdAt - a.createdAt);
+    .sort((a, b) => a.createdAt - b.createdAt);
   };
 
   getGallery = async (): Promise<GalleryItem[]> => {
