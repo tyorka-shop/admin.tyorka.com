@@ -25,10 +25,15 @@ export class MutationsResolver {
   private config: Config;
 
   @Mutation(() => Product, { nullable: true })
-  saveProduct(
+  async saveProduct(
     @Arg("product", () => ProductInput) product: ProductInput
-  ): Product | undefined {
-    this.store.saveProduct(product);
+  ): Promise<Product | undefined> {
+    const prevProduct = await this.store.getProduct(product.id)
+    await this.store.saveProduct({
+      ...product,
+      createdAt: prevProduct ? prevProduct.createdAt: +Date.now(),
+      updatedAt: +Date.now()
+    });
 
     return this.store.getProduct(product.id);
   }
@@ -38,18 +43,18 @@ export class MutationsResolver {
     @Arg("id", () => ID) id: IDScalar,
     @Arg("crop", () => CropInput) crop: CropInput
   ): Promise<Picture> {
-    const pic = this.store.getPicture(id);
+    const pic = await this.store.getPicture(id);
     if (!pic) {
       throw new Error("Can not find picture");
     }
     await cropSlide(join(this.config.imagesFolder, pic.src), crop);
-    this.store.saveCrop(id, crop);
+    await this.store.saveCrop(id, crop);
     return pic;
   }
 
   @Mutation(() => [GalleryItem])
-  saveGalleryOrder(@Arg("list", () => [ID]) list: IDScalar[]): GalleryItem[] {
-    this.store.saveGalleryOrder(list);
+  async saveGalleryOrder(@Arg("list", () => [ID]) list: IDScalar[]): Promise<GalleryItem[]> {
+    await this.store.saveGalleryOrder(list);
     return this.store.getGallery();
   }
 

@@ -46,11 +46,11 @@ export class Builder {
       this.currentBuild.log += data.toString("ascii");
     });
 
-    cmd.on("close", (code) => {
+    cmd.on("close", async (code) => {
       if(!this.currentBuild) return;
       this.currentBuild.status = code === 0 ? BuildStatus.DONE : BuildStatus.FAILURE;
       this.currentBuild.duration = Date.now() - this.currentBuild.date;
-      this.store.publish(this.currentBuild);
+      await this.store.publish(this.currentBuild);
       this.currentBuild = undefined
     });
 

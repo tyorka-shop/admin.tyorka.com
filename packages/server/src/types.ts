@@ -38,6 +38,8 @@ export interface Product {
   showInGallery: boolean
   showInShop: boolean
   description?: MultiLang
+  createdAt: number
+  updatedAt?: number
 }
 
 export interface InstaPost {
@@ -54,6 +56,7 @@ export interface Schema {
   instaPosts: InstaPost[]
   isDraft: boolean
   publications: Build[]
+  migrations?: number
 }
 
 export type Gallery = Picture[];

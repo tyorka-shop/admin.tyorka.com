@@ -73,7 +73,7 @@ router.post("/", checkAuth, mw, async (ctx) => {
   const { width, height, dominantColor } = await getMeta(fullPathname);
   const store = Container.get(Store);
 
-  const picture = store.addPicture(filename, { width, height }, dominantColor);
+  const picture = await store.addPicture(filename, { width, height }, dominantColor);
 
   ctx.body = picture;
 

@@ -16,12 +16,12 @@ export class ProductResolver {
   private store: Store;
 
   @FieldResolver(() => [Picture])
-  pictures(@Root() { id }: Product): Picture[] {
+  async pictures(@Root() { id }: Product): Promise<Picture[]> {
     return this.store.getProductPictures(id)
   }
 
   @FieldResolver(() => Picture)
-  cover(@Root() { id }: Product): Picture {
+  async cover(@Root() { id }: Product): Promise<Picture> {
     return this.store.getProductCover(id)
   }
 

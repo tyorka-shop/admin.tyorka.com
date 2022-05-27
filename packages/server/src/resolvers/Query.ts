@@ -11,7 +11,6 @@ import { Context } from "../types/Context";
 import { BlogPost } from "../types/BlogPost";
 import { Builder } from "../builder";
 import { Build } from "../types/Build";
-import { isDraft } from "../types/IsDraft";
 
 @Service()
 @Resolver()
@@ -23,32 +22,32 @@ export class QueryResolver {
   private builder: Builder;
 
   @Query(() => [Product])
-  products(): Product[] {
+  async products(): Promise<Product[]> {
     return this.store.getProducts();
   }
 
   @Query(() => Picture)
-  picture(@Arg("id", () => ID) id: IDScalar): Picture | undefined {
+  async picture(@Arg("id", () => ID) id: IDScalar): Promise<Picture | undefined> {
     return this.store.getPicture(id);
   }
 
   @Query(() => Product)
-  product(@Arg("id", () => ID) id: IDScalar): Product | undefined {
+  async product(@Arg("id", () => ID) id: IDScalar): Promise<Product | undefined> {
     return this.store.getProduct(id);
   }
 
   @Query(() => [GalleryItem])
-  gallery(): GalleryItem[] {
+  async gallery(): Promise<GalleryItem[]> {
     return this.store.getGallery();
   }
 
   @Query(() => [ShopItem])
-  shop(): ShopItem[] {
+  async shop(): Promise<ShopItem[]> {
     return this.store.getShop();
   }
 
   @Query(() => [BlogPost])
-  blog(): BlogPost[] {
+  async blog(): Promise<BlogPost[]> {
     return this.store.getInstaPosts();
   }
 
@@ -65,8 +64,8 @@ export class QueryResolver {
   }
 
   @Query(() => [Build])
-  publications(): Build[] {
-    const result = this.store.getPublications();
+  async publications(): Promise<Build[]> {
+    const result = await this.store.getPublications();
     const current = this.builder.getStatus();
     if (!current) {
       return result;
@@ -75,7 +74,7 @@ export class QueryResolver {
   }
 
   @Query(() => Build, { nullable: true })
-  publication(@Arg("id", () => String) id: string): Build | undefined {
+  async publication(@Arg("id", () => String) id: string): Promise<Build | undefined> {
     const current = this.builder.getStatus();
     if (current?.id === id) {
       return current;
@@ -84,12 +83,12 @@ export class QueryResolver {
   }
 
   @Query(() => Float)
-  publicationDuration(): number {
+  async publicationDuration(): Promise<number> {
     return this.store.getPublicationDuration();
   }
 
   @Query(() => Boolean)
-  isDraft(): boolean {
+  async isDraft(): Promise<boolean> {
     return this.store.getIsDraft();
   }
 }

@@ -33,5 +33,5 @@ export async function syncPosts() {
 
   const store = Container.get(Store);
 
-  store.saveInstaPosts(processed);
+  await store.saveInstaPosts(processed);
 }

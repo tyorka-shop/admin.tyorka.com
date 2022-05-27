@@ -11,7 +11,7 @@ const processImages = async () => {
   const { imagesFolder } = Container.get<Config>("config");
   const store = Container.get(Store);
 
-  const pictures = store.getPictures();
+  const pictures = await store.getPictures();
 
   await pictures.reduce(
     (promise, picture) =>
