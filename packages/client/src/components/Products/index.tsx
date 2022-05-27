@@ -19,10 +19,10 @@ export const Products: React.FC<Props> = () => {
   }
   return (
     <section className={b()}>
+      <AddProductButton />
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
-      <AddProductButton />
     </section>
   );
 };
