@@ -1,6 +1,7 @@
 import { FieldResolver, Resolver, Root } from "type-graphql";
 import { Inject, Service } from "typedi";
 import { Converter } from 'showdown'
+import { markdownToTxt } from 'markdown-to-txt'
 import { Store } from "../store";
 import { MultiLang } from "../types/MultiLang";
 import { Picture } from "../types/Picture";
@@ -30,6 +31,14 @@ export class ProductResolver {
     return {
       en: MDConverter.makeHtml(description?.en || ''),
       ru: MDConverter.makeHtml(description?.ru || '')
+    }
+  }
+
+  @FieldResolver(() => MultiLang)
+  descriptionText(@Root() { description }: Product) {
+    return {
+      en: markdownToTxt(description?.en || ''),
+      ru: markdownToTxt(description?.ru || '')
     }
   }
 }

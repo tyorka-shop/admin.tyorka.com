@@ -18795,6 +18795,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["lodash.escape", [
+        ["npm:4.0.1", {
+          "packageLocation": "./.yarn/cache/lodash.escape-npm-4.0.1-5ea709377f-fcb54f4574.zip/node_modules/lodash.escape/",
+          "packageDependencies": [
+            ["lodash.escape", "npm:4.0.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["lodash.every", [
         ["npm:4.6.0", {
           "packageLocation": "./.yarn/cache/lodash.every-npm-4.6.0-bea415bd43-bfb96426cc.zip/node_modules/lodash.every/",
@@ -18992,6 +19001,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/lodash.truncate-npm-4.4.2-bc50fe1663-b463d8a382.zip/node_modules/lodash.truncate/",
           "packageDependencies": [
             ["lodash.truncate", "npm:4.4.2"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["lodash.unescape", [
+        ["npm:4.0.1", {
+          "packageLocation": "./.yarn/cache/lodash.unescape-npm-4.0.1-369781db1f-7a9c2133f5.zip/node_modules/lodash.unescape/",
+          "packageDependencies": [
+            ["lodash.unescape", "npm:4.0.1"]
           ],
           "linkType": "HARD",
         }]
@@ -19268,6 +19286,27 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["markdown-table", "npm:2.0.0"],
             ["repeat-string", "npm:1.6.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["markdown-to-txt", [
+        ["npm:2.0.1", {
+          "packageLocation": "./.yarn/cache/markdown-to-txt-npm-2.0.1-bf230c67c1-a81833093c.zip/node_modules/markdown-to-txt/",
+          "packageDependencies": [
+            ["markdown-to-txt", "npm:2.0.1"],
+            ["lodash.escape", "npm:4.0.1"],
+            ["lodash.unescape", "npm:4.0.1"],
+            ["marked", "npm:4.0.16"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["marked", [
+        ["npm:4.0.16", {
+          "packageLocation": "./.yarn/cache/marked-npm-4.0.16-1c7fe7ec7b-c0ef780bf5.zip/node_modules/marked/",
+          "packageDependencies": [
+            ["marked", "npm:4.0.16"]
           ],
           "linkType": "HARD",
         }]
@@ -24452,6 +24491,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["koa-mount", "npm:4.0.0"],
             ["koa-router", "npm:7.4.0"],
             ["koa-static", "npm:5.0.0"],
+            ["markdown-to-txt", "npm:2.0.1"],
             ["node-ansiparser", "npm:2.2.0"],
             ["node-ansiterminal", "npm:0.2.1-beta"],
             ["nodemon", "npm:1.19.4"],

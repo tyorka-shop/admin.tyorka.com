@@ -85,6 +85,7 @@ type Product {
   coverId: ID
   description: MultiLang
   descriptionHTML: MultiLang!
+  descriptionText: MultiLang!
   id: ID!
   pictures: [Picture!]!
   price: Float

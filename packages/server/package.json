@@ -51,6 +51,7 @@
     "koa-mount": "^4.0.0",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
+    "markdown-to-txt": "^2.0.1",
     "node-ansiparser": "^2.2.0",
     "node-ansiterminal": "^0.2.1-beta",
     "qs": "^6.10.1",
