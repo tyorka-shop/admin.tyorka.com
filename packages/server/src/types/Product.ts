@@ -1,6 +1,7 @@
 import { Field, Float, ID, InputType, ObjectType } from "type-graphql";
 import { ID as IDScalar } from "../types";
 import { MultiLang, MultiLangInput } from "./MultiLang";
+import { Picture } from "./Picture";
 import { State } from "./State";
 
 @ObjectType()
@@ -11,8 +12,8 @@ export class Product {
   @Field(() => State)
   state: State;
 
-  @Field(() => ID, { nullable: true })
-  coverId?: IDScalar;
+  @Field(() => Picture, { nullable: true })
+  cover?: Picture;
 
   @Field(() => MultiLang, { nullable: true })
   title?: MultiLang;

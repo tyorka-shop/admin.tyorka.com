@@ -11,6 +11,8 @@ import { Context } from "../types/Context";
 import { BlogPost } from "../types/BlogPost";
 import { Builder } from "../builder";
 import { Build } from "../types/Build";
+import { Storage } from "../storage";
+import { IsNull, Not } from "typeorm";
 
 @Service()
 @Resolver()
@@ -18,37 +20,70 @@ export class QueryResolver {
   @Inject(() => Store)
   private store: Store;
 
+  @Inject(() => Storage)
+  private storage: Storage;
+
   @Inject(() => Builder)
   private builder: Builder;
 
   @Query(() => [Product])
   async products(): Promise<Product[]> {
-    return this.store.getProducts();
+    return this.storage.products.find({relations: {cover: true}});
   }
 
   @Query(() => Picture)
-  async picture(@Arg("id", () => ID) id: IDScalar): Promise<Picture | undefined> {
-    return this.store.getPicture(id);
+  async picture(@Arg("id", () => ID) id: IDScalar): Promise<Picture | null> {
+    return this.storage.pictures.findOne({ where: { id } });
   }
 
   @Query(() => Product)
-  async product(@Arg("id", () => ID) id: IDScalar): Promise<Product | undefined> {
-    return this.store.getProduct(id);
+  async product(@Arg("id", () => ID) id: IDScalar): Promise<Product | null> {
+    return this.storage.products.findOne({ where: { id }, relations: {cover: true} });
   }
 
   @Query(() => [GalleryItem])
   async gallery(): Promise<GalleryItem[]> {
-    return this.store.getGallery();
+    // return this.store.getGallery();
+    const products = await this.storage.products.find({
+      where: {
+        showInGallery: true,
+        cover: Not(IsNull())
+      },
+      order: {
+        index: 'ASC'
+      },
+      relations: {
+        pictures: true
+      }
+    });
+
+    return products.map(product => ({
+      id: product.id,
+      color: product.cover!.color,
+      src: product.cover!.src,
+      ...product.cover!.originalSize,
+    }))
   }
 
   @Query(() => [ShopItem])
   async shop(): Promise<ShopItem[]> {
-    return this.store.getShop();
+    const products = await this.storage.products.find({
+      where: {
+        showInShop: true,
+        cover: Not(IsNull()),
+        price: Not(IsNull()),
+        title: Not(IsNull()),
+      },
+    });
+    return products.map((product) => ({
+      ...product,
+      price: product.price!,
+    }));
   }
 
   @Query(() => [BlogPost])
   async blog(): Promise<BlogPost[]> {
-    return this.store.getInstaPosts();
+    return this.storage.blog.find();
   }
 
   @Query(() => User)
@@ -74,7 +109,9 @@ export class QueryResolver {
   }
 
   @Query(() => Build, { nullable: true })
-  async publication(@Arg("id", () => String) id: string): Promise<Build | undefined> {
+  async publication(
+    @Arg("id", () => String) id: string
+  ): Promise<Build | undefined> {
     const current = this.builder.getStatus();
     if (current?.id === id) {
       return current;

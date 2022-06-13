@@ -81,8 +81,7 @@ input PointInput {
 }
 
 type Product {
-  cover: Picture!
-  coverId: ID
+  cover: Picture
   description: MultiLang
   descriptionHTML: MultiLang!
   descriptionText: MultiLang!

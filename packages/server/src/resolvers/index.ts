@@ -39,7 +39,7 @@ export const bootstrap = async () => {
 
   const mw = graphqlHTTP((req, res, ctx) => ({
     schema,
-    context: ctx.state.user || {},
+    context: ctx.state.user || {}
   }));
 
   return compose([checkAuth, mw]);

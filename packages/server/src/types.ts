@@ -2,7 +2,7 @@ import { Build } from "./types/Build";
 import { MultiLang } from "./types/MultiLang";
 import { State } from "./types/State";
 
-export type ID = String;
+export type ID = string;
 
 export interface Position {
   x: number

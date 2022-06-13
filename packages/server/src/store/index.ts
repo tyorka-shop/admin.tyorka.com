@@ -271,7 +271,7 @@ export class Store {
     await this.save(state);
   }
 
-  async saveGalleryOrder(list: String[]) {
+  async saveGalleryOrder(list: string[]) {
     const state = await this.get();
 
     state.gallery = list;

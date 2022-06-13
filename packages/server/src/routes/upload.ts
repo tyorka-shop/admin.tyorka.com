@@ -11,6 +11,8 @@ import { crop } from "../image-processing/square";
 import { Store } from "../store";
 import { Config } from "../config";
 import { checkAuthMiddleware } from "../middleware/checkAuth";
+import { Storage } from "../storage";
+import { Picture } from '../entity/Picture'
 
 export const router = new Router({
   prefix: "/upload",
@@ -72,8 +74,10 @@ router.post("/", checkAuth, mw, async (ctx) => {
 
   const { width, height, dominantColor } = await getMeta(fullPathname);
   const store = Container.get(Store);
+  const storage = Container.get(Storage);
 
-  const picture = await store.addPicture(filename, { width, height }, dominantColor);
+  await store.addPicture(filename, { width, height }, dominantColor);
+  const picture = await storage.pictures.save(Picture.create(filename, { width, height }, dominantColor));
 
   ctx.body = picture;
 

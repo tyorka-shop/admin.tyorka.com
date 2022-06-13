@@ -7,6 +7,8 @@ export class ShopItem {
   @Field(() => ID)
   id: IDScalar;
 
+  coverId?: string
+
   @Field(() => MultiLang, { nullable: true })
   title?: MultiLang;
 

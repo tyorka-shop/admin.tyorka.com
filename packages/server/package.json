@@ -1,9 +1,10 @@
 {
   "name": "server",
   "scripts": {
-    "start": "node -r ts-node/register ./src/index.ts",
+    "start": "node --inspect -r ts-node/register ./src/index.ts",
     "sync-instagram": "node -r ts-node/register ./src/tasks.ts",
     "process-images": "node -r ts-node/register ./src/process-images.ts",
+    "typeorm": "typeorm -d ./src/storage/db.js",
     "build": "tsc",
     "generate:schema": "ts-node scripts/types.ts && yarn generate:json-schema",
     "generate:json-schema": "ts-json-schema-generator --path './src/interfaces/config.ts' --type ConfigIndex --no-top-ref --additional-properties -o config.schema.json"
@@ -58,9 +59,11 @@
     "reflect-metadata": "^0.1.13",
     "sharp": "^0.30.0",
     "showdown": "^2.0.0-alpha",
+    "sqlite3": "^5.0.8",
     "ts-json-schema-generator": "^0.98.0",
     "type-graphql": "^1.1.1",
     "typedi": "^0.10.0",
+    "typeorm": "^0.3.6",
     "uuid": "^8.1.0"
   }
 }

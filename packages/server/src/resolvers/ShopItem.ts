@@ -1,36 +1,41 @@
 import { FieldResolver, Resolver, Root } from "type-graphql";
 import { Inject, Service } from "typedi";
-import { Converter } from 'showdown'
-import { Store } from "../store";
+import { Converter } from "showdown";
 import { MultiLang } from "../types/MultiLang";
 import { Picture } from "../types/Picture";
 import { ShopItem } from "../types/ShopItem";
+import { Storage } from "../storage";
 
-const MDConverter = new Converter()
-MDConverter.setOption('simplifiedAutoLink', true)
+const MDConverter = new Converter();
+MDConverter.setOption("simplifiedAutoLink", true);
 
 @Service()
 @Resolver(ShopItem)
 export class ShopItemResolver {
-  @Inject(() => Store)
-  private store: Store;
+  @Inject(() => Storage)
+  private storage: Storage;
 
   @FieldResolver(() => [Picture])
   async pictures(@Root() { id }: ShopItem): Promise<Picture[]> {
-    return this.store.getProductPictures(id)
+    const product = await this.storage.products.findOne({
+      where: {id},
+      relations: {
+        pictures: true
+      }
+    })
+    return product?.pictures || [];
   }
 
   @FieldResolver(() => Picture)
-  async cover(@Root() { id }: ShopItem): Promise<Picture> {
-    return this.store.getProductCover(id)
+  async cover(@Root() { coverId }: ShopItem): Promise<Picture | null> {
+    return this.storage.pictures.findOne({ where: { id: coverId } });
   }
 
   @FieldResolver(() => MultiLang)
   descriptionHTML(@Root() { description }: ShopItem) {
     return {
-      en: MDConverter.makeHtml(description?.en || ''),
-      ru: MDConverter.makeHtml(description?.ru || '')
-    }
+      en: MDConverter.makeHtml(description?.en || ""),
+      ru: MDConverter.makeHtml(description?.ru || ""),
+    };
   }
-
 }

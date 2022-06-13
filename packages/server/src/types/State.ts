@@ -1,9 +1,9 @@
 import { registerEnumType } from "type-graphql";
 
 export enum State {
-  DRAFT,
-  PUBLISHED,
-  ARCHIVED,
+  DRAFT = 'DRAFT',
+  PUBLISHED = 'PUBLISHED',
+  ARCHIVED = 'ARCHIVED',
 }
 
 registerEnumType(State, {

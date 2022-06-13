@@ -4,6 +4,7 @@ import { join } from "path";
 import { ConfigSchema } from "./schemas/config";
 import { ConfigIndex } from "./interfaces/config";
 import { Store } from "./store";
+import { Storage } from "./storage";
 
 export type Config = ConfigIndex;
 
@@ -28,6 +29,8 @@ export const setupConfig = async () => {
   Container.set("config", config);
   // hit migrations
   Container.get(Store);
+  const storage = Container.get(Storage);
+  await storage.init();
 
   return config;
 };

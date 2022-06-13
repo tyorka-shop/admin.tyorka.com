@@ -3,10 +3,10 @@ import { basename } from "path";
 import { Config } from "../config";
 import { crop } from "../image-processing/insta";
 import { getDominantColor } from "../image-processing";
-import { Store } from "../store";
 import { InstaPost } from "../types";
 import { downloadMedia } from "./download";
 import { getPosts } from "./posts";
+import { Storage } from "../storage";
 
 export async function syncPosts() {
   console.log(new Date(), "Start syncing instagram posts");
@@ -33,7 +33,7 @@ export async function syncPosts() {
     })
   );
 
-  const store = Container.get(Store);
+  const storage = Container.get(Storage);
 
-  await store.saveInstaPosts(processed);
+  await storage.blog.save(processed);
 }
