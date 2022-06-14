@@ -13,8 +13,8 @@ interface Props {
 }
 
 export const ProductCard: React.FC<Props> = ({ product }) => {
-  const cover = product.coverId
-    ? product.pictures.find(({ id }) => product.coverId === id)
+  const cover = product.cover?.id
+    ? product.pictures.find(({ id }) => product.cover?.id === id)
     : undefined;
 
   return (

@@ -13,7 +13,7 @@ export class Product {
   state: State;
 
   @Field(() => Picture, { nullable: true })
-  cover?: Picture;
+  cover: Picture | null;
 
   @Field(() => MultiLang, { nullable: true })
   title?: MultiLang;

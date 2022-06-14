@@ -72,7 +72,7 @@ export type MultiLangInput = {
 export type Mutation = {
   __typename: 'Mutation';
   publish: Maybe<Build>;
-  saveCrop: Maybe<Picture>;
+  saveCrop: Picture;
   saveGalleryOrder: Array<GalleryItem>;
   saveProduct: Maybe<Product>;
 };
@@ -98,6 +98,7 @@ export type Picture = {
   color: Scalars['String'];
   crop: Crop;
   id: Scalars['ID'];
+  inline: Scalars['String'];
   originalSize: Size;
   src: Scalars['String'];
 };
@@ -115,9 +116,10 @@ export type PointInput = {
 
 export type Product = {
   __typename: 'Product';
-  cover: Picture;
-  coverId: Maybe<Scalars['ID']>;
+  cover: Maybe<Picture>;
   description: Maybe<MultiLang>;
+  descriptionHTML: MultiLang;
+  descriptionText: MultiLang;
   id: Scalars['ID'];
   pictures: Array<Picture>;
   price: Maybe<Scalars['Float']>;
@@ -174,6 +176,7 @@ export type ShopItem = {
   __typename: 'ShopItem';
   cover: Picture;
   description: Maybe<MultiLang>;
+  descriptionHTML: MultiLang;
   id: Scalars['ID'];
   pictures: Array<Picture>;
   price: Scalars['Float'];
@@ -219,16 +222,16 @@ export type PictureEditorFragment = { __typename: 'Picture', id: string, src: st
 
 export type ProductCardCoverFragment = { __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } } };
 
-export type ProductCardFragment = { __typename: 'Product', id: string, coverId: string | null, title: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, pictures: Array<{ __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } } }> };
+export type ProductCardFragment = { __typename: 'Product', id: string, title: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, pictures: Array<{ __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } } }>, cover: { __typename: 'Picture', id: string } | null };
 
-export type FormFragment = { __typename: 'Product', id: string, showInGallery: boolean, showInShop: boolean, coverId: string | null, price: number | null, title: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, description: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, pictures: Array<{ __typename: 'Picture', id: string, src: string }> };
+export type FormFragment = { __typename: 'Product', id: string, showInGallery: boolean, showInShop: boolean, price: number | null, title: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, cover: { __typename: 'Picture', id: string } | null, description: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, pictures: Array<{ __typename: 'Picture', id: string, src: string }> };
 
 export type SaveProductMutationVariables = Exact<{
   product: ProductInput;
 }>;
 
 
-export type SaveProductMutation = { __typename: 'Mutation', saveProduct: { __typename: 'Product', id: string, showInGallery: boolean, showInShop: boolean, coverId: string | null, price: number | null, title: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, description: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, pictures: Array<{ __typename: 'Picture', id: string, src: string }> } | null };
+export type SaveProductMutation = { __typename: 'Mutation', saveProduct: { __typename: 'Product', id: string, showInGallery: boolean, showInShop: boolean, price: number | null, title: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, cover: { __typename: 'Picture', id: string } | null, description: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, pictures: Array<{ __typename: 'Picture', id: string, src: string }> } | null };
 
 export type PicFragment = { __typename: 'Picture', id: string, src: string };
 
@@ -240,19 +243,19 @@ export type SaveCropMutationVariables = Exact<{
 }>;
 
 
-export type SaveCropMutation = { __typename: 'Mutation', saveCrop: { __typename: 'Picture', id: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } } } | null };
+export type SaveCropMutation = { __typename: 'Mutation', saveCrop: { __typename: 'Picture', id: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } } } };
 
 export type ProductQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type ProductQuery = { __typename: 'Query', product: { __typename: 'Product', id: string, state: State, showInGallery: boolean, showInShop: boolean, coverId: string | null, price: number | null, title: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, pictures: Array<{ __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } }, originalSize: { __typename: 'Size', width: number, height: number } }>, description: { __typename: 'MultiLang', en: string | null, ru: string | null } | null } };
+export type ProductQuery = { __typename: 'Query', product: { __typename: 'Product', id: string, state: State, showInGallery: boolean, showInShop: boolean, price: number | null, title: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, pictures: Array<{ __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } }, originalSize: { __typename: 'Size', width: number, height: number } }>, cover: { __typename: 'Picture', id: string } | null, description: { __typename: 'MultiLang', en: string | null, ru: string | null } | null } };
 
 export type ProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProductsQuery = { __typename: 'Query', products: Array<{ __typename: 'Product', id: string, coverId: string | null, title: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, pictures: Array<{ __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } } }> }> };
+export type ProductsQuery = { __typename: 'Query', products: Array<{ __typename: 'Product', id: string, title: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, pictures: Array<{ __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } } }>, cover: { __typename: 'Picture', id: string } | null }> };
 
 export type PublishMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -302,7 +305,9 @@ export const ProductCardFragmentDoc = gql`
     id
     ...ProductCardCover
   }
-  coverId
+  cover {
+    id
+  }
 }
     ${ProductCardCoverFragmentDoc}`;
 export const PicFragmentDoc = gql`
@@ -320,7 +325,9 @@ export const FormFragmentDoc = gql`
   }
   showInGallery
   showInShop
-  coverId
+  cover {
+    id
+  }
   price
   description {
     en

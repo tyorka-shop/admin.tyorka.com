@@ -6,9 +6,11 @@ import {
   ProductQueryVariables as Variables,
 } from "./query.types";
 import { useQuery } from "@apollo/client";
-import { Picture, State } from "../../types/gql";
+import { State } from "../../types/gql";
+import { Picture } from "../../types";
 
-type Product = Query["product"];
+
+type Product = Query["product"] & { coverId?: string };
 
 export const useProduct = (id: string | undefined) => {
   const { data, loading } = useQuery<Query, Variables>(query, {
@@ -21,7 +23,10 @@ export const useProduct = (id: string | undefined) => {
   const [product, setProduct] = React.useState<Product>(createNewProduct());
 
   React.useEffect(() => {
-    data && setProduct(data.product);
+    data && setProduct({
+      ...data.product,
+      coverId: data.product.cover?.id
+    });
   }, [data]);
 
   const addPic = (pic: Picture) => {

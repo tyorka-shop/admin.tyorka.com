@@ -12,7 +12,8 @@ import { BlogPost } from "../types/BlogPost";
 import { Builder } from "../builder";
 import { Build } from "../types/Build";
 import { Storage } from "../storage";
-import { IsNull, Not } from "typeorm";
+import { BuildStatus } from "../types/BuildStatus";
+import { MoreThan } from "typeorm";
 
 @Service()
 @Resolver()
@@ -28,7 +29,10 @@ export class QueryResolver {
 
   @Query(() => [Product])
   async products(): Promise<Product[]> {
-    return this.storage.products.find({relations: {cover: true}});
+    return this.storage.products.find({
+      relations: { cover: true },
+      order: { createdAt: "DESC" },
+    });
   }
 
   @Query(() => Picture)
@@ -38,47 +42,20 @@ export class QueryResolver {
 
   @Query(() => Product)
   async product(@Arg("id", () => ID) id: IDScalar): Promise<Product | null> {
-    return this.storage.products.findOne({ where: { id }, relations: {cover: true} });
+    return this.storage.products.findOne({
+      where: { id },
+      relations: { cover: true },
+    });
   }
 
   @Query(() => [GalleryItem])
   async gallery(): Promise<GalleryItem[]> {
-    // return this.store.getGallery();
-    const products = await this.storage.products.find({
-      where: {
-        showInGallery: true,
-        cover: Not(IsNull())
-      },
-      order: {
-        index: 'ASC'
-      },
-      relations: {
-        pictures: true
-      }
-    });
-
-    return products.map(product => ({
-      id: product.id,
-      color: product.cover!.color,
-      src: product.cover!.src,
-      ...product.cover!.originalSize,
-    }))
+    return this.storage.getGallery();
   }
 
   @Query(() => [ShopItem])
   async shop(): Promise<ShopItem[]> {
-    const products = await this.storage.products.find({
-      where: {
-        showInShop: true,
-        cover: Not(IsNull()),
-        price: Not(IsNull()),
-        title: Not(IsNull()),
-      },
-    });
-    return products.map((product) => ({
-      ...product,
-      price: product.price!,
-    }));
+    return this.storage.getShop();
   }
 
   @Query(() => [BlogPost])
@@ -94,38 +71,71 @@ export class QueryResolver {
   }
 
   @Query(() => Build, { nullable: true })
-  currentBuild(): Build | undefined {
-    return this.builder.getStatus();
+  async currentBuild(): Promise<Build | undefined> {
+    const result = await this.storage.builds.findOne({
+      where: {
+        status: BuildStatus.PENDING,
+      },
+    });
+    return result ? Build.fromEntity(result) : undefined;
   }
 
   @Query(() => [Build])
   async publications(): Promise<Build[]> {
-    const result = await this.store.getPublications();
-    const current = this.builder.getStatus();
-    if (!current) {
-      return result;
-    }
-    return [current, ...result];
+    const result = await this.storage.builds.find();
+    return result.map((item) => Build.fromEntity(item));
   }
 
   @Query(() => Build, { nullable: true })
   async publication(
     @Arg("id", () => String) id: string
   ): Promise<Build | undefined> {
-    const current = this.builder.getStatus();
-    if (current?.id === id) {
-      return current;
-    }
-    return this.store.getPublication(id);
+    const result = await this.storage.builds.findOne({
+      where: {
+        id,
+      },
+    });
+    return result ? Build.fromEntity(result) : undefined;
   }
 
   @Query(() => Float)
   async publicationDuration(): Promise<number> {
-    return this.store.getPublicationDuration();
+    const done = await this.storage.builds.find({
+      where: { status: BuildStatus.DONE, duration: MoreThan(0) },
+    });
+    if (!done.length) {
+      return 60_000;
+    }
+    return (
+      done.reduce(
+        (result, publication) => result + (publication.duration || 0),
+        0
+      ) / done.length
+    );
   }
 
   @Query(() => Boolean)
   async isDraft(): Promise<boolean> {
-    return this.store.getIsDraft();
+    const product = await this.storage.products
+      .createQueryBuilder("p")
+      .select("max(p.updatedAt)", "maxUpdatedAt")
+      .where("p.showInGallery = true or p.showInShop = true")
+      .getRawOne<{maxUpdatedAt: Date}>();
+
+    const build = await this.storage.builds
+      .createQueryBuilder("b")
+      .select("max(b.date)", "maxDate")
+      .where(`b.status = "DONE"`)
+      .getRawOne<{maxDate: Date}>();
+    
+    if(!product || !product.maxUpdatedAt) {
+      return false;
+    }
+
+    if(!build || !build.maxDate){
+      return true
+    }
+
+    return build.maxDate < product.maxUpdatedAt;
   }
 }

@@ -8,7 +8,6 @@ import type { Files, File } from "formidable";
 import { Container } from "typedi";
 import { getMeta, resize } from "../image-processing";
 import { crop } from "../image-processing/square";
-import { Store } from "../store";
 import { Config } from "../config";
 import { checkAuthMiddleware } from "../middleware/checkAuth";
 import { Storage } from "../storage";
@@ -73,10 +72,8 @@ router.post("/", checkAuth, mw, async (ctx) => {
   await crop(fullPathname);
 
   const { width, height, dominantColor } = await getMeta(fullPathname);
-  const store = Container.get(Store);
   const storage = Container.get(Storage);
 
-  await store.addPicture(filename, { width, height }, dominantColor);
   const picture = await storage.pictures.save(Picture.create(filename, { width, height }, dominantColor));
 
   ctx.body = picture;

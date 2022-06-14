@@ -1,16 +1,16 @@
 import { spawn } from "child_process";
 import { Inject, Service } from "typedi";
 import { Config } from "../config";
-import { Store } from "../store";
-import { Build } from "../types/Build";
+import { Build } from "../entity/Build";
 import { BuildStatus } from "../types/BuildStatus";
+import { Storage } from "../storage";
 
 @Service()
 export class Builder {
   private currentBuild: Build | undefined
 
-  @Inject(() => Store)
-  private store: Store;
+  @Inject(() => Storage)
+  private storage: Storage;
 
   @Inject("config")
   private config: Config;
@@ -19,7 +19,8 @@ export class Builder {
     if (this.currentBuild) {
       throw new Error("build already started");
     }
-    this.currentBuild = Build.create();
+    this.currentBuild = this.storage.builds.create();
+    this.storage.builds.save(this.currentBuild);
 
     const env = Object.keys(process.env)
       .filter((key) => !key.match(/NODE/i))
@@ -36,21 +37,23 @@ export class Builder {
       },
     });
 
-    cmd.stdout.on("data", (data: Buffer) => {
+    cmd.stdout.on("data", async (data: Buffer) => {
       if(!this.currentBuild) return;
       this.currentBuild.log += data.toString("ascii");
+      await this.storage.builds.save(this.currentBuild);
     });
 
-    cmd.stderr.on("data", (data: Buffer) => {
+    cmd.stderr.on("data", async (data: Buffer) => {
       if(!this.currentBuild) return;
       this.currentBuild.log += data.toString("ascii");
+      await this.storage.builds.save(this.currentBuild);
     });
 
     cmd.on("close", async (code) => {
       if(!this.currentBuild) return;
       this.currentBuild.status = code === 0 ? BuildStatus.DONE : BuildStatus.FAILURE;
-      this.currentBuild.duration = Date.now() - this.currentBuild.date;
-      await this.store.publish(this.currentBuild);
+      this.currentBuild.duration = Date.now() - (+this.currentBuild.date);
+      await this.storage.builds.save(this.currentBuild);
       this.currentBuild = undefined
     });
 

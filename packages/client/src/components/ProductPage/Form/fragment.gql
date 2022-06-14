@@ -7,7 +7,9 @@ fragment Form on Product {
   }
   showInGallery
   showInShop
-  coverId
+  cover{
+    id
+  }
   price
   description {
     en

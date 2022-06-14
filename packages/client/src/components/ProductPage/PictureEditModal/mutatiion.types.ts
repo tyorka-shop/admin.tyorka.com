@@ -6,4 +6,4 @@ export type SaveCropMutationVariables = Types.Exact<{
 }>;
 
 
-export type SaveCropMutation = { __typename?: 'Mutation', saveCrop?: { __typename?: 'Picture', id: string, crop: { __typename?: 'Crop', factor: number, anchor: { __typename?: 'Point', x: number, y: number } } } | null | undefined };
+export type SaveCropMutation = { __typename?: 'Mutation', saveCrop: { __typename?: 'Picture', id: string, crop: { __typename?: 'Crop', factor: number, anchor: { __typename?: 'Point', x: number, y: number } } } };

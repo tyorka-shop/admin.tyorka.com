@@ -28,13 +28,6 @@ export class ProductResolver {
     return product?.pictures || [];
   }
 
-  // @FieldResolver(() => Picture, {nullable: true})
-  // async cover(@Root() { coverId }: Product): Promise<Picture | null> {
-  //   return !coverId ? null : this.storage.pictures.findOne({
-  //     where: { id: coverId },
-  //   });
-  // }
-
   @FieldResolver(() => MultiLang)
   descriptionHTML(@Root() { description }: Product) {
     return {

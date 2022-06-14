@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Form, Button, ButtonToolbar } from "rsuite";
 import { Form as RForm } from "react-final-form";
-import ReactMarkdown from "react-markdown";
 import b_ from "b_";
 import { Picture } from "../../../types";
 import { Input } from "../../Input";
@@ -10,15 +9,15 @@ import { Checkbox } from "../../Checkbox";
 import { createValidator, required } from "../../../libs/validation";
 import { Pics } from "../Pics";
 import { useSubmit } from "./hooks";
-import { FormFragment } from "./fragment.types";
+import { ProductInput } from "./types";
+import { Preview } from "./Previce";
 
 import "./index.scss";
-import { Preview } from "./Previce";
 
 const b = b_.with("product-page-form");
 
 interface Props {
-  product: FormFragment;
+  product: ProductInput
   onPictureAdd: (pic: Picture) => void;
   onPictureRemove: (id: string) => void;
   onCoverSelect: (id: string) => void;

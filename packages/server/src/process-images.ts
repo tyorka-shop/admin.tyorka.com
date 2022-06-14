@@ -5,13 +5,13 @@ import { Config } from "./config";
 import { setupConfig } from "./config";
 import { resize } from "./image-processing";
 import { crop } from "./image-processing/square";
-import { Store } from "./store";
+import { Storage } from "./storage";
 
 const processImages = async () => {
   const { imagesFolder } = Container.get<Config>("config");
-  const store = Container.get(Store);
+  const storage = Container.get(Storage);
 
-  const pictures = await store.getPictures();
+  const pictures = await storage.pictures.find();
 
   await pictures.reduce(
     (promise, picture) =>

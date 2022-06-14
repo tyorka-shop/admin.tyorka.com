@@ -7,10 +7,10 @@ import {
 import * as mutation from "./mutation.gql";
 import { FormValues } from ".";
 import { State } from "../../../types/gql";
-import { FormFragment } from "./fragment.types";
 import * as productsQuery from "../../Products/query.gql";
+import { ProductInput } from "./types";
 
-export const useSubmit = (product: FormFragment) => {
+export const useSubmit = (product: ProductInput) => {
   const { addToast } = useToasts();
   const [save, { loading, error }] = useMutation<Mutation, Variables>(
     mutation,
@@ -33,7 +33,7 @@ export const useSubmit = (product: FormFragment) => {
           },
           showInGallery: values.showInGallery,
           showInShop: values.showInShop,
-          coverId: product.coverId || undefined,
+          coverId: product.coverId,
           pictures: product.pictures.map((pic) => pic.id),
           state: State.Draft,
           price: +values.price,

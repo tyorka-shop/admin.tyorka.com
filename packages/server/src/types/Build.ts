@@ -1,13 +1,9 @@
 import { Field, ObjectType } from "type-graphql";
-import { v4 as uuid } from "uuid";
 import { BuildStatus } from "./BuildStatus";
+import { Build as BuildEntity} from '../entity/Build'
 
 @ObjectType()
 export class Build {
-  constructor(b: Build) {
-    Object.assign(this, b);
-  }
-
   @Field()
   id: string
   
@@ -20,15 +16,16 @@ export class Build {
   @Field(() => String)
   date: number
 
-  duration: number | undefined
+  duration?: number
 
-  static create(){
+  constructor(value: Build) {
+    Object.assign(this, value)
+  }
+
+  static fromEntity(build: BuildEntity){
     return new this({
-      id: uuid(),
-      date: Date.now(),
-      status: BuildStatus.PENDING,
-      log: '',
-      duration: undefined
+      ...build,
+      date: +build.date
     })
   }
 }
