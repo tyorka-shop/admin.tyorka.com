@@ -82,7 +82,11 @@ export class QueryResolver {
 
   @Query(() => [Build])
   async publications(): Promise<Build[]> {
-    const result = await this.storage.builds.find();
+    const result = await this.storage.builds.find({
+      order: {
+        date: 'DESC'
+      }
+    });
     return result.map((item) => Build.fromEntity(item));
   }
 

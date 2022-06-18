@@ -15,12 +15,12 @@ export class Builder {
   @Inject("config")
   private config: Config;
 
-  build() {
+  async build() {
     if (this.currentBuild) {
       throw new Error("build already started");
     }
-    this.currentBuild = this.storage.builds.create();
-    this.storage.builds.save(this.currentBuild);
+
+    this.currentBuild = await this.storage.builds.save(this.storage.builds.create());
 
     const env = Object.keys(process.env)
       .filter((key) => !key.match(/NODE/i))
@@ -52,7 +52,8 @@ export class Builder {
     cmd.on("close", async (code) => {
       if(!this.currentBuild) return;
       this.currentBuild.status = code === 0 ? BuildStatus.DONE : BuildStatus.FAILURE;
-      this.currentBuild.duration = Date.now() - (+this.currentBuild.date);
+
+      this.currentBuild.duration = Date.now() - +new Date(this.currentBuild.date);
       await this.storage.builds.save(this.currentBuild);
       this.currentBuild = undefined
     });
@@ -80,6 +81,11 @@ export class Builder {
 
     // const log = terminal.toString().trim()
 
-    return this.currentBuild;
+    if(!this.currentBuild) return;
+
+    return {
+      ...this.currentBuild,
+      log: this.currentBuild?.log.replace(/\[.{2}/g, '')
+    };
   }
 }

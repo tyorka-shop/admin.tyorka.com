@@ -25,7 +25,8 @@ export class Build {
   static fromEntity(build: BuildEntity){
     return new this({
       ...build,
-      date: +build.date
+      date: +new Date(build.date),
+      log: build.log.replace(/\x1b\[(2K|1A|G)/g, '')
     })
   }
 }

@@ -32,7 +32,7 @@ export class Storage {
       entities: ["src/entity/*"],
       migrations: [],
       migrationsTableName: "migrations",
-      logging: ["error", "log", "query"],
+      logging: ["error"],
       logger: "simple-console",
       synchronize: true,
     });

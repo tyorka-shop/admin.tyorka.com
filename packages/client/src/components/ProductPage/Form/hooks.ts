@@ -8,6 +8,7 @@ import * as mutation from "./mutation.gql";
 import { FormValues } from ".";
 import { State } from "../../../types/gql";
 import * as productsQuery from "../../Products/query.gql";
+import * as galleryQuery from '../../Gallery/query.gql'
 import { ProductInput } from "./types";
 
 export const useSubmit = (product: ProductInput) => {
@@ -43,7 +44,7 @@ export const useSubmit = (product: ProductInput) => {
           },
         },
       },
-      refetchQueries: [{ query: productsQuery }, "IsDraft"],
+      refetchQueries: [{ query: productsQuery }, "IsDraft", {query: galleryQuery}],
     });
   };
 

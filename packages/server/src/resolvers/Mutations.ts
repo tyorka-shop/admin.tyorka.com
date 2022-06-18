@@ -61,8 +61,8 @@ export class MutationsResolver {
   }
 
   @Mutation(() => Build, { nullable: true })
-  publish(): Build | undefined {
-    this.builder.build();
+  async publish(): Promise<Build | undefined> {
+    await this.builder.build();
     const build = this.builder.getStatus();
     return build ? Build.fromEntity(build) : undefined;
   }
