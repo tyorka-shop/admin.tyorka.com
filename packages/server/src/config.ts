@@ -3,7 +3,6 @@ import { Container } from "typedi";
 import { join } from "path";
 import { ConfigSchema } from "./schemas/config";
 import { ConfigIndex } from "./interfaces/config";
-import { Store } from "./store";
 import { Storage } from "./storage";
 
 export type Config = ConfigIndex;
@@ -27,8 +26,6 @@ const loadConfig = async (): Promise<Config> => {
 export const setupConfig = async () => {
   const config = await loadConfig();
   Container.set("config", config);
-  // hit migrations
-  Container.get(Store);
   const storage = Container.get(Storage);
   await storage.init();
 

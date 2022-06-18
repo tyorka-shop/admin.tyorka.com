@@ -64,23 +64,6 @@ export class Builder {
   }
 
   getStatus(): Build | undefined{
-    // var AnsiTerminal = require("node-ansiterminal").AnsiTerminal;
-    // var AnsiParser = require("node-ansiparser");
-    // var terminal = new AnsiTerminal(1000, 5000, 5000);
-    // var oldInstX = terminal.inst_x
-    // terminal.inst_x = (flag: string) => {
-    //   if(flag.charCodeAt(0) === 10) {
-    //     oldInstX.call(terminal, flag)
-    //     oldInstX.call(terminal, '\r');
-    //     return;
-    //   }
-    //   return oldInstX.call(terminal, flag)
-    // }
-    // var parser = new AnsiParser(terminal);
-    // parser.parse(this.log);
-
-    // const log = terminal.toString().trim()
-
     if(!this.currentBuild) return;
 
     return {

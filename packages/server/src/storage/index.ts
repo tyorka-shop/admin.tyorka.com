@@ -32,7 +32,7 @@ export class Storage {
       entities: ["src/entity/*"],
       migrations: [],
       migrationsTableName: "migrations",
-      logging: ["error"],
+      logging: false,
       logger: "simple-console",
       synchronize: true,
     });
@@ -45,7 +45,7 @@ export class Storage {
 
   init = async () => {
     await this.db.initialize();
-    this.logger.log(this.db.isInitialized);
+    this.logger.log(this.db.isInitialized ? 'ok': 'not initialized');
   };
 
   saveProduct = async ({ pictures: picIds, coverId, ...value }: ProductInput) => {

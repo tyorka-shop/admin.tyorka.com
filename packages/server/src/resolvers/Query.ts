@@ -1,7 +1,6 @@
 import { Arg, Query, Resolver, ID, Ctx, Float } from "type-graphql";
 import { Inject, Service } from "typedi";
 import { ID as IDScalar } from "../types";
-import { Store } from "../store";
 import { Picture } from "../types/Picture";
 import { Product } from "../types/Product";
 import { GalleryItem } from "../types/GalleryItem";
@@ -9,7 +8,6 @@ import { ShopItem } from "../types/ShopItem";
 import { User } from "../types/User";
 import { Context } from "../types/Context";
 import { BlogPost } from "../types/BlogPost";
-import { Builder } from "../builder";
 import { Build } from "../types/Build";
 import { Storage } from "../storage";
 import { BuildStatus } from "../types/BuildStatus";
@@ -18,14 +16,8 @@ import { MoreThan } from "typeorm";
 @Service()
 @Resolver()
 export class QueryResolver {
-  @Inject(() => Store)
-  private store: Store;
-
   @Inject(() => Storage)
   private storage: Storage;
-
-  @Inject(() => Builder)
-  private builder: Builder;
 
   @Query(() => [Product])
   async products(): Promise<Product[]> {

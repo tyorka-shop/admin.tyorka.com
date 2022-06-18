@@ -4,6 +4,7 @@
     "start": "node -r ts-node/register ./src/index.ts",
     "sync-instagram": "node -r ts-node/register ./src/tasks.ts",
     "process-images": "node -r ts-node/register ./src/process-images.ts",
+    "migrate": "node -r ts-node/register ./src/migrate.ts",
     "typeorm": "typeorm -d ./src/storage/db.js",
     "build": "tsc",
     "generate:schema": "ts-node scripts/types.ts && yarn generate:json-schema",
