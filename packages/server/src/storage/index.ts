@@ -9,6 +9,7 @@ import { BlogPost } from "../entity/BlogPost";
 import { GalleryItem } from "../types/GalleryItem";
 import { ProductInput } from "../types/Product";
 import { Build } from "../entity/Build";
+import { ShopItem } from "../types/ShopItem";
 
 const file = "db.sqlite";
 
@@ -119,15 +120,11 @@ export class Storage {
         showInShop: true,
         cover: Not(IsNull()),
         price: Not(IsNull()),
-        title: Not(IsNull()),
       },
       order: {
         createdAt: "DESC",
       },
     });
-    return products.map((product) => ({
-      ...product,
-      price: product.price!,
-    }));
+    return products.map((product) => ShopItem.fromEntity(product));
   };
 }

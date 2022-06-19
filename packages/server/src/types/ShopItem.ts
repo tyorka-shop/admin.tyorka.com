@@ -1,4 +1,5 @@
 import { Field, Float, ID, ObjectType } from "type-graphql";
+import { Product } from "../entity/Product";
 import { ID as IDScalar } from "../types";
 import { MultiLang } from "./MultiLang";
 
@@ -17,4 +18,18 @@ export class ShopItem {
 
   @Field(() => MultiLang, { nullable: true })
   description?: MultiLang;
+
+  constructor(value: ShopItem){
+    Object.assign(this, value)
+  }
+
+  static fromEntity(product: Product) {
+    return new this({
+      id: product.id,
+      coverId: product.cover?.id,
+      title: product.title,
+      description: product.description,
+      price: product.price!
+    })
+  }
 }
