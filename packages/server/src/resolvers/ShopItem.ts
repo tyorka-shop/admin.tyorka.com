@@ -26,11 +26,6 @@ export class ShopItemResolver {
     return product?.pictures || [];
   }
 
-  @FieldResolver(() => Picture)
-  async cover(@Root() { coverId }: ShopItem): Promise<Picture | null> {
-    return this.storage.pictures.findOne({ where: { id: coverId } });
-  }
-
   @FieldResolver(() => MultiLang)
   descriptionHTML(@Root() { description }: ShopItem) {
     return {

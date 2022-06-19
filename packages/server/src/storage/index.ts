@@ -124,6 +124,9 @@ export class Storage {
       order: {
         createdAt: "DESC",
       },
+      relations: {
+        cover: true
+      }
     });
     return products.map((product) => ShopItem.fromEntity(product));
   };

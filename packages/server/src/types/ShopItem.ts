@@ -2,13 +2,15 @@ import { Field, Float, ID, ObjectType } from "type-graphql";
 import { Product } from "../entity/Product";
 import { ID as IDScalar } from "../types";
 import { MultiLang } from "./MultiLang";
+import { Picture } from "./Picture";
 
 @ObjectType()
 export class ShopItem {
   @Field(() => ID)
   id: IDScalar;
 
-  coverId?: string
+  @Field(() => Picture, {nullable: true})
+  cover?: Picture
 
   @Field(() => MultiLang, { nullable: true })
   title?: MultiLang;
@@ -25,10 +27,8 @@ export class ShopItem {
 
   static fromEntity(product: Product) {
     return new this({
-      id: product.id,
-      coverId: product.cover?.id,
-      title: product.title,
-      description: product.description,
+      ...product,
+      cover: product.cover || undefined,
       price: product.price!
     })
   }
