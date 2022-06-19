@@ -10,9 +10,12 @@ interface VerifyResponse {
 @Service()
 export class SessionServiceClient {
   private client: AxiosInstance;
-  private logger = new LoggerService("session service client");
-
-  constructor(@Inject("config") config: Config) {
+  
+  constructor(
+    @Inject("config") config: Config,
+    @Inject(() => LoggerService) private logger: LoggerService
+  ) {
+    this.logger.setName('session service client')
     this.client = axios.create({
       baseURL: config.sessionService.url,
     });

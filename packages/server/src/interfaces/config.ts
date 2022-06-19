@@ -6,6 +6,7 @@
 export interface ConfigIndex {
   imagesFolder: string;
   insta: InstaConfig;
+  logLevel?: 'debug' | 'log' | 'error';
   port: string;
   publicSite: PublicSiteConfig;
   secret: string;

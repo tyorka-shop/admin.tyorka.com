@@ -47,6 +47,14 @@
     "insta": {
       "$ref": "#/definitions/InstaConfig"
     },
+    "logLevel": {
+      "enum": [
+        "debug",
+        "log",
+        "error"
+      ],
+      "type": "string"
+    },
     "port": {
       "type": "string"
     },

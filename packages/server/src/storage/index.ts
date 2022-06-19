@@ -1,7 +1,7 @@
 import { join } from "path";
 import { Inject, Service } from "typedi";
 import { DataSource, IsNull, Not, Repository } from "typeorm";
-import { LoggerService } from "../services/LoggerService";
+import { DBLoggingService } from "../services/DBLoggerService";
 import { Config } from "../config";
 import { Picture } from "../entity/Picture";
 import { Product } from "../entity/Product";
@@ -21,11 +21,13 @@ export class Storage {
   blog: Repository<BlogPost>;
   builds: Repository<Build>;
 
-  private logger = new LoggerService("db");
 
-  constructor(@Inject("config") config: Config) {
+  constructor(
+    @Inject("config") config: Config,
+    @Inject(() => DBLoggingService) private logger: DBLoggingService
+  ) {
     const filename = join(config.storeFolder, file);
-    this.logger.log("Connect to", filename);
+    this.logger.log('log', `Connect to ${filename}`);
     this.db = new DataSource({
       type: "sqlite",
       database: filename,
@@ -33,7 +35,7 @@ export class Storage {
       migrations: [],
       migrationsTableName: "migrations",
       logging: false,
-      logger: "simple-console",
+      logger: this.logger,
       synchronize: true,
     });
 
@@ -45,7 +47,7 @@ export class Storage {
 
   init = async () => {
     await this.db.initialize();
-    this.logger.log(this.db.isInitialized ? 'ok': 'not initialized');
+    this.logger.log('log', this.db.isInitialized ? 'ok': 'not initialized');
   };
 
   saveProduct = async ({ pictures: picIds, coverId, ...value }: ProductInput) => {
