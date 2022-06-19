@@ -78,7 +78,7 @@ export class Product {
   }
 }
 
-const defaultMultilang = (value?: MultiLangInput) => {
+export const defaultMultilang = (value?: MultiLangInput) => {
   return {
     en: value?.en || "",
     ru: value?.ru || "",

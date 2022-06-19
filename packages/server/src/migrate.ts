@@ -1,7 +1,9 @@
 import Container from "typedi";
 import { setupConfig } from "./config";
+import { defaultMultilang } from "./entity/Product";
 import { Storage } from "./storage";
 import { Schema } from "./types";
+import { State } from "./types/State";
 
 async function main() {
   await setupConfig();
@@ -20,19 +22,21 @@ async function main() {
     })
   );
 
-  await storage.pictures.save(pictures);
+  const storedPictures = await storage.pictures.save(pictures);
 
   const products = json.products.map(product => 
     storage.products.create({
       id: product.id,
-      state: product.state,
-      title: product.title,
-      description: product.description,
+      state: [State.DRAFT, State.PUBLISHED, State.ARCHIVED][product.state as unknown as number],
+      title: defaultMultilang(product.title),
+      description: defaultMultilang(product.description),
       showInGallery: product.showInGallery,
       showInShop: product.showInShop,
       price: product.price,
       createdAt: product.createdAt,
       updatedAt: product.updatedAt,
+      pictures: storedPictures.filter(pic => product.pictures.includes(pic.id)),
+      cover: storedPictures.find(pic => pic.id === product.coverId)
     })
   )
 
