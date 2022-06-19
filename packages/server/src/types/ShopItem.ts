@@ -9,8 +9,8 @@ export class ShopItem {
   @Field(() => ID)
   id: IDScalar;
 
-  @Field(() => Picture, {nullable: true})
-  cover?: Picture
+  @Field(() => Picture)
+  cover: Picture
 
   @Field(() => MultiLang, { nullable: true })
   title?: MultiLang;
@@ -28,7 +28,7 @@ export class ShopItem {
   static fromEntity(product: Product) {
     return new this({
       ...product,
-      cover: product.cover || undefined,
+      cover: product.cover!,
       price: product.price!
     })
   }
