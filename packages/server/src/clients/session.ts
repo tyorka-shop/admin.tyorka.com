@@ -4,18 +4,16 @@ import { Config } from "../config";
 import { LoggerService } from "../services/LoggerService";
 
 interface VerifyResponse {
-  email: string
+  email: string;
 }
 
 @Service()
 export class SessionServiceClient {
   private client: AxiosInstance;
-  
-  constructor(
-    @Inject("config") config: Config,
-    @Inject(() => LoggerService) private logger: LoggerService
-  ) {
-    this.logger.setName('session service client')
+
+  private logger = new LoggerService("session service client");
+
+  constructor(@Inject("config") config: Config) {
     this.client = axios.create({
       baseURL: config.sessionService.url,
     });
@@ -23,7 +21,9 @@ export class SessionServiceClient {
 
   verify = async (token: string) => {
     try {
-      const response = await this.client.post<VerifyResponse>("/verify", { token });
+      const response = await this.client.post<VerifyResponse>("/verify", {
+        token,
+      });
       return response.data;
     } catch (e: any) {
       this.logger.log(e.message);

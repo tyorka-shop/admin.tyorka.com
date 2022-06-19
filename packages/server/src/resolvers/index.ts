@@ -27,7 +27,7 @@ export const bootstrap = async () => {
       PictureResolver
     ],
     container: Container,
-    emitSchemaFile: true,
+    emitSchemaFile: true
   });
 
   const schema = makeExecutableSchema({ typeDefs, resolvers });

@@ -2,9 +2,7 @@ import "reflect-metadata";
 import Koa from "koa";
 import serve from "koa-static";
 import mount from "koa-mount";
-import { Container } from "typedi";
 import cors from "@koa/cors";
-import { Config } from "./config";
 import { setupConfig } from "./config";
 import { router as uploadRouter } from "./routes/upload";
 import { bootstrap } from "./resolvers";
@@ -24,6 +22,7 @@ app.use(async (ctx, next) => {
     ctx.status = 500;
     ctx.body = err.message;
     app.emit("error", err, ctx);
+    console.error(err, ctx);
   }
 });
 

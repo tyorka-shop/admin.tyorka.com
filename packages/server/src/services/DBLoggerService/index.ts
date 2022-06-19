@@ -5,9 +5,8 @@ import { LoggerService } from '../LoggerService'
 @Service()
 export class DBLoggingService implements Logger {
 
-  constructor(@Inject(() => LoggerService) private logger: LoggerService){
-    this.logger.setName('db');
-  }
+  private logger = new LoggerService('db')
+
   /**
    * Logs query and parameters used in it.
    */

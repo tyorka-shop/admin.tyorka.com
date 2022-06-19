@@ -1,4 +1,4 @@
-import { Inject, Service } from "typedi";
+import { Container } from "typedi";
 import { Config } from "../../config";
 
 export const levels = ["debug", "log", "error"] as const;
@@ -13,14 +13,12 @@ const levelToNumber = levels.reduce(
   {} as Record<LogLevel, number>
 );
 
-@Service()
 export class LoggerService {
   private logLevel: number;
-  constructor(@Inject("config") config: Config) {
+  constructor(private name: string) {
+    const config: Config = Container.get('config');
     this.logLevel = levelToNumber[config.logLevel || "error"];
   }
-
-  private name: string = "app";
 
   setName(name: string) {
     this.name = name;
