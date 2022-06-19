@@ -29,7 +29,7 @@ export class Storage {
     this.db = new DataSource({
       type: "sqlite",
       database: filename,
-      entities: ["src/entity/*"],
+      entities: [Product, Picture, BlogPost, Build],
       migrations: [],
       migrationsTableName: "migrations",
       logging: false,
