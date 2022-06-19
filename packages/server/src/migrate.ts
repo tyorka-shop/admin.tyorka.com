@@ -24,6 +24,11 @@ async function main() {
 
   const storedPictures = await storage.pictures.save(pictures);
 
+  const galleryOrder = json.gallery.reduce((result, id, index) => ({
+    ...result,
+    [id]: index
+  }), {} as Record<string, number>)
+
   const products = json.products.map(product => 
     storage.products.create({
       id: product.id,
@@ -36,11 +41,14 @@ async function main() {
       createdAt: product.createdAt,
       updatedAt: product.updatedAt,
       pictures: storedPictures.filter(pic => product.pictures.includes(pic.id)),
-      cover: storedPictures.find(pic => pic.id === product.coverId)
+      cover: storedPictures.find(pic => pic.id === product.coverId),
+      index: galleryOrder[product.id]
     })
   )
 
   await storage.products.save(products);
+
+  
 }
 
 main();
