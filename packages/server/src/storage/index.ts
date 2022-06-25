@@ -37,7 +37,6 @@ export class Storage {
       migrationsTableName: "migrations",
       logging: false,
       logger: this.logger,
-      synchronize: true,
     });
 
     this.pictures = this.db.getRepository(Picture);

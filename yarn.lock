@@ -5,7 +5,7 @@ __metadata:
   version: 5
   cacheKey: 8
 
-"@apollo/client@npm:^3.4.16, @apollo/client@npm:~3.2.5 || ~3.3.0 || ~3.4.0":
+"@apollo/client@npm:^3.4.16":
   version: 3.4.16
   resolution: "@apollo/client@npm:3.4.16"
   dependencies:
@@ -2354,6 +2354,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graphql-tools/merge@npm:8.2.15":
+  version: 8.2.15
+  resolution: "@graphql-tools/merge@npm:8.2.15"
+  dependencies:
+    "@graphql-tools/utils": 8.7.0
+    tslib: ^2.4.0
+  peerDependencies:
+    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+  checksum: 028f2c00d53b91323afdbf7cefa34facbc568428431cfd89b9120dfe952d4b63c812deee2f947f3cd5e084bf5929081caabc164d2123a6ec385c600469b9ed2f
+  languageName: node
+  linkType: hard
+
 "@graphql-tools/merge@npm:^6.2.12":
   version: 6.2.17
   resolution: "@graphql-tools/merge@npm:6.2.17"
@@ -2447,7 +2459,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-tools/schema@npm:8.3.1, @graphql-tools/schema@npm:^8.0.0, @graphql-tools/schema@npm:^8.0.2, @graphql-tools/schema@npm:^8.1.2, @graphql-tools/schema@npm:^8.2.0, @graphql-tools/schema@npm:^8.3.1":
+"@graphql-tools/schema@npm:8.3.1, @graphql-tools/schema@npm:^8.0.0, @graphql-tools/schema@npm:^8.0.2, @graphql-tools/schema@npm:^8.1.2, @graphql-tools/schema@npm:^8.3.1":
   version: 8.3.1
   resolution: "@graphql-tools/schema@npm:8.3.1"
   dependencies:
@@ -2471,6 +2483,20 @@ __metadata:
   peerDependencies:
     graphql: ^14.0.0 || ^15.0.0
   checksum: 4baf3a39bd33ef33dbc0cfc04fa671718f48f603b5301ec21d5501145fd270a258dd4ea94d49a8062091d6c2ed35727e31a7992c564cbb14bb4d159f7f2d60f8
+  languageName: node
+  linkType: hard
+
+"@graphql-tools/schema@npm:^8.4.0":
+  version: 8.4.0
+  resolution: "@graphql-tools/schema@npm:8.4.0"
+  dependencies:
+    "@graphql-tools/merge": 8.2.15
+    "@graphql-tools/utils": 8.7.0
+    tslib: ^2.4.0
+    value-or-promise: 1.0.11
+  peerDependencies:
+    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+  checksum: 96071685d4e5fde4fbb20e514a4881063377a7f38b786532024d938d3cb0352881fb5bb30dbdfce2617821f00dcdddb9a265808ee7ee98ae7b491127edc09775
   languageName: node
   linkType: hard
 
@@ -2553,6 +2579,17 @@ __metadata:
   peerDependencies:
     graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
   checksum: 518c0bcfc853a8f77e9f7f426f434cc2c1c9501ff66e5a1d2cc5d833a6b6ad75205bfb58da1c475936ab1aa0696d1ceaf362517d07246aaf8f5842126fe6285a
+  languageName: node
+  linkType: hard
+
+"@graphql-tools/utils@npm:8.7.0":
+  version: 8.7.0
+  resolution: "@graphql-tools/utils@npm:8.7.0"
+  dependencies:
+    tslib: ^2.4.0
+  peerDependencies:
+    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+  checksum: 52d61469306e2279d4ff24f7e3b1adc11a9e97a7b06d2b6830af9a0cf13ca8e19a5e2f68736892bf3e7de4a08a2e96a2639608e81ba0838d11ec1893ff7f7902
   languageName: node
   linkType: hard
 
@@ -11027,22 +11064,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql-tools@npm:^8.2.0":
-  version: 8.2.0
-  resolution: "graphql-tools@npm:8.2.0"
-  dependencies:
-    "@apollo/client": ~3.2.5 || ~3.3.0 || ~3.4.0
-    "@graphql-tools/schema": ^8.2.0
-    tslib: ~2.3.0
-  peerDependencies:
-    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
-  dependenciesMeta:
-    "@apollo/client":
-      optional: true
-  checksum: c0468306d9698c2e5058b304fd53e1b1b56b8f4563eea0fce8acee300c4aff3005121015d449ffcef57186ebfd52617320e57a52d6eecc30c50e22d13fe9e3df
-  languageName: node
-  linkType: hard
-
 "graphql-type-json@npm:0.3.2, graphql-type-json@npm:^0.3.2":
   version: 0.3.2
   resolution: "graphql-type-json@npm:0.3.2"
@@ -18076,6 +18097,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "server@workspace:packages/server"
   dependencies:
+    "@graphql-tools/schema": ^8.4.0
     "@koa/cors": ^3.1.0
     "@koa/router": ^10.1.1
     "@types/cron": ^1.7.3
@@ -18100,7 +18122,6 @@ __metadata:
     dotenv: ^10.0.0
     formidable: ^2.0.1
     google-auth-library: ^7.10.2
-    graphql-tools: ^8.2.0
     joi: ^17.6.0
     joi-to-typescript: ^3.0.3
     jsonwebtoken: ^8.5.1
@@ -19692,7 +19713,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.3.1":
+"tslib@npm:^2.3.1, tslib@npm:^2.4.0":
   version: 2.4.0
   resolution: "tslib@npm:2.4.0"
   checksum: 8c4aa6a3c5a754bf76aefc38026134180c053b7bd2f81338cb5e5ebf96fefa0f417bff221592bf801077f5bf990562f6264fecbc42cd3309b33872cb6fc3b113

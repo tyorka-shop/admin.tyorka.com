@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { makeExecutableSchema } from "graphql-tools";
+import { makeExecutableSchema } from "@graphql-tools/schema";
 import { buildTypeDefsAndResolvers } from "type-graphql";
 import graphqlHTTP from "koa-graphql";
 import { Container } from "typedi";

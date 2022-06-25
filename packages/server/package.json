@@ -34,6 +34,7 @@
     "typescript-json-schema": "^0.53.0"
   },
   "dependencies": {
+    "@graphql-tools/schema": "^8.4.0",
     "@koa/cors": "^3.1.0",
     "@koa/router": "^10.1.1",
     "apollo-server": "^3.4.0",
@@ -43,7 +44,6 @@
     "dotenv": "^10.0.0",
     "formidable": "^2.0.1",
     "google-auth-library": "^7.10.2",
-    "graphql-tools": "^8.2.0",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.6.2",
