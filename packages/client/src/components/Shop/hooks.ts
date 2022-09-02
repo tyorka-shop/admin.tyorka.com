@@ -15,7 +15,7 @@ export const useShop = () => {
   const [save, { loading: submitting }] = useMutation<Mutation, Variables>(
     mutation,
     {
-      refetchQueries: ["IsDraft"],
+      refetchQueries: ["IsDraft", "Shop"],
       onCompleted: () => addToast("Сохранено", { appearance: "success" }),
     }
   );

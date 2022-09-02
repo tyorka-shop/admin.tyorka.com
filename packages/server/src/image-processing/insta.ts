@@ -16,9 +16,3 @@ const cropSingle = (filename: string, width: number) => {
 
 export const crop = (filename: string, widths: number[]) =>
   Promise.all(widths.map((width) => cropSingle(filename, width)));
-
-interface Color {
-  r: number;
-  g: number;
-  b: number;
-}
