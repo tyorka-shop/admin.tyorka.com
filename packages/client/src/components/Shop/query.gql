@@ -1,0 +1,18 @@
+query Shop {
+  shop {
+    id
+    ...Item
+  }
+}
+
+fragment Item on ShopItem {
+  id
+  title {
+    en
+    ru
+  }
+  cover {
+    id
+    src
+  }
+}

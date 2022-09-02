@@ -59,6 +59,7 @@ type Mutation {
   saveCrop(crop: CropInput!, id: ID!): Picture!
   saveGalleryOrder(list: [ID!]!): [GalleryItem!]!
   saveProduct(product: ProductInput!): Product
+  saveShopOrder(list: [ID!]!): [ShopItem!]!
 }
 
 type Picture {

@@ -75,6 +75,7 @@ export type Mutation = {
   saveCrop: Picture;
   saveGalleryOrder: Array<GalleryItem>;
   saveProduct: Maybe<Product>;
+  saveShopOrder: Array<ShopItem>;
 };
 
 
@@ -91,6 +92,11 @@ export type MutationSaveGalleryOrderArgs = {
 
 export type MutationSaveProductArgs = {
   product: ProductInput;
+};
+
+
+export type MutationSaveShopOrderArgs = {
+  list: Array<Scalars['ID']>;
 };
 
 export type Picture = {
@@ -276,6 +282,20 @@ export type PublicationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type PublicationsQuery = { __typename: 'Query', publicationDuration: number, publications: Array<{ __typename: 'Build', id: string, date: string, status: BuildStatus }> };
 
+export type SaveShopOrderMutationVariables = Exact<{
+  list: Array<Scalars['ID']> | Scalars['ID'];
+}>;
+
+
+export type SaveShopOrderMutation = { __typename: 'Mutation', saveShopOrder: Array<{ __typename: 'ShopItem', id: string }> };
+
+export type ShopQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ShopQuery = { __typename: 'Query', shop: Array<{ __typename: 'ShopItem', id: string, title: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, cover: { __typename: 'Picture', id: string, src: string } }> };
+
+export type ItemFragment = { __typename: 'ShopItem', id: string, title: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, cover: { __typename: 'Picture', id: string, src: string } };
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -367,6 +387,19 @@ export const PublicationFragmentDoc = gql`
   id
   date
   status
+}
+    `;
+export const ItemFragmentDoc = gql`
+    fragment Item on ShopItem {
+  id
+  title {
+    en
+    ru
+  }
+  cover {
+    id
+    src
+  }
 }
     `;
 export const SaveGalleryOrderDocument = gql`
@@ -732,6 +765,74 @@ export function usePublicationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type PublicationsQueryHookResult = ReturnType<typeof usePublicationsQuery>;
 export type PublicationsLazyQueryHookResult = ReturnType<typeof usePublicationsLazyQuery>;
 export type PublicationsQueryResult = Apollo.QueryResult<PublicationsQuery, PublicationsQueryVariables>;
+export const SaveShopOrderDocument = gql`
+    mutation SaveShopOrder($list: [ID!]!) {
+  saveShopOrder(list: $list) {
+    id
+  }
+}
+    `;
+export type SaveShopOrderMutationFn = Apollo.MutationFunction<SaveShopOrderMutation, SaveShopOrderMutationVariables>;
+
+/**
+ * __useSaveShopOrderMutation__
+ *
+ * To run a mutation, you first call `useSaveShopOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveShopOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveShopOrderMutation, { data, loading, error }] = useSaveShopOrderMutation({
+ *   variables: {
+ *      list: // value for 'list'
+ *   },
+ * });
+ */
+export function useSaveShopOrderMutation(baseOptions?: Apollo.MutationHookOptions<SaveShopOrderMutation, SaveShopOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveShopOrderMutation, SaveShopOrderMutationVariables>(SaveShopOrderDocument, options);
+      }
+export type SaveShopOrderMutationHookResult = ReturnType<typeof useSaveShopOrderMutation>;
+export type SaveShopOrderMutationResult = Apollo.MutationResult<SaveShopOrderMutation>;
+export type SaveShopOrderMutationOptions = Apollo.BaseMutationOptions<SaveShopOrderMutation, SaveShopOrderMutationVariables>;
+export const ShopDocument = gql`
+    query Shop {
+  shop {
+    id
+    ...Item
+  }
+}
+    ${ItemFragmentDoc}`;
+
+/**
+ * __useShopQuery__
+ *
+ * To run a query within a React component, call `useShopQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShopQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useShopQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useShopQuery(baseOptions?: Apollo.QueryHookOptions<ShopQuery, ShopQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ShopQuery, ShopQueryVariables>(ShopDocument, options);
+      }
+export function useShopLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ShopQuery, ShopQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ShopQuery, ShopQueryVariables>(ShopDocument, options);
+        }
+export type ShopQueryHookResult = ReturnType<typeof useShopQuery>;
+export type ShopLazyQueryHookResult = ReturnType<typeof useShopLazyQuery>;
+export type ShopQueryResult = Apollo.QueryResult<ShopQuery, ShopQueryVariables>;
 export const MeDocument = gql`
     query Me {
   user {

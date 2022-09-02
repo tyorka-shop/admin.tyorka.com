@@ -1,0 +1,20 @@
+.shop {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 375px) {
+    grid-template-columns: 1fr;
+  }
+
+  &__btn-wrap {
+    padding-top: 1rem;
+    display: flex;
+    justify-content: end;
+  }
+
+}

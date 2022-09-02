@@ -11,6 +11,7 @@ import { Builder } from "../builder";
 import { crop as cropSlide } from "../image-processing/square";
 import { Config } from "../config";
 import { Storage } from "../storage";
+import { ShopItem } from "../types/ShopItem";
 
 @Service()
 @Resolver()
@@ -58,6 +59,12 @@ export class MutationsResolver {
   ): Promise<GalleryItem[]> {
     await this.storage.saveGalleryOrder(list);
     return this.storage.getGallery();
+  }
+
+  @Mutation(() => [ShopItem])
+  async saveShopOrder(@Arg("list", () => [ID]) list: IDScalar[]): Promise<ShopItem[]> {
+    await this.storage.saveShopOrder(list);
+    return this.storage.getShop();
   }
 
   @Mutation(() => Build, { nullable: true })

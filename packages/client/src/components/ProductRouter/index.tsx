@@ -3,6 +3,7 @@ import React from "react";
 import { ProductPage } from "../ProductPage";
 import { Products } from "../Products";
 import { Gallery } from "../Gallery";
+import { Shop } from '../Shop'
 
 export const ProductRouter: React.FC = () => (
   <>
@@ -13,6 +14,9 @@ export const ProductRouter: React.FC = () => (
     </Router>
     <Router basepath="/gallery">
       <Gallery path="/" />
+    </Router>
+    <Router basepath="/shop">
+      <Shop path='/' />
     </Router>
   </>
 );

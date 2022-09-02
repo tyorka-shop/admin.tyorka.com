@@ -1,0 +1,21 @@
+.shop-product {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  break-inside: avoid;
+  padding: 1rem;
+
+  &__photo {
+    width: 100%;
+  }
+
+  &__title {
+    color: #888785;
+    padding: 15px 0px 0px;
+  }
+
+  &__price {
+    color: #B3ADA9;
+    padding: 5px 0px 0px;
+  }
+}

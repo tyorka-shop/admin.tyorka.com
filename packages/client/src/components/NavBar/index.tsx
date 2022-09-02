@@ -17,6 +17,9 @@ export const NavBar: React.FC<NavbarProps> = (props) => {
           <Nav.Item as={NavLink} to="/gallery/">
             Gallery
           </Nav.Item>
+          <Nav.Item as={NavLink} to="/shop/">
+            Shop
+          </Nav.Item>
           <Nav.Item as={NavLink} to="/publication/">
             Publication{isDraft && ' *'}
           </Nav.Item>

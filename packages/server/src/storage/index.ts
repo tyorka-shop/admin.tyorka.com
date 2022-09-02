@@ -11,6 +11,7 @@ import { ProductInput } from "../types/Product";
 import { Build } from "../entity/Build";
 import { ShopItem } from "../types/ShopItem";
 import { PictureOrder } from "../entity/PictureOrder";
+import { ShopOrder } from "../entity/ShopOrder";
 
 const file = "db.sqlite";
 
@@ -23,6 +24,7 @@ export class Storage {
   blog: Repository<BlogPost>;
   builds: Repository<Build>;
   picturesOrder: Repository<PictureOrder>;
+  shopOrder: Repository<ShopOrder>;
 
   constructor(
     @Inject("config") config: Config,
@@ -33,11 +35,12 @@ export class Storage {
     this.db = new DataSource({
       type: "sqlite",
       database: filename,
-      entities: [Product, Picture, BlogPost, Build, PictureOrder],
+      entities: [Product, Picture, BlogPost, Build, PictureOrder, ShopOrder],
       migrations: [],
       migrationsTableName: "migrations",
       logging: false,
       logger: this.logger,
+      synchronize: true,
     });
 
     this.pictures = this.db.getRepository(Picture);
@@ -45,6 +48,7 @@ export class Storage {
     this.blog = this.db.getRepository(BlogPost);
     this.builds = this.db.getRepository(Build);
     this.picturesOrder = this.db.getRepository(PictureOrder);
+    this.shopOrder = this.db.getRepository(ShopOrder);
   }
 
   init = async () => {
@@ -78,7 +82,7 @@ export class Storage {
 
     await this.picturesOrder.delete({
       productId: product.id,
-    })
+    });
 
     await this.picturesOrder.save(
       picIds.map(
@@ -131,6 +135,20 @@ export class Storage {
     await this.products.save(products);
   };
 
+  saveShopOrder = async (list: string[]) => {
+    const shopOrder = list.map(
+      (productId, index) =>
+        new ShopOrder({
+          productId: productId,
+          index,
+        })
+    );
+
+    await this.shopOrder.delete({});
+
+    await this.shopOrder.save(shopOrder);
+  };
+
   getShop = async () => {
     const products = await this.products.find({
       where: {
@@ -138,13 +156,20 @@ export class Storage {
         cover: Not(IsNull()),
         price: Not(IsNull()),
       },
-      order: {
-        createdAt: "DESC",
-      },
       relations: {
         cover: true,
       },
     });
-    return products.map((product) => ShopItem.fromEntity(product));
+
+    const shopOrder = await this.shopOrder.find({});
+
+    return products
+      .map((product) => ({
+        product,
+        index:
+          shopOrder.find((item) => item.productId === product.id)?.index || 0,
+      }))
+      .sort((a, b) => a.index - b.index)
+      .map(({ product }) => ShopItem.fromEntity(product));
   };
 }
