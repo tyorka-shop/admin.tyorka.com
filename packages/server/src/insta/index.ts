@@ -35,5 +35,6 @@ export async function syncPosts() {
 
   const storage = Container.get(Storage);
 
+  await storage.blog.delete({});
   await storage.blog.save(processed);
 }
