@@ -20,10 +20,6 @@ export class LoggerService {
     this.logLevel = levelToNumber[config.logLevel || "error"];
   }
 
-  setName(name: string) {
-    this.name = name;
-  }
-
   log(...args: any[]) {
     if (this.logLevel > levelToNumber["log"]) return;
     console.log(`[${this.name}]`, ...args);

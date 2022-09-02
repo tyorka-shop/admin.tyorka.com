@@ -10,6 +10,7 @@ import { GalleryItem } from "../types/GalleryItem";
 import { ProductInput } from "../types/Product";
 import { Build } from "../entity/Build";
 import { ShopItem } from "../types/ShopItem";
+import { PictureOrder } from "../entity/PictureOrder";
 
 const file = "db.sqlite";
 
@@ -21,18 +22,18 @@ export class Storage {
   products: Repository<Product>;
   blog: Repository<BlogPost>;
   builds: Repository<Build>;
-
+  picturesOrder: Repository<PictureOrder>;
 
   constructor(
     @Inject("config") config: Config,
     @Inject(() => DBLoggingService) private logger: DBLoggingService
   ) {
     const filename = join(config.storeFolder, file);
-    this.logger.log('log', `Connect to ${filename}`);
+    this.logger.log("log", `Connect to ${filename}`);
     this.db = new DataSource({
       type: "sqlite",
       database: filename,
-      entities: [Product, Picture, BlogPost, Build],
+      entities: [Product, Picture, BlogPost, Build, PictureOrder],
       migrations: [],
       migrationsTableName: "migrations",
       logging: false,
@@ -43,34 +44,51 @@ export class Storage {
     this.products = this.db.getRepository(Product);
     this.blog = this.db.getRepository(BlogPost);
     this.builds = this.db.getRepository(Build);
+    this.picturesOrder = this.db.getRepository(PictureOrder);
   }
 
   init = async () => {
     await this.db.initialize();
-    this.logger.log('log', this.db.isInitialized ? 'ok': 'not initialized');
+    this.logger.log("log", this.db.isInitialized ? "ok" : "not initialized");
   };
 
-  saveProduct = async ({ pictures: picIds, coverId, ...value }: ProductInput) => {
+  saveProduct = async ({
+    pictures: picIds,
+    coverId,
+    ...value
+  }: ProductInput) => {
     const pictures = await this.pictures.find({
       where: picIds.map((id) => ({ id })),
     });
 
     let cover: Picture | null = null;
-    if(coverId) {
+    if (coverId) {
       cover = await this.pictures.findOne({
-        where: { id: coverId }
-      })
-    }
-    else if(picIds[0]) {
+        where: { id: coverId },
+      });
+    } else if (picIds[0]) {
       cover = await this.pictures.findOne({
-        where: { id: picIds[0] }
-      })
+        where: { id: picIds[0] },
+      });
     }
 
-    return this.products.save(
+    const product = await this.products.save(
       Product.fromProductInput(value, pictures, cover)
     );
-  }
+
+    await this.picturesOrder.delete({
+      productId: product.id,
+    })
+
+    await this.picturesOrder.save(
+      picIds.map(
+        (pictureId, index) =>
+          new PictureOrder({ pictureId, productId: product.id, index })
+      )
+    );
+
+    return product;
+  };
 
   getGallery = async (): Promise<GalleryItem[]> => {
     const products = await this.products.find({
@@ -83,7 +101,7 @@ export class Storage {
       },
       relations: {
         pictures: true,
-        cover: true
+        cover: true,
       },
     });
 
@@ -124,8 +142,8 @@ export class Storage {
         createdAt: "DESC",
       },
       relations: {
-        cover: true
-      }
+        cover: true,
+      },
     });
     return products.map((product) => ShopItem.fromEntity(product));
   };

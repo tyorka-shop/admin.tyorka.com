@@ -25,7 +25,34 @@ export class ProductResolver {
       },
     });
 
-    return product?.pictures || [];
+    const pictures = product?.pictures;
+
+    if (!pictures || pictures.length === 0) {
+      return [];
+    }
+
+    const picturesOrder = await this.storage.picturesOrder.find({
+      where: {
+        productId: id,
+      },
+    });
+
+    if (
+      picturesOrder.length !== pictures.length ||
+      picturesOrder.some(
+        ({ pictureId }) => !pictures.find(({ id }) => id === pictureId)
+      )
+    ) {
+      return pictures;
+    }
+
+    return picturesOrder
+      .map(({ pictureId, index }) => ({
+        picture: pictures.find(({ id }) => id === pictureId)!,
+        index,
+      }))
+      .sort((a, b) => a.index - b.index)
+      .map(({ picture }) => picture);
   }
 
   @FieldResolver(() => MultiLang)
