@@ -32,7 +32,7 @@ export const Gallery: React.FC<Props> = () => {
       <section className={b()}>
         {order
           .map((id) => gallery.find((pic) => pic.id === id)!)
-          .map(({ id, src }) => (
+          .map(({ id, cover: {src} }) => (
             <GalleryImage
               key={id}
               src={src}

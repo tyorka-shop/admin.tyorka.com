@@ -22,7 +22,7 @@ export const Publication: React.FC<Props> = ({ publication, maxDuration }) => {
     <div className={b()}>
       <div className={b("vis-button-wrapper")}>
         <div className={b("date")}>
-          {moment(+publication.date).format("DD.MM.YY HH:ss:mm")}
+          {moment(publication.date).format("DD.MM.YY HH:ss:mm")}
         </div>
         <Progress
           percent={getPercent(status, +publication.date, maxDuration)}

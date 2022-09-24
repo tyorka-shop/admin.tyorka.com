@@ -13,11 +13,12 @@ import { ProductInput } from "./types";
 import { Preview } from "./Previce";
 
 import "./index.scss";
+import { ProductDraft } from "../types";
 
 const b = b_.with("product-page-form");
 
 interface Props {
-  product: ProductInput
+  product: ProductDraft
   onPictureAdd: (pic: Picture) => void;
   onPictureRemove: (id: string) => void;
   onCoverSelect: (id: string) => void;

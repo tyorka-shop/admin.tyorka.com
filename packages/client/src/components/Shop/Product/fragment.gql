@@ -1,0 +1,10 @@
+fragment Item on Product {
+	id
+	title {
+		ru
+	}
+	cover {
+		id
+		src
+	}
+}

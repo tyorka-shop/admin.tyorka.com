@@ -6,11 +6,10 @@ import {
   ProductQueryVariables as Variables,
 } from "./query.types";
 import { useQuery } from "@apollo/client";
-import { State } from "../../types/gql";
+import { ProductState } from "../../types/gql";
 import { Picture } from "../../types";
+import { ProductDraft } from "./types";
 
-
-type Product = Query["product"] & { coverId?: string };
 
 export const useProduct = (id: string | undefined) => {
   const { data, loading } = useQuery<Query, Variables>(query, {
@@ -20,18 +19,20 @@ export const useProduct = (id: string | undefined) => {
     skip: !id,
   });
 
-  const [product, setProduct] = React.useState<Product>(createNewProduct());
+  const [product, setProduct] = React.useState<ProductDraft>(createNewProduct());
 
   React.useEffect(() => {
-    data && setProduct({
+    data?.product && setProduct({
       ...data.product,
+      pictures: data.product.pictures,
+      price: data.product.price || undefined,
       coverId: data.product.cover?.id
     });
   }, [data]);
 
   const addPic = (pic: Picture) => {
     setProduct((previous) => {
-      const newProduct: Product = {
+      const newProduct: ProductDraft = {
         ...previous,
         pictures: [...previous.pictures, pic],
       };
@@ -44,7 +45,7 @@ export const useProduct = (id: string | undefined) => {
 
   const removePic = (id: string) => {
     setProduct((previous) => {
-      const newProduct: Product = {
+      const newProduct: ProductDraft = {
         ...previous,
         pictures: previous.pictures.filter((pic) => pic.id !== id),
       };
@@ -63,13 +64,10 @@ export const useProduct = (id: string | undefined) => {
   };
 
   const reorderPics = (picIds: string[]) => {
-    setProduct((previous) => {
-      const newProduct: Product = {
+    setProduct((previous) => ({
         ...previous,
         pictures: picIds.map(id => previous.pictures.find(pic => pic.id === id)!),
-      };
-      return newProduct;
-    });
+    }));
   };
 
   return {
@@ -82,9 +80,9 @@ export const useProduct = (id: string | undefined) => {
   };
 };
 
-const createNewProduct = (): Product => ({
+const createNewProduct = (): ProductDraft => ({
   id: uuid(),
-  state: State.Draft,
+  state: ProductState.Draft,
   pictures: [],
   title: {
     ru: "",
@@ -92,5 +90,11 @@ const createNewProduct = (): Product => ({
   },
   showInGallery: false,
   showInShop: false,
+  description: {
+    ru: "",
+    en: ""
+  },
+  price: undefined,
+  
   coverId: undefined,
 });

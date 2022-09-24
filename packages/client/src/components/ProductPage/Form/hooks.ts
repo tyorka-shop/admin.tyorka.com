@@ -6,12 +6,13 @@ import {
 } from "./mutation.types";
 import * as mutation from "./mutation.gql";
 import { FormValues } from ".";
-import { State } from "../../../types/gql";
+import { ProductState } from "../../../types/gql";
 import * as productsQuery from "../../Products/query.gql";
 import * as galleryQuery from '../../Gallery/query.gql'
-import { ProductInput } from "./types";
+import * as shopQuery from '../../Shop/query.gql'
+import { ProductDraft } from "../types";
 
-export const useSubmit = (product: ProductInput) => {
+export const useSubmit = (product: ProductDraft) => {
   const { addToast } = useToasts();
   const [save, { loading, error }] = useMutation<Mutation, Variables>(
     mutation,
@@ -20,7 +21,7 @@ export const useSubmit = (product: ProductInput) => {
     }
   );
   const onSubmit = (values: FormValues) => {
-    if (!product.pictures.length) {
+    if (!product.pictures.length || !product.coverId) {
       addToast("Добавь фото", { appearance: "warning" });
       return;
     }
@@ -36,7 +37,7 @@ export const useSubmit = (product: ProductInput) => {
           showInShop: values.showInShop,
           coverId: product.coverId,
           pictures: product.pictures.map((pic) => pic.id),
-          state: State.Draft,
+          state: ProductState.Draft,
           price: +values.price,
           description: {
             en: values.descriptionEn,
@@ -44,7 +45,7 @@ export const useSubmit = (product: ProductInput) => {
           },
         },
       },
-      refetchQueries: [{ query: productsQuery }, "IsDraft", {query: galleryQuery}],
+      refetchQueries: [{ query: productsQuery }, "IsDraft", {query: galleryQuery}, {query: shopQuery}],
     });
   };
 

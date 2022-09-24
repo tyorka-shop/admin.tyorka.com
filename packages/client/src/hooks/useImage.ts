@@ -11,6 +11,5 @@ const sizeToWidth: Record<Size, number> = {
 export const useImage = (src: string, size: Size = 'big', cropped = false) => {
   const { config } = React.useContext(Context);
 
-  const [basename, ext] = src.split('.')
-  return `${config.imagesUrl}${basename}${cropped ? '_square' : ''}_${sizeToWidth[size]}.${ext}`;
+  return `${config.imagesUrl}${src}${cropped ? '_square' : ''}_${sizeToWidth[size]}.jpg`;
 }

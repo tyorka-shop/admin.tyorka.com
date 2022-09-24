@@ -1,0 +1,7 @@
+#import '../../PictureEditor/fragment.gql'
+query Picture($id: ID!) {
+	picture(id: $id) {
+		id
+		...PictureEditor
+	}
+}

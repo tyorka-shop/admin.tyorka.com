@@ -6817,6 +6817,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/cookie", "npm:0.4.1"]
           ],
           "linkType": "HARD",
+        }],
+        ["npm:0.5.1", {
+          "packageLocation": "./.yarn/cache/@types-cookie-npm-0.5.1-4b655a0ac0-9a8d60fc84.zip/node_modules/@types/cookie/",
+          "packageDependencies": [
+            ["@types/cookie", "npm:0.5.1"]
+          ],
+          "linkType": "HARD",
         }]
       ]],
       ["@types/cookies", [
@@ -11062,6 +11069,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@graphql-codegen/typescript-react-apollo", "virtual:658502eb4296e93abedc18b6aa9b26978f434f08d98e21ebb0e725354b8bb54b62db9c4a1893e460c694ff7500ff5cbafa4457b0dfd26b5838868666c861e990#npm:3.2.0"],
             ["@reach/router", "virtual:658502eb4296e93abedc18b6aa9b26978f434f08d98e21ebb0e725354b8bb54b62db9c4a1893e460c694ff7500ff5cbafa4457b0dfd26b5838868666c861e990#npm:1.3.4"],
             ["@types/b_", "npm:1.3.2"],
+            ["@types/cookie", "npm:0.5.1"],
             ["@types/node", "npm:16.11.6"],
             ["@types/reach__router", "npm:1.3.9"],
             ["@types/react", "npm:16.14.20"],
@@ -11074,6 +11082,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["apollo-link-error", "npm:1.1.13"],
             ["b_", "npm:1.3.4"],
             ["babel-preset-gatsby", "virtual:658502eb4296e93abedc18b6aa9b26978f434f08d98e21ebb0e725354b8bb54b62db9c4a1893e460c694ff7500ff5cbafa4457b0dfd26b5838868666c861e990#npm:2.2.0"],
+            ["cookie", "npm:0.5.0"],
             ["dotenv", "npm:10.0.0"],
             ["final-form", "npm:4.20.4"],
             ["gatsby", "virtual:658502eb4296e93abedc18b6aa9b26978f434f08d98e21ebb0e725354b8bb54b62db9c4a1893e460c694ff7500ff5cbafa4457b0dfd26b5838868666c861e990#npm:3.14.5"],
@@ -11614,6 +11623,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/cookie-npm-0.4.1-cc5e2ebb42-bd7c47f5d9.zip/node_modules/cookie/",
           "packageDependencies": [
             ["cookie", "npm:0.4.1"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:0.5.0", {
+          "packageLocation": "./.yarn/cache/cookie-npm-0.5.0-e2d58a161a-1f4bd2ca57.zip/node_modules/cookie/",
+          "packageDependencies": [
+            ["cookie", "npm:0.5.0"]
           ],
           "linkType": "HARD",
         }]

@@ -5,4 +5,4 @@ export type SaveGalleryOrderMutationVariables = Types.Exact<{
 }>;
 
 
-export type SaveGalleryOrderMutation = { __typename?: 'Mutation', saveGalleryOrder: Array<{ __typename?: 'GalleryItem', id: string }> };
+export type SaveGalleryOrderMutation = { __typename?: 'Mutations', saveGalleryOrder: Array<{ __typename?: 'Product', id: string }> };

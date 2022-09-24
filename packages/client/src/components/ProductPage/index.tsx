@@ -18,16 +18,13 @@ export interface FormValues {
 export const ProductPage: React.FC<Props> = ({ id }) => {
   const { product, loading, addPic, removePic, setCover, reorderPics } =
     useProduct(id);
-  const [pictureIdToEdit, setPictureToEdit] =
-    React.useState<string | null>(null);
+  const [pictureIdToEdit, setPictureToEdit] = React.useState<string | null>(
+    null
+  );
 
   if (loading || !product) {
     return <Loader />;
   }
-
-  const pictureToEdit = product.pictures.find(
-    ({ id }) => id === pictureIdToEdit
-  );
 
   return (
     <div>
@@ -39,9 +36,9 @@ export const ProductPage: React.FC<Props> = ({ id }) => {
         onCropClick={(id: string) => setPictureToEdit(id)}
         onReorderPics={reorderPics}
       />
-      {pictureToEdit && (
+      {pictureIdToEdit && (
         <PictureEditModal
-          picture={pictureToEdit}
+          id={pictureIdToEdit}
           onClose={() => setPictureToEdit(null)}
         />
       )}

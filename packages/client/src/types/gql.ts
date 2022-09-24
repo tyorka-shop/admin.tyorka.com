@@ -17,7 +17,7 @@ export type Scalars = {
 export type BlogPost = {
   __typename: 'BlogPost';
   color: Scalars['String'];
-  id: Scalars['String'];
+  id: Scalars['ID'];
   src: Scalars['String'];
   url: Scalars['String'];
 };
@@ -25,12 +25,11 @@ export type BlogPost = {
 export type Build = {
   __typename: 'Build';
   date: Scalars['String'];
-  id: Scalars['String'];
+  id: Scalars['ID'];
   log: Scalars['String'];
   status: BuildStatus;
 };
 
-/** State of building process */
 export enum BuildStatus {
   Done = 'DONE',
   Failure = 'FAILURE',
@@ -48,54 +47,44 @@ export type CropInput = {
   factor: Scalars['Float'];
 };
 
-export type GalleryItem = {
-  __typename: 'GalleryItem';
-  color: Scalars['String'];
-  height: Scalars['Float'];
-  /** id of product */
-  id: Scalars['ID'];
-  src: Scalars['String'];
-  width: Scalars['Float'];
-};
-
 export type MultiLang = {
   __typename: 'MultiLang';
-  en: Maybe<Scalars['String']>;
-  ru: Maybe<Scalars['String']>;
+  en: Scalars['String'];
+  ru: Scalars['String'];
 };
 
 export type MultiLangInput = {
-  en: Maybe<Scalars['String']>;
-  ru: Maybe<Scalars['String']>;
+  en: Scalars['String'];
+  ru: Scalars['String'];
 };
 
-export type Mutation = {
-  __typename: 'Mutation';
-  publish: Maybe<Build>;
+export type Mutations = {
+  __typename: 'Mutations';
+  publish: Build;
   saveCrop: Picture;
-  saveGalleryOrder: Array<GalleryItem>;
-  saveProduct: Maybe<Product>;
-  saveShopOrder: Array<ShopItem>;
+  saveGalleryOrder: Array<Product>;
+  saveProduct: Product;
+  saveShopOrder: Array<Product>;
 };
 
 
-export type MutationSaveCropArgs = {
+export type MutationsSaveCropArgs = {
   crop: CropInput;
   id: Scalars['ID'];
 };
 
 
-export type MutationSaveGalleryOrderArgs = {
+export type MutationsSaveGalleryOrderArgs = {
   list: Array<Scalars['ID']>;
 };
 
 
-export type MutationSaveProductArgs = {
+export type MutationsSaveProductArgs = {
   product: ProductInput;
 };
 
 
-export type MutationSaveShopOrderArgs = {
+export type MutationsSaveShopOrderArgs = {
   list: Array<Scalars['ID']>;
 };
 
@@ -104,9 +93,14 @@ export type Picture = {
   color: Scalars['String'];
   crop: Crop;
   id: Scalars['ID'];
-  inline: Scalars['String'];
-  originalSize: Size;
+  originalSize: PictureSize;
   src: Scalars['String'];
+};
+
+export type PictureSize = {
+  __typename: 'PictureSize';
+  height: Scalars['Int'];
+  width: Scalars['Int'];
 };
 
 export type Point = {
@@ -122,85 +116,66 @@ export type PointInput = {
 
 export type Product = {
   __typename: 'Product';
-  cover: Maybe<Picture>;
-  description: Maybe<MultiLang>;
+  cover: Picture;
+  description: MultiLang;
   descriptionHTML: MultiLang;
   descriptionText: MultiLang;
   id: Scalars['ID'];
   pictures: Array<Picture>;
-  price: Maybe<Scalars['Float']>;
+  price: Maybe<Scalars['Int']>;
   showInGallery: Scalars['Boolean'];
   showInShop: Scalars['Boolean'];
-  state: State;
-  title: Maybe<MultiLang>;
+  state: ProductState;
+  title: MultiLang;
 };
 
 export type ProductInput = {
-  coverId: Maybe<Scalars['ID']>;
-  description: Maybe<MultiLangInput>;
+  coverId: Scalars['ID'];
+  description: MultiLangInput;
   id: Scalars['ID'];
   pictures: Array<Scalars['ID']>;
-  price: Maybe<Scalars['Float']>;
+  price: Maybe<Scalars['Int']>;
   showInGallery: Scalars['Boolean'];
   showInShop: Scalars['Boolean'];
-  state: State;
-  title: Maybe<MultiLangInput>;
+  state: ProductState;
+  title: MultiLangInput;
 };
 
-export type Query = {
-  __typename: 'Query';
+export enum ProductState {
+  Draft = 'DRAFT'
+}
+
+export type Queries = {
+  __typename: 'Queries';
   blog: Array<BlogPost>;
   currentBuild: Maybe<Build>;
-  gallery: Array<GalleryItem>;
+  gallery: Array<Product>;
   isDraft: Scalars['Boolean'];
-  picture: Picture;
-  product: Product;
+  picture: Maybe<Picture>;
+  product: Maybe<Product>;
   products: Array<Product>;
   publication: Maybe<Build>;
-  publicationDuration: Scalars['Float'];
+  publicationDuration: Scalars['Int'];
   publications: Array<Build>;
-  shop: Array<ShopItem>;
+  shop: Array<Product>;
+  status: Scalars['String'];
   user: User;
 };
 
 
-export type QueryPictureArgs = {
+export type QueriesPictureArgs = {
   id: Scalars['ID'];
 };
 
 
-export type QueryProductArgs = {
+export type QueriesProductArgs = {
   id: Scalars['ID'];
 };
 
 
-export type QueryPublicationArgs = {
-  id: Scalars['String'];
-};
-
-export type ShopItem = {
-  __typename: 'ShopItem';
-  cover: Picture;
-  description: Maybe<MultiLang>;
-  descriptionHTML: MultiLang;
+export type QueriesPublicationArgs = {
   id: Scalars['ID'];
-  pictures: Array<Picture>;
-  price: Scalars['Float'];
-  title: Maybe<MultiLang>;
 };
-
-export type Size = {
-  __typename: 'Size';
-  height: Scalars['Float'];
-  width: Scalars['Float'];
-};
-
-/** State of product */
-export enum State {
-  Archived = 'ARCHIVED',
-  Draft = 'DRAFT',
-  Published = 'PUBLISHED'
-}
 
 export type User = {
   __typename: 'User';
@@ -212,36 +187,36 @@ export type SaveGalleryOrderMutationVariables = Exact<{
 }>;
 
 
-export type SaveGalleryOrderMutation = { __typename: 'Mutation', saveGalleryOrder: Array<{ __typename: 'GalleryItem', id: string }> };
+export type SaveGalleryOrderMutation = { __typename: 'Mutations', saveGalleryOrder: Array<{ __typename: 'Product', id: string }> };
 
 export type GalleryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GalleryQuery = { __typename: 'Query', gallery: Array<{ __typename: 'GalleryItem', id: string, src: string }> };
+export type GalleryQuery = { __typename: 'Queries', gallery: Array<{ __typename: 'Product', id: string, cover: { __typename: 'Picture', id: string, src: string } }> };
 
 export type IsDraftQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type IsDraftQuery = { __typename: 'Query', isDraft: boolean };
+export type IsDraftQuery = { __typename: 'Queries', isDraft: boolean };
 
-export type PictureEditorFragment = { __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } }, originalSize: { __typename: 'Size', width: number, height: number } };
+export type PictureEditorFragment = { __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } }, originalSize: { __typename: 'PictureSize', width: number, height: number } };
 
 export type ProductCardCoverFragment = { __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } } };
 
-export type ProductCardFragment = { __typename: 'Product', id: string, title: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, pictures: Array<{ __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } } }>, cover: { __typename: 'Picture', id: string } | null };
+export type ProductCardFragment = { __typename: 'Product', id: string, title: { __typename: 'MultiLang', en: string, ru: string }, pictures: Array<{ __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } } }>, cover: { __typename: 'Picture', id: string } };
 
-export type FormFragment = { __typename: 'Product', id: string, showInGallery: boolean, showInShop: boolean, price: number | null, title: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, cover: { __typename: 'Picture', id: string } | null, description: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, pictures: Array<{ __typename: 'Picture', id: string, src: string }> };
+export type FormFragment = { __typename: 'Product', id: string, showInGallery: boolean, showInShop: boolean, price: number | null, title: { __typename: 'MultiLang', en: string, ru: string }, cover: { __typename: 'Picture', id: string }, description: { __typename: 'MultiLang', en: string, ru: string }, pictures: Array<{ __typename: 'Picture', id: string, src: string }> };
 
 export type SaveProductMutationVariables = Exact<{
   product: ProductInput;
 }>;
 
 
-export type SaveProductMutation = { __typename: 'Mutation', saveProduct: { __typename: 'Product', id: string, showInGallery: boolean, showInShop: boolean, price: number | null, title: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, cover: { __typename: 'Picture', id: string } | null, description: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, pictures: Array<{ __typename: 'Picture', id: string, src: string }> } | null };
+export type SaveProductMutation = { __typename: 'Mutations', saveProduct: { __typename: 'Product', id: string, showInGallery: boolean, showInShop: boolean, price: number | null, title: { __typename: 'MultiLang', en: string, ru: string }, cover: { __typename: 'Picture', id: string }, description: { __typename: 'MultiLang', en: string, ru: string }, pictures: Array<{ __typename: 'Picture', id: string, src: string }> } };
 
 export type PicFragment = { __typename: 'Picture', id: string, src: string };
 
-export type PictureEditModalFragment = { __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } }, originalSize: { __typename: 'Size', width: number, height: number } };
+export type PictureEditModalFragment = { __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } }, originalSize: { __typename: 'PictureSize', width: number, height: number } };
 
 export type SaveCropMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -249,57 +224,64 @@ export type SaveCropMutationVariables = Exact<{
 }>;
 
 
-export type SaveCropMutation = { __typename: 'Mutation', saveCrop: { __typename: 'Picture', id: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } } } };
+export type SaveCropMutation = { __typename: 'Mutations', saveCrop: { __typename: 'Picture', id: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } } } };
+
+export type PictureQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type PictureQuery = { __typename: 'Queries', picture: { __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } }, originalSize: { __typename: 'PictureSize', width: number, height: number } } | null };
 
 export type ProductQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type ProductQuery = { __typename: 'Query', product: { __typename: 'Product', id: string, state: State, showInGallery: boolean, showInShop: boolean, price: number | null, title: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, pictures: Array<{ __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } }, originalSize: { __typename: 'Size', width: number, height: number } }>, cover: { __typename: 'Picture', id: string } | null, description: { __typename: 'MultiLang', en: string | null, ru: string | null } | null } };
+export type ProductQuery = { __typename: 'Queries', product: { __typename: 'Product', id: string, state: ProductState, showInGallery: boolean, showInShop: boolean, price: number | null, title: { __typename: 'MultiLang', en: string, ru: string }, pictures: Array<{ __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } }, originalSize: { __typename: 'PictureSize', width: number, height: number } }>, cover: { __typename: 'Picture', id: string }, description: { __typename: 'MultiLang', en: string, ru: string } } | null };
 
 export type ProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProductsQuery = { __typename: 'Query', products: Array<{ __typename: 'Product', id: string, title: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, pictures: Array<{ __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } } }>, cover: { __typename: 'Picture', id: string } | null }> };
+export type ProductsQuery = { __typename: 'Queries', products: Array<{ __typename: 'Product', id: string, title: { __typename: 'MultiLang', en: string, ru: string }, pictures: Array<{ __typename: 'Picture', id: string, src: string, crop: { __typename: 'Crop', factor: number, anchor: { __typename: 'Point', x: number, y: number } } }>, cover: { __typename: 'Picture', id: string } }> };
 
 export type PublishMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PublishMutation = { __typename: 'Mutation', publish: { __typename: 'Build', status: BuildStatus, log: string } | null };
+export type PublishMutation = { __typename: 'Mutations', publish: { __typename: 'Build', status: BuildStatus, log: string } };
 
 export type PublicationFragment = { __typename: 'Build', id: string, date: string, status: BuildStatus };
 
 export type LogQueryVariables = Exact<{
-  id: Scalars['String'];
+  id: Scalars['ID'];
 }>;
 
 
-export type LogQuery = { __typename: 'Query', publication: { __typename: 'Build', id: string, status: BuildStatus, log: string, date: string } | null };
+export type LogQuery = { __typename: 'Queries', publication: { __typename: 'Build', id: string, status: BuildStatus, log: string, date: string } | null };
 
 export type PublicationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PublicationsQuery = { __typename: 'Query', publicationDuration: number, publications: Array<{ __typename: 'Build', id: string, date: string, status: BuildStatus }> };
+export type PublicationsQuery = { __typename: 'Queries', publicationDuration: number, publications: Array<{ __typename: 'Build', id: string, date: string, status: BuildStatus }> };
+
+export type ItemFragment = { __typename: 'Product', id: string, title: { __typename: 'MultiLang', ru: string }, cover: { __typename: 'Picture', id: string, src: string } };
 
 export type SaveShopOrderMutationVariables = Exact<{
   list: Array<Scalars['ID']> | Scalars['ID'];
 }>;
 
 
-export type SaveShopOrderMutation = { __typename: 'Mutation', saveShopOrder: Array<{ __typename: 'ShopItem', id: string }> };
+export type SaveShopOrderMutation = { __typename: 'Mutations', saveShopOrder: Array<{ __typename: 'Product', id: string }> };
 
 export type ShopQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ShopQuery = { __typename: 'Query', shop: Array<{ __typename: 'ShopItem', id: string, title: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, cover: { __typename: 'Picture', id: string, src: string } }> };
-
-export type ItemFragment = { __typename: 'ShopItem', id: string, title: { __typename: 'MultiLang', en: string | null, ru: string | null } | null, cover: { __typename: 'Picture', id: string, src: string } };
+export type ShopQuery = { __typename: 'Queries', shop: Array<{ __typename: 'Product', id: string, title: { __typename: 'MultiLang', ru: string }, cover: { __typename: 'Picture', id: string, src: string } }> };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename: 'Query', user: { __typename: 'User', email: string } };
+export type MeQuery = { __typename: 'Queries', user: { __typename: 'User', email: string } };
 
 export const ProductCardCoverFragmentDoc = gql`
     fragment ProductCardCover on Picture {
@@ -390,10 +372,9 @@ export const PublicationFragmentDoc = gql`
 }
     `;
 export const ItemFragmentDoc = gql`
-    fragment Item on ShopItem {
+    fragment Item on Product {
   id
   title {
-    en
     ru
   }
   cover {
@@ -439,7 +420,10 @@ export const GalleryDocument = gql`
     query Gallery {
   gallery {
     id
-    src
+    cover {
+      id
+      src
+    }
   }
 }
     `;
@@ -577,6 +561,42 @@ export function useSaveCropMutation(baseOptions?: Apollo.MutationHookOptions<Sav
 export type SaveCropMutationHookResult = ReturnType<typeof useSaveCropMutation>;
 export type SaveCropMutationResult = Apollo.MutationResult<SaveCropMutation>;
 export type SaveCropMutationOptions = Apollo.BaseMutationOptions<SaveCropMutation, SaveCropMutationVariables>;
+export const PictureDocument = gql`
+    query Picture($id: ID!) {
+  picture(id: $id) {
+    id
+    ...PictureEditor
+  }
+}
+    ${PictureEditorFragmentDoc}`;
+
+/**
+ * __usePictureQuery__
+ *
+ * To run a query within a React component, call `usePictureQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePictureQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePictureQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePictureQuery(baseOptions: Apollo.QueryHookOptions<PictureQuery, PictureQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PictureQuery, PictureQueryVariables>(PictureDocument, options);
+      }
+export function usePictureLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PictureQuery, PictureQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PictureQuery, PictureQueryVariables>(PictureDocument, options);
+        }
+export type PictureQueryHookResult = ReturnType<typeof usePictureQuery>;
+export type PictureLazyQueryHookResult = ReturnType<typeof usePictureLazyQuery>;
+export type PictureQueryResult = Apollo.QueryResult<PictureQuery, PictureQueryVariables>;
 export const ProductDocument = gql`
     query Product($id: ID!) {
   product(id: $id) {
@@ -692,7 +712,7 @@ export type PublishMutationHookResult = ReturnType<typeof usePublishMutation>;
 export type PublishMutationResult = Apollo.MutationResult<PublishMutation>;
 export type PublishMutationOptions = Apollo.BaseMutationOptions<PublishMutation, PublishMutationVariables>;
 export const LogDocument = gql`
-    query Log($id: String!) {
+    query Log($id: ID!) {
   publication(id: $id) {
     id
     status

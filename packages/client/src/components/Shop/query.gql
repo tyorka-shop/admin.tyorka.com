@@ -1,18 +1,7 @@
+#import './Product/fragment.gql'
 query Shop {
-  shop {
-    id
-    ...Item
-  }
-}
-
-fragment Item on ShopItem {
-  id
-  title {
-    en
-    ru
-  }
-  cover {
-    id
-    src
-  }
+	shop {
+		id
+		...Item
+	}
 }

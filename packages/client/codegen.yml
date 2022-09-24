@@ -1,4 +1,4 @@
-schema: '../server/schema.gql'
+schema: 'http://localhost:3000/graphql'
 documents: 'src/**/*.gql'
 generates:
   schema.json:

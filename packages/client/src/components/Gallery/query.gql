@@ -1,6 +1,9 @@
 query Gallery {
-  gallery {
-    id
-    src
-  }
+	gallery {
+		id
+		cover {
+			id
+			src	
+		}
+	}
 }

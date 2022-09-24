@@ -1,6 +1,6 @@
 import React from "react";
 import b_ from "b_";
-import { ItemFragment } from "../query.types";
+import { ItemFragment } from "./fragment.types";
 import { useImage } from "../../../hooks/useImage";
 
 import './index.scss';

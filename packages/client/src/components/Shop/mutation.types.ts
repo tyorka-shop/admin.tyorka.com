@@ -5,4 +5,4 @@ export type SaveShopOrderMutationVariables = Types.Exact<{
 }>;
 
 
-export type SaveShopOrderMutation = { __typename?: 'Mutation', saveShopOrder: Array<{ __typename?: 'ShopItem', id: string }> };
+export type SaveShopOrderMutation = { __typename?: 'Mutations', saveShopOrder: Array<{ __typename?: 'Product', id: string }> };
