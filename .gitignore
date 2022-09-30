@@ -2,5 +2,6 @@
 !.yarn/releases
 !.yarn/sdks
 .cache
+.npmrc
 public
 config.json

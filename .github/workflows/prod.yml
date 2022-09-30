@@ -1,14 +1,28 @@
 name: CI
+
 on: [push]
+
 jobs:
   build:
     name: Prod
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: borales/actions-yarn@v3.0.0
+      
+      - name: Save config
+        run: |
+          echo "$CONFIG" >> config.json
+          cat config.ini
+        shell: bash
+        env:
+          CONFIG: ${{secrets.CONFIG}}
+
+      - name: Install deps
+        uses: borales/actions-yarn@v3.0.0
         with:
-          cmd: install # will run `yarn install` command
-      - uses: borales/actions-yarn@v3.0.0
+          cmd: install
+
+      - name: Build
+        uses: borales/actions-yarn@v3.0.0
         with:
-          cmd: build # will run `yarn build` command
+          cmd: build
