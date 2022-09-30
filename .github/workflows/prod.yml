@@ -16,13 +16,6 @@ jobs:
         env:
           CONFIG: ${{secrets.CONFIG}}
 
-      - name: Save .npmrc
-        run: |
-          echo "$NPMRC" >> .npmrc
-        shell: bash
-        env:
-          CONFIG: ${{secrets.NPMRC}}
-
       - name: Install deps
         uses: borales/actions-yarn@v3.0.0
         with:
@@ -32,6 +25,14 @@ jobs:
         uses: borales/actions-yarn@v3.0.0
         with:
           cmd: build
+
+      - name: Save .npmrc
+        run: |
+          echo "$NPMRC" >> .npmrc
+        shell: bash
+        env:
+          NPMRC: ${{secrets.NPMRC}}
+
       
       - name: Publish
         run: npm publish
