@@ -1,1 +1,0 @@
-export const IMAGE_SIZES = [200, 600, 2000]

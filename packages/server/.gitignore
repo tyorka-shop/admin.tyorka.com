@@ -1,6 +1,0 @@
-dist
-store/*
-jwt-key/*
-jwt-keys/*
-images/*
-config.json

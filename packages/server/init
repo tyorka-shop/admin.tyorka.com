@@ -1,5 +1,0 @@
-#!/bin/sh
-mkdir images
-mkdir store
-
-cp ~config.json config.json
