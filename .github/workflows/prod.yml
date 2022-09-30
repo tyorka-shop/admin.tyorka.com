@@ -33,6 +33,5 @@ jobs:
         env:
           NPMRC: ${{secrets.NPMRC}}
 
-      
       - name: Publish
         run: npm publish
