@@ -1,6 +1,6 @@
 {
   "name": "@tyorka-shop/admin.tyorka.com",
-  "version": "0.3.19",
+  "version": "0.3.1",
   "scripts": {
     "start": "gatsby develop",
     "build": "gatsby build",
