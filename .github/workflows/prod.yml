@@ -12,7 +12,6 @@ jobs:
       - name: Save config
         run: |
           echo "$CONFIG" >> config.json
-          cat config.ini
         shell: bash
         env:
           CONFIG: ${{secrets.CONFIG}}
