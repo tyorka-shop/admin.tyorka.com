@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BuildStatus } from "../../../../types/gql";
 import * as query from "./query.gql";
 import { LogQuery, LogQueryVariables } from './query.types'
@@ -29,3 +29,27 @@ export const useCurrentState = (publication: PublicationFragment) => {
     log: data?.publication?.log || ''
   }
 };
+
+export const useScroll = () => {
+  const container = useRef<HTMLPreElement>(null);
+  const [enabled, setEnabled] = useState(true);
+
+  useEffect(() => {
+    if(!enabled) {
+      return;
+    }
+    const interval = setInterval(() => {
+      container.current?.scrollTo({
+        top: container.current.scrollHeight,
+      });
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [enabled]);
+
+  return {
+    container,
+    enabled,
+    setEnabled
+  }
+}

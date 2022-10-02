@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Button, Progress, ProgressLineProps } from "rsuite";
+import { Button, Progress, ProgressLineProps, Checkbox } from "rsuite";
 import b_ from "b_";
 import moment from "moment";
 import { BuildStatus } from "../../../../types/gql";
 import { PublicationFragment } from "./fragment.types";
-import { useCurrentState } from "./hooks";
+import { useCurrentState, useScroll } from "./hooks";
 
 import "./styles.scss";
 
@@ -12,20 +12,24 @@ const b = b_.with("publication");
 
 interface Props {
   publication: PublicationFragment;
-  maxDuration: number
+  maxDuration: number;
 }
 
 export const Publication: React.FC<Props> = ({ publication, maxDuration }) => {
   const [isLogVisible, setLogVisible] = useState(false);
   const { status, log } = useCurrentState(publication);
+  const { container, ...checkbox } = useScroll();
+
+  const date = moment.utc(publication.date);
+
   return (
     <div className={b()}>
       <div className={b("vis-button-wrapper")}>
         <div className={b("date")}>
-          {moment(publication.date).format("DD.MM.YY HH:ss:mm")}
+          {date.local().format("DD.MM.YY HH:mm:ss")}
         </div>
         <Progress
-          percent={getPercent(status, +publication.date, maxDuration)}
+          percent={getPercent(status, +date.toDate(), maxDuration)}
           status={buildStatusToStatus[status]}
           showInfo={false}
         />
@@ -37,7 +41,14 @@ export const Publication: React.FC<Props> = ({ publication, maxDuration }) => {
           {isLogVisible ? "▴" : "▾"}
         </Button>
       </div>
-      {isLogVisible && <pre className={b("log")}>{log}</pre>}
+      {isLogVisible && (
+        <div>
+          <pre className={b("log")} ref={container}>
+            {log}
+          </pre>
+          <Checkbox onChange={(_, value) => checkbox.setEnabled(value)} checked={checkbox.enabled}>auto scroll</Checkbox>
+        </div>
+      )}
     </div>
   );
 };
