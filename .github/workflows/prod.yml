@@ -8,30 +8,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
+
+      - name: Login to registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Save config
         run: |
           echo "$CONFIG" >> config.json
         shell: bash
         env:
           CONFIG: ${{secrets.CONFIG}}
-
-      - name: Install deps
-        uses: borales/actions-yarn@v3.0.0
-        with:
-          cmd: install
-
       - name: Build
-        uses: borales/actions-yarn@v3.0.0
-        with:
-          cmd: build
-
-      - name: Save .npmrc
-        run: |
-          echo "$NPMRC" >> .npmrc
-        shell: bash
-        env:
-          NPMRC: ${{secrets.NPMRC}}
+        run: docker build -t ghcr.io/tyorka-shop/admin.tyorka.com:latest .
 
       - name: Publish
-        run: npm publish
+        run: docker push ghcr.io/tyorka-shop/admin.tyorka.com:latest
